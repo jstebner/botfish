@@ -35,11 +35,11 @@ command to run if program contains helper info
 
 ## Authors
 
-[Jordan S-H](https://github.com/jstebner)
-[Christian Cuevas](https://github.com/cdwagc8)
-[Jordan Krasan](https://github.com/JordanKra)
-[James Elugbemi](https://github.com/James-Elugbemi)
-[William Castle](https://github.com/SOUP-404)
+* [Jordan S-H](https://github.com/jstebner)
+* [Christian Cuevas](https://github.com/cdwagc8)
+* [Jordan Krasan](https://github.com/JordanKra)
+* [James Elugbemi](https://github.com/James-Elugbemi)
+* [William Castle](https://github.com/SOUP-404)
 
 ## Version History
 
