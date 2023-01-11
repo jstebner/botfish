@@ -4,33 +4,34 @@ Integration of Stockfish and UM-D R2ED Humanoid Robot for autonomous chess playi
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+TODO: this
 
 ## Getting Started
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+* REVIEW: Requires Python 3.10 on Windows 10/11, Ubunutu 22 
+* Packages listed in botfish/requirements.txt
 
 ### Installing
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
 ```
-code blocks for commands
+REVIEW:
+git clone https://github.com/jstebner/botfish.git
+cd botfish
+py 3.10 -m pip install -r requirements
+```
+
+### Usage
+
+```
+py ./botfish.py [args]
 ```
 
 ## Help
 
-Any advise for common problems or issues.
 ```
-command to run if program contains helper info
+py ./botfish.py --help
 ```
 
 ## Authors
@@ -43,8 +44,5 @@ command to run if program contains helper info
 
 ## Version History
 
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
 * 0.1
     * Initial Release
