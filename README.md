@@ -10,7 +10,7 @@ TODO: this
 
 ### Dependencies
 
-* REVIEW: Requires Python 3.10 on Windows 10/11, Ubunutu 22 
+* REVIEW: Requires Python 3.10 on Ubunutu 22 
 * Packages listed in botfish/requirements.txt
 
 ### Installing

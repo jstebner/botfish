@@ -1,6 +1,7 @@
 from sys import argv
 from getopt import getopt
 from stockfish import Stockfish
+from chessboard2fen import boardDetection
 
 class Botfish:
     def __init__(self, lvl, clr):
@@ -15,6 +16,18 @@ class Botfish:
             )
 
     def main(self):
+        # TODO: uhhhhhhhhhhhh
+        # user press done btn -> 
+        # bot take pic -> 
+        # pic sent over network to client pc -> 
+        # pic processed by 2fen -> 
+        # get move somehow (find out 2fen return type and turn that into standard chess notation for move performed) -> 
+        # give move to sf -> 
+        # sf return its move -> 
+        # move translated to trajectory (make a module for translating move to trajectory, maybe using corner data from 2fen for localization) -> 
+        # trajectory sent to bot ->
+        # bot make move ->
+        # bot wait for user to hit btn.
         print(self.sf.get_parameters())
 
 
