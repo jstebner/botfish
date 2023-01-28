@@ -48,7 +48,8 @@ class chess_digitizer:
         # cap = cv2.VideoCapture('input_imgs/20201209_111609.mp4')
 
 
-        filenames = glob.glob("input_imgs/*")
+        # filenames = glob.glob("input_imgs/*")
+        filenames = glob.glob("chess_data/*")
         filenames = sorted(filenames)
         for file in filenames:
             img = cv2.imread(file)
@@ -56,6 +57,7 @@ class chess_digitizer:
             if len(corners) == 4:
                 predictions = detect.predictBoard(img, corners)
                 board.predictions_to_move(predictions)
+            
             self.visualize(detect, board, corners)
         # while True:
         #     ret, img = cap.read()
