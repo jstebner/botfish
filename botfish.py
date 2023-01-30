@@ -1,7 +1,14 @@
 from sys import argv
 from getopt import getopt
 from stockfish import Stockfish
-from chessboard2fen import boardDetection
+import chess
+
+def display(board):
+    for i, row in enumerate(str(board).split('\n')):
+        print(8-i,'|', row)
+    print('  +----------------')
+    print('    a b c d e f g h', end='\n\n')
+    
 
 class Botfish:
     def __init__(self, lvl, clr):
@@ -14,6 +21,8 @@ class Botfish:
                 'Ponder': True
                 }
             )
+        self.board = chess.Board()
+        self.clr = clr
 
     def main(self):
         # TODO: uhhhhhhhhhhhh
@@ -30,6 +39,36 @@ class Botfish:
         # bot wait for user to hit btn.
         print(self.sf.get_parameters())
 
+        if self.clr == 'W':
+            move = chess.Move.from_uci(self.sf.get_best_move())
+            self.board.push(move)
+            self.sf.make_moves_from_current_position([move])
+        
+        inp = ''
+        while True:
+            # NOTE: player move 
+            display(self.board)
+            inp = input('mkae ya move: ').lower()
+            if inp in ('exit', 'quit', 'stop', 'end'):
+                break
+            try:
+                move = chess.Move.from_uci(inp)
+                # legal move check
+                if not self.sf.is_move_correct(move):
+                    raise Exception
+            except:
+                print('you idiot')
+                continue
+
+            self.board.push(move)
+            self.sf.make_moves_from_current_position([move])
+            display(self.board)
+            
+            # NOTE: sf move
+            move = chess.Move.from_uci(self.sf.get_best_move())
+            self.board.push(move)
+            self.sf.make_moves_from_current_position([move])
+            print('feesh move:', move)
 
 if __name__ == '__main__':
     # default parameters
@@ -45,6 +84,7 @@ if __name__ == '__main__':
         for curr_arg, curr_val in args:
             if curr_arg in ('-h','--help'):
                 print('TODO: help screen')
+                exit()
 
             elif curr_arg in ('-l','--level'):
                 level = int(curr_val)
@@ -52,10 +92,9 @@ if __name__ == '__main__':
                     raise Exception('level must be 0, 1, or 2')
                 
             elif curr_arg in ('-c','--color'):
-                if curr_val not in ('W', 'B'):
+                if curr_val.upper() not in ('W', 'B'):
                     raise Exception('color must be W or B')
-                color = curr_val
-            
+                color = curr_val.upper()
     except Exception as e:
         print(e)
         
