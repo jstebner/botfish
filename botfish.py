@@ -1,7 +1,7 @@
 from sys import argv
 from getopt import getopt
 from stockfish import Stockfish
-import chess
+# import chess
 
 def display(board):
     for i, row in enumerate(str(board).split('\n')):
