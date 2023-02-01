@@ -1,14 +1,6 @@
 from sys import argv
 from getopt import getopt
 from stockfish import Stockfish
-import chess
-
-def display(board):
-    for i, row in enumerate(str(board).split('\n')):
-        print(8-i,'|', row)
-    print('  +----------------')
-    print('    a b c d e f g h', end='\n\n')
-    
 
 class Botfish:
     def __init__(self, lvl, clr):
@@ -21,7 +13,6 @@ class Botfish:
                 'Ponder': True
                 }
             )
-        self.board = chess.Board()
         self.clr = clr
 
     def main(self):
@@ -40,19 +31,17 @@ class Botfish:
         print(self.sf.get_parameters())
 
         if self.clr == 'W':
-            move = chess.Move.from_uci(self.sf.get_best_move())
-            self.board.push(move)
+            move = self.sf.get_best_move()
             self.sf.make_moves_from_current_position([move])
         
-        inp = ''
+        move = ''
         while True:
-            # NOTE: player move 
-            display(self.board)
-            inp = input('mkae ya move: ').lower()
-            if inp in ('exit', 'quit', 'stop', 'end'):
+            print(self.sf.get_board_visual())
+            # NOTE: player move
+            move = input('mkae ya move: ').lower()
+            if move in ('exit', 'quit', 'stop', 'end'):
                 break
             try:
-                move = chess.Move.from_uci(inp)
                 # legal move check
                 if not self.sf.is_move_correct(move):
                     raise Exception
@@ -60,13 +49,11 @@ class Botfish:
                 print('you idiot')
                 continue
 
-            self.board.push(move)
             self.sf.make_moves_from_current_position([move])
-            display(self.board)
+            print(self.sf.get_board_visual())
             
             # NOTE: sf move
-            move = chess.Move.from_uci(self.sf.get_best_move())
-            self.board.push(move)
+            move = self.sf.get_best_move()
             self.sf.make_moves_from_current_position([move])
             print('feesh move:', move)
 
