@@ -3,7 +3,6 @@ from getopt import getopt
 from stockfish import Stockfish
 import pygame
 from pygame.locals import *
-from threading import Thread
 
 class Botfish:
     def __init__(self, lvl, clr):
@@ -17,20 +16,6 @@ class Botfish:
                 }
             )
         self.clr = clr
-    
-    def ui_thread(self):
-        pygame.init()
-        # screen = pygame.display.set_mode((1920, 1080), pygame.NOFRAME) # final
-        screen = pygame.display.set_mode((1920//2, 1080//2),) # testing
-        running = True
-        while running:
-            screen.fill((0,0,0))
-            avatar = pygame.Rect(0, 0, 20, 20)
-            pygame.draw.rect(screen,(64,31,255),avatar)
-            pygame.display.update()
-            for event in pygame.event.get():
-                pass
-            continue
             
         
     def main(self):
