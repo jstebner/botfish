@@ -1,3 +1,4 @@
+import os
 from sys import argv
 from getopt import getopt
 from stockfish import Stockfish
@@ -124,6 +125,8 @@ class Botfish:
         pygame.quit()
 
 if __name__ == '__main__':
+    # if os.
+    
     # default parameters
     level = 1 # 0: ez, 1: med, 2: sicko mode
     color = 'W'
