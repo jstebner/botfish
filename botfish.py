@@ -17,9 +17,60 @@ class Botfish:
             )
         self.clr = clr
             
+    def process_move(self, move: str) -> tuple[int, str]:
+        """update board state with opponent move and return stockfish move
+
+        Args:
+            move (str): move performed: "{from_coord}{to_coord}"; ex: "a2a3"
+
+        Returns:
+            tuple[int, str]: 
+                int: response code:
+                    0: EXIT
+                    1: ERROR
+                    2: OKAY
+                str: response string (move or error message)             
+        """
+
+        # NOTE: process input
+        # stopwords
+        if move in ('exit', 'quit', 'stop', 'end'): 
+            return (0, 'stopword received')
+        
+        # legal move check    
+        if not self.sf.is_move_correct(move):
+            return (1,'you idiot')
+
+        self.sf.make_moves_from_current_position([move])
+        print(self.sf.get_board_visual()) # TODO: rmv this
+        
+        # NOTE: stockfish move
+        move = self.sf.get_best_move()
+        self.sf.make_moves_from_current_position([move])
+        return (2, move)
+    
+    # TODO: all this jawn
+    def send_move(self, move: str) -> None: # REVIEW: return type of this
+        """send chess move to manip node
+
+        Args:
+            move (str): move performed: "{from_coord}{to_coord}"; ex: "a2a3"
+        """
+        print("sending move:", move)
+        pass
+    
+    # TODO: all this jawn as well
+    def get_move(self) -> str:
+        """retrieve move made by player
+
+        Returns:
+            str: move performed: "{from_coord}{to_coord}"; ex: "a2a3"
+        """
+        return input('mkae ya move: ').lower() # TODO: replace this with viz node
         
     def main(self):
         pygame.init()
+        # DEBUG: change resolution
         # screen = pygame.display.set_mode((1920, 1080), pygame.NOFRAME) # final
         screen = pygame.display.set_mode((1920//2, 1080//2),) # testing
 
@@ -39,11 +90,13 @@ class Botfish:
 
         if self.clr == 'W':
             move = self.sf.get_best_move()
+            self.send_move(move)
             self.sf.make_moves_from_current_position([move])
         
         move = ''
         running = True
         while running:
+            # ui stuffs
             screen.fill((0,0,0))
             avatar = pygame.Rect(0, 0, 20, 20)
             pygame.draw.rect(screen,(64,31,255),avatar)
@@ -51,26 +104,20 @@ class Botfish:
             for event in pygame.event.get():
                 pass
             
-            print(self.sf.get_board_visual())
+            print(self.sf.get_board_visual()) # TODO: rmv this
             # NOTE: player move
-            move = input('mkae ya move: ').lower()
-            if move in ('exit', 'quit', 'stop', 'end'):
-                break
-            try:
-                # legal move check
-                if not self.sf.is_move_correct(move):
-                    raise Exception
-            except:
-                print('you idiot')
-                continue
 
-            self.sf.make_moves_from_current_position([move])
-            print(self.sf.get_board_visual())
+            move = self.get_move()
+            status, response = self.process_move(move)
+            if status == 0: # exit
+                print("stopword received")
+                exit()
+            if status == 1: # error
+                print(response)
+            if status == 2:
+                self.send_move(move)
+                print(self.sf.get_board_visual()) # TODO: rmv this
             
-            # NOTE: sf move
-            move = self.sf.get_best_move()
-            self.sf.make_moves_from_current_position([move])
-            print('feesh move:', move)
             
             pygame.display.update()
             
