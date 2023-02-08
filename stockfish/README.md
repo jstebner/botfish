@@ -1,1 +1,0 @@
-# [Stockfish](https://github.com/official-stockfish/Stockfish)
