@@ -140,7 +140,7 @@ class Botfish:
             
         pygame.quit()
 
-if __name__ == '__main__':
+def main(args=None):
     # move cwd to */botfish/
     import pathlib
     parent_dir = pathlib.Path(__file__).parent.resolve()
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     
     # check for valid os (ik we cant use win but shut up ok)
     import sys
-    print(sys.platform)
+    # print(sys.platform)
     if 'win' in sys.platform:
         engine = './engines/stockfish-windows-2022-x86-64-avx2.exe'
     elif 'linux' in sys.platform:
@@ -187,3 +187,6 @@ if __name__ == '__main__':
         
     botfish = Botfish(engine, level, color)
     botfish.main()
+
+if __name__ == '__main__':
+    main()
