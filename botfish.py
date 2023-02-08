@@ -6,9 +6,9 @@ import pygame
 from pygame.locals import *
 
 class Botfish:
-    def __init__(self, lvl, clr):
+    def __init__(self, engine, lvl, clr):
         self.sf = Stockfish(
-            path='stockfish/stockfish-windows-2022-x86-64-avx2.exe',
+            path=engine,
             parameters={
                 'UCI_Elo':{0:500, 1:1000, 2:2500}[lvl],
                 'UCI_LimitStrength': True,
@@ -35,7 +35,7 @@ class Botfish:
 
         # NOTE: process input
         # stopwords
-        if move in ('exit', 'quit', 'stop', 'end'): 
+        if any([stopword in move for stopword in ('exit', 'quit', 'stop', 'end')]): 
             return (0, 'stopword received')
         
         # legal move check    
@@ -125,7 +125,21 @@ class Botfish:
         pygame.quit()
 
 if __name__ == '__main__':
-    # if os.
+    # move cwd to */botfish/
+    import pathlib
+    parent_dir = pathlib.Path(__file__).parent.resolve()
+    os.chdir(parent_dir)
+    
+    # check for valid os (ik we cant use win but shut up ok)
+    import sys
+    print(sys.platform)
+    if 'win' in sys.platform:
+        engine = './engines/stockfish-windows-2022-x86-64-avx2.exe'
+    elif 'linux' in sys.platform:
+        engine = './engines/stockfish-ubuntu-20.04-x86-64'
+    else:
+        print('OS not supported')
+        exit()
     
     # default parameters
     level = 1 # 0: ez, 1: med, 2: sicko mode
@@ -153,6 +167,7 @@ if __name__ == '__main__':
                 color = curr_val.upper()
     except Exception as e:
         print(e)
+        exit()
         
-    botfish = Botfish(level, color)
+    botfish = Botfish(engine, level, color)
     botfish.main()
