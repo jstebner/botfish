@@ -8,18 +8,21 @@ import time
 import random
 
 class Botfish:
-    def __init__(self, engine: str, lvl: int, clr: chr):
-        """_summary_
+    def __init__(self, engine: str, lvl: int, clr: chr, side: chr):
+        """botfish main program
 
         Args:
             engine (str): path of stockfish engine
             lvl (int):  difficulty of the robot
                             0: ez
-                            1: mid
+                            1: mid (default)
                             2: ultra nightmare mode
-            clr (char): color bot is playing:
-                            'W': white
+            clr (chr): color bot is playing:
+                            'W': white (default)
                             'B': black
+            side (chr): side bot is playing (relative to computer):
+                            'L': left (default)
+                            'R': right
         """
         self.sf = Stockfish(
             path=engine,
@@ -160,12 +163,14 @@ def main(args=None):
     # default parameters
     level = 1 # 0: ez, 1: med, 2: sicko mode
     color = 'W'
+    side = 'L'
     
     # parse arguments
     try:
-        shortopts = 'hl:c:'
-        longopts = ['help','level=', 'color=']
+        shortopts = 'hl:c:s:'
+        longopts = ['help','level=', 'color=', 'side=']
         args, vals = getopt(argv[1:], shortopts=shortopts, longopts=longopts)
+        print(args, vals)
         
         for curr_arg, curr_val in args:
             if curr_arg in ('-h','--help'):
@@ -181,11 +186,16 @@ def main(args=None):
                 if curr_val.upper() not in ('W', 'B'):
                     raise Exception('color must be W or B')
                 color = curr_val.upper()
+            
+            elif curr_arg in ('-s', '--side'):
+                if curr_val.upper() not in ('L', 'R'):
+                    raise Exception('side must be L or R')
+                side = curr_val.upper()
     except Exception as e:
         print(e)
         exit()
         
-    botfish = Botfish(engine, level, color)
+    botfish = Botfish(engine, level, color, side)
     botfish.main()
 
 if __name__ == '__main__':
