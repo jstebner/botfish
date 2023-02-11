@@ -2,6 +2,8 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 
+from multiprocessing import Process, Queue
+
 class DebugController(Node):
     def __init__(self):
         super().__init__('debug_controller')
@@ -19,16 +21,15 @@ class DebugController(Node):
             10
         )
 
-        self.main()
-
     def display_ping(self, msg):
-        self.q.append(msg.data)
+        print('ping received')
 
-    def main(self):
+
+def term_proc(args):
         stopwords = ('exit', 'quit', 'stop', 'end', 'LET ME OUT OF THIS CHAIR YOU IDIOT')
         while True:
-            while self.q:
-                print(self.q.pop(0))
+            # while self.q:
+            #     print(self.q.pop(0))
 
             cmd = input('>')
             if cmd in stopwords:
@@ -38,17 +39,16 @@ class DebugController(Node):
 
             msg = String()
             msg.data = cmd
-            self.pub.publish(msg)
-        
-        self
+            # self.pub.publish(msg)
+
 
 def main(args=None):
     rclpy.init(args=args)
 
-    debug = DebugController()
-    rclpy.spin(debug)
+    debug_node = DebugController()
+    rclpy.spin(debug_node)
 
-    debug.destroy_node()
+    debug_node.destroy_node()
     rclpy.shutdown()
 
 if __name__ == '__main__':
