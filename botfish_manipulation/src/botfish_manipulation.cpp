@@ -1,6 +1,7 @@
 #include <memory>
 
 #include <rclcpp/rclcpp.hpp>
+#include <geometry_msgs/msg/pose_stamped.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
 
 int main(int argc, char* argv[])
@@ -20,13 +21,14 @@ int main(int argc, char* argv[])
   // Set a target Pose
   auto const target_pose = [] {
     geometry_msgs::msg::Pose msg;
-    msg.orientation.w = 0.0;
-    msg.position.x = 0.0;
-    msg.position.y = 0.0;
-    msg.position.z = 0.0;
+    msg.orientation.w = 1.0;
+    msg.position.x = 0.1;
+    msg.position.y = 0.1;
+    msg.position.z = 0.3;
     return msg;
   }();
   move_group_interface.setPoseTarget(target_pose);
+  move_group_interface.setGoalTolerance(0.5);
 
   // Create a plan to that target pose
   auto const [success, plan] = [&move_group_interface] {
@@ -38,12 +40,13 @@ int main(int argc, char* argv[])
   // Execute the plan
   if (success)
   {
-    move_group_interface.execute(plan);
+    //move_group_interface.execute(plan);
   }
   else
   {
     RCLCPP_ERROR(logger, "Planning failed!");
   }
+
 
   // Shutdown ROS
   rclcpp::shutdown();
