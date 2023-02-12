@@ -24,7 +24,9 @@ class DebugDisplay(Node):
         self.board = chess.Board()
         self.screen = pygame.display.set_mode(SIZE) # testing
         self.board_render = pygame.image.frombuffer(
-            chess.svg,
+            chess.svg.board(
+                self.board
+            ),
             SIZE,
             "ARGB"
         )
