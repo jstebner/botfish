@@ -26,10 +26,11 @@ class DebugDisplay(Node):
         
         pygame.display.set_caption('Debug')
         self.q = Queue()
-        self.board = chess.Board()
-        self.board_rendered = self._render_board()
         self.screen = pygame.display.set_mode(SIZE) # testing
         self.FONT = pygame.font.SysFont('Calibri', 15)
+        self.board = chess.Board()
+        self.board_rendered
+        self._render_board()
         
         self.sub = self.create_subscription(
             String,
