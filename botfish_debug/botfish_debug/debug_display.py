@@ -34,10 +34,10 @@ class DebugDisplay(Node):
         )
     
         pygame.init()
-        self.screen = pygame.display.set_mode((512, 512)) # testing
+        self.screen = pygame.display.set_mode((600, 600)) # testing
         self.x = 0
         self.y = 30
-        self.FONT = pygame.font.SysFont('Calibri', 35)
+        self.FONT = pygame.font.SysFont('Calibri', 5)
         self.path_txt = self.FONT.render(self.PATH, True, (255,255,255), (0,0,0))
         self.txt_rect = self.path_txt.get_rect()
         self.txt_rect.center = (256,256)

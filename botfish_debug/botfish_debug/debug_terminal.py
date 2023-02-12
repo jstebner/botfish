@@ -40,7 +40,7 @@ class DebugTerminal(Node):
         # while self.q:
         #     print(self.q.pop(0))
 
-        cmd_tokens = input('>').lower().split()
+        cmd_tokens = input('botfish-debug:~$ ').lower().split()
         if not cmd_tokens:
             return
 
