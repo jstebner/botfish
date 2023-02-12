@@ -15,7 +15,6 @@ from multiprocessing import Queue
 
 class DebugDisplay(Node):
     PERIOD_s = 1/10 # 10 UpS
-    FONT = pygame.font.SysFont('Calibri', 35)
     PATH = os.path.dirname(__file__)
 
     def __init__(self):
@@ -38,6 +37,10 @@ class DebugDisplay(Node):
         self.screen = pygame.display.set_mode((512, 512)) # testing
         self.x = 0
         self.y = 30
+        self.FONT = pygame.font.SysFont('Calibri', 35)
+        self.path_txt = self.FONT.render(self.PATH, True, (255,255,255), (0,0,0))
+        self.txt_rect = self.path_txt.get_rect()
+        self.txt_rect.center = (256,256)
 
     def __del__(self):
         print(chr(7))
@@ -46,6 +49,7 @@ class DebugDisplay(Node):
         self.screen.fill((0,0,0))
         self.x += 5
         self.x %= 1080
+        self.screen.blit(self.path_txt, self.txt_rect)
         box = pygame.Rect(self.x, self.y, 20, 20)
         pygame.draw.rect(self.screen,(64,31,255),box)
 
