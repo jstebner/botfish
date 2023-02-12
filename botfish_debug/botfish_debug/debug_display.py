@@ -50,7 +50,7 @@ class DebugDisplay(Node):
         self.screen.blit(self.path_txt, self.txt_rect)
         box = pygame.Rect(self.x, self.y, 20, 20)
         pygame.draw.rect(self.screen,(64,31,255),box)
-        display = pygame.image.frombuffer()
+        # display = pygame.image.frombuffer() # TODO: make this take board svg
 
         # check for close
         for event in pygame.event.get():
