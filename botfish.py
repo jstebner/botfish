@@ -134,7 +134,6 @@ class Botfish:
             if status == 1: # error
                 print(response)
             if status == 2: # okay
-                
                 self.send_bot_move(move)
                 print(self.sf.get_board_visual()) # TODO: rmv this
             

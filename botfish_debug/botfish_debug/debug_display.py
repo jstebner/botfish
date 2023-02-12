@@ -1,5 +1,6 @@
 import sys
 import os
+import io
 
 import rclpy
 from rclpy.node import Node
@@ -8,10 +9,12 @@ from std_msgs.msg import String
 import chess
 import chess.svg
 import pygame
+import cairosvg
 from pygame.locals import *
 from multiprocessing import Queue
 
-SIZE = (600,600)
+SIZE = (512 + 256,1024)
+WIDGET_SIZE = 512
 
 class DebugDisplay(Node):
     PERIOD_s = 1/10 # 10 UpS
@@ -20,23 +23,13 @@ class DebugDisplay(Node):
     def __init__(self):
         pygame.init()
         super().__init__('debug_display')
+        
+        pygame.display.set_caption('Debug')
         self.q = Queue()
         self.board = chess.Board()
+        self.board_rendered = self._render_board()
         self.screen = pygame.display.set_mode(SIZE) # testing
-        self.board_render = pygame.image.frombuffer(
-            chess.svg.board(
-                self.board
-            ),
-            SIZE,
-            "ARGB"
-        )
-        
-        self.x = 0
-        self.y = 30
         self.FONT = pygame.font.SysFont('Calibri', 15)
-        self.path_txt = self.FONT.render(self.DIRPATH, True, (255,255,255), (0,0,0))
-        self.txt_rect = self.path_txt.get_rect()
-        self.txt_rect.center = (256,256)
         
         self.sub = self.create_subscription(
             String,
@@ -48,18 +41,21 @@ class DebugDisplay(Node):
             self.PERIOD_s,
             self.update
         )
-        
+    
+    def _render_board(self):
+        render = io.BytesIO()
+        cairosvg.svg2png(
+            chess.svg.board(self.board, size=512),
+            write_to=render
+        )
+        render.seek(0)
+        self.board_rendered = pygame.image.load(render)
 
     def __del__(self):
         pass # maybe delete extra file or smthn idk
 
     def update(self):
         self.screen.fill((0,0,0))
-        self.x += 5
-        self.x %= 1080
-        self.screen.blit(self.path_txt, self.txt_rect)
-        box = pygame.Rect(self.x, self.y, 20, 20)
-        pygame.draw.rect(self.screen,(64,31,255),box)
         board_update = False
 
         # check for close
@@ -80,23 +76,20 @@ class DebugDisplay(Node):
                     for move in cmd_tokens[1:]:
                         self.board.push(move)
                 except:
-                    continue    
+                    pass
+                board_update = True
 
             elif cmd_tokens[0] == 'pop':
                 depth = int(cmd_tokens[1])
                 for _ in range(min(depth, len(self.board.move_stack))):
                     self.board.pop()
+                board_update = True
+                
         if board_update:
-            self.board_render = pygame.image.frombuffer(
-                chess.svg.board(
-                    self.board
-                ),
-                SIZE,
-                "ARGB"
-            )
+            self._render_board()
             # add stuff more move stack
 
-        self.screen.blit(self.board_render)
+        self.screen.blit(self.board_rendered, (0,0))
         # also render move stack
         pygame.display.update()
 

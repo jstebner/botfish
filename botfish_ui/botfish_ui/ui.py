@@ -14,8 +14,16 @@ class UIController(Node):
     PERIOD_s = 1/32 # 32 UpS
     
     def __init__(self):
-        self.q = Queue()
+        pygame.init()
         super().__init__('ui_controller')
+        # self.screen = pygame.display.set_mode(DIM, pygame.NOFRAME) # final
+        self.screen = pygame.display.set_mode(self.DIM,) # testing
+        pygame.display.set_caption('Botfish Chess Timer')
+
+        self.i = 0
+        self.x = 0
+        self.q = Queue()
+        
         self.pub = self.create_publisher(
             String,
             'ui_ping',
@@ -32,13 +40,6 @@ class UIController(Node):
             self.update
         )
 
-        pygame.init()
-        # self.screen = pygame.display.set_mode(DIM, pygame.NOFRAME) # final
-        self.screen = pygame.display.set_mode(self.DIM,) # testing
-        pygame.display.set_caption('Botfish Chess Timer')
-
-        self.i = 0
-        self.x = 0
 
     def update(self):
         # TODO: make this look good
@@ -48,9 +49,11 @@ class UIController(Node):
         box = pygame.Rect(self.x, 30, 20, 20)
         pygame.draw.rect(self.screen,(64,31,255),box)
         
-        # check prompt queue
-        # if not self.q.empty():
-        #     self.q.get()
+        while not self.q.empty():
+            cmd_tokens = self.q.get().data.split()
+            if cmd_tokens[0] == 'stop':
+                pygame.quit()
+                sys.exit()
         
         for event in pygame.event.get():
             if event.type in [QUIT, K_ESCAPE]:
