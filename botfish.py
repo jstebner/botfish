@@ -199,6 +199,4 @@ def main(args=None):
     botfish.main()
 
 if __name__ == '__main__':
-    print(os.path.dirname(__file__))
-    quit()
     main()
