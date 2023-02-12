@@ -7,15 +7,13 @@ from std_msgs.msg import String
 
 import chess
 import chess.svg
-
 import pygame
 from pygame.locals import *
-
 from multiprocessing import Queue
 
 class DebugDisplay(Node):
     PERIOD_s = 1/10 # 10 UpS
-    PATH = os.path.dirname(__file__)
+    DIRPATH = os.path.dirname(__file__)
 
     def __init__(self):
         pygame.init()
@@ -38,12 +36,12 @@ class DebugDisplay(Node):
         self.x = 0
         self.y = 30
         self.FONT = pygame.font.SysFont('Calibri', 15)
-        self.path_txt = self.FONT.render(self.PATH, True, (255,255,255), (0,0,0))
+        self.path_txt = self.FONT.render(self.DIRPATH, True, (255,255,255), (0,0,0))
         self.txt_rect = self.path_txt.get_rect()
         self.txt_rect.center = (256,256)
 
     def __del__(self):
-        print(chr(7))
+        pass # maybe delete extra file or smthn idk
 
     def update(self):
         self.screen.fill((0,0,0))
@@ -52,6 +50,7 @@ class DebugDisplay(Node):
         self.screen.blit(self.path_txt, self.txt_rect)
         box = pygame.Rect(self.x, self.y, 20, 20)
         pygame.draw.rect(self.screen,(64,31,255),box)
+        display = pygame.image.frombuffer()
 
         # check for close
         for event in pygame.event.get():
