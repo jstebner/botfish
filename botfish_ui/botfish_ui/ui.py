@@ -46,8 +46,8 @@ def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggl
     )
     btn = pygame.Rect(*pos, *dim)
     if btn.collidepoint(mpos): # hover
-        pos[0] -= int(dim[0]*EXPAND)
-        pos[1] -= int(dim[1]*EXPAND)
+        pos[0] -= int(dim[0]*(EXPAND-1))
+        pos[1] -= int(dim[1]*(EXPAND-1))
         dim[0] *= EXPAND
         dim[1] *= EXPAND
         btn = pygame.Rect(*pos, *dim) # FIXME: goes down or smthn
