@@ -13,7 +13,7 @@ pygame.init()
 # UTILS
 DIM = (1920//2, 1080//2) # rmv //2 for final
 PERIOD_s = 1/32 # 32 UpS
-EXPAND = 1.05 # make btn go big by 5%
+EXPAND = 1.10 # make btn go big by 10%
 SMOLFONT = pygame.font.SysFont('monospace', 30)
 BEEGFONT = pygame.font.SysFont('monospace', 60)
 CLRS = { # TODO: make these better and more
@@ -46,8 +46,8 @@ def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggl
     )
     btn = pygame.Rect(*pos, *dim)
     if btn.collidepoint(mpos): # hover
-        pos[0] -= int(dim[0]*(EXPAND-1))
-        pos[1] -= int(dim[1]*(EXPAND-1))
+        pos[0] -= int(dim[0]*(EXPAND-1)/2)
+        pos[1] -= int(dim[1]*(EXPAND-1)/2)
         dim[0] *= EXPAND
         dim[1] *= EXPAND
         btn = pygame.Rect(*pos, *dim) # FIXME: goes down or smthn
