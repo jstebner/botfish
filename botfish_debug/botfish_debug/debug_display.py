@@ -15,6 +15,7 @@ from multiprocessing import Queue
 
 SIZE = (512 + 256,1024)
 WIDGET_SIZE = 512
+FONT_SIZE = 15
 
 class DebugDisplay(Node):
     PERIOD_s = 1/10 # 10 UpS
@@ -27,7 +28,7 @@ class DebugDisplay(Node):
         pygame.display.set_caption('Debug')
         self.q = Queue()
         self.screen = pygame.display.set_mode(SIZE) # testing
-        self.FONT = pygame.font.SysFont('Calibri', 15)
+        self.FONT = pygame.font.SysFont('Calibri', FONT_SIZE)
         self.board = chess.Board()
         self.board_rendered = None
         self._render_board()
@@ -93,10 +94,15 @@ class DebugDisplay(Node):
                     self.board.pop()
                 board_update = True
                 
-                
         if board_update:
             self._render_board()
-            # add stuff more move stack
+        
+        last = max(0, self.board.move_stack - 10)
+        for pos, idx in enumerate(range(last, len(self.board.move_stack))):
+            self._draw_text(
+                f'{str(idx).rjust(3)}: ({'white' if idx%2==0 else 'black'}) {self.board.move_stack[idx]}',
+                pos*FONT_SIZE + 3
+            )
 
         self.screen.blit(self.board_rendered, (0,0))
         # also render move stack
