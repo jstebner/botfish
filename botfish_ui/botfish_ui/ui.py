@@ -145,7 +145,7 @@ class UIController(Node):
     def update(self,): # screen "skeleton"
         self.screen.fill(CLRS['black'])
         mouse_pos, clicking = self.event_listener()
-        self.screens[self.curr_screen](mouse_pos, clicking)
+        self.screens[self.curr_screen]['func'](mouse_pos, clicking)
         pygame.display.update()
     
     def start_screen(self, pos, clicking): # setup params n whatnot
