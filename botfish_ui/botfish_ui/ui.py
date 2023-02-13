@@ -36,9 +36,10 @@ def draw_rect(screen, color, x, y, dims):
     pygame.draw.rect(screen, color, rectangle)
 
 def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggle: bool, mpos: tuple, click: bool) -> bool:
+    smolfont_size = 10
     text_pos = (
-        int(dim[0]/2 - len(text)*SMOLFONT.size/2),
-        int(dim[1]/2 - SMOLFONT.size/2),
+        int(dim[0]/2 - len(text)*smolfont_size/2),
+        int(dim[1]/2 - smolfont_size/2),
     )
     btn = pygame.Rect(*pos, *dim)
     if btn.collidepoint(mpos): # hover
