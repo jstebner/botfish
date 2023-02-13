@@ -14,8 +14,8 @@ pygame.init()
 DIM = (1920//2, 1080//2) # rmv //2 for final
 PERIOD_s = 1/32 # 32 UpS
 EXPAND = 1.05 # make btn go big by 5%
-SMOLFONT = pygame.font.SysFont('monospace', 10)
-BEEGFONT = pygame.font.SysFont('monospace', 30)
+SMOLFONT = pygame.font.SysFont('monospace', 30)
+BEEGFONT = pygame.font.SysFont('monospace', 60)
 CLRS = { # TODO: make these better and more
     'white': (255,255,255),
     'black': (0,0,0),
@@ -35,21 +35,22 @@ def draw_rect(screen, color, x, y, dims):
     rectangle = pygame.Rect(x, y, *dims)
     pygame.draw.rect(screen, color, rectangle)
 
+# TODO: please for the love of god why cant this just work
 def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggle: bool, mpos: tuple, click: bool) -> bool:
-    smolfont_size = 10
+    smolfont_size = 30
     pos = list(pos) # removes reference 
     dim = list(dim)
-    text_pos = (
+    text_pos = ( # FIXME: offcenter
         int(dim[0]/2 - len(text)*smolfont_size/2),
         int(dim[1]/2 - smolfont_size/2),
     )
     btn = pygame.Rect(*pos, *dim)
     if btn.collidepoint(mpos): # hover
-        pos[0] -= int(dim[0]*(1-EXPAND))
-        pos[1] -= int(dim[1]*(1-EXPAND))
+        pos[0] -= int(dim[0]*EXPAND)
+        pos[1] -= int(dim[1]*EXPAND)
         dim[0] *= EXPAND
         dim[1] *= EXPAND
-        btn = pygame.Rect(*pos, *dim)
+        btn = pygame.Rect(*pos, *dim) # FIXME: goes down or smthn
         
         if click:
             toggle ^= True # dont ask
