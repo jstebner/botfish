@@ -9,6 +9,7 @@ from multiprocessing import Queue
 import pygame
 from pygame.locals import *
 
+pygame.init()
 # UTILS
 DIM = (1920//2, 1080//2) # rmv //2 for final
 PERIOD_s = 1/32 # 32 UpS
@@ -63,7 +64,7 @@ def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggl
 
 class UIController(Node):
     def __init__(self):
-        pygame.init()
+        # pygame.init()
         super().__init__('ui_controller')
         # self.screen = pygame.display.set_mode(DIM, pygame.NOFRAME) # final
         self.screen = pygame.display.set_mode(DIM,) # testing
