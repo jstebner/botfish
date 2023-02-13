@@ -49,6 +49,7 @@ def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggl
         pos[1] -= int(dim[1]*(1-EXPAND))
         dim[0] *= EXPAND
         dim[1] *= EXPAND
+        btn = pygame.Rect(*pos, *dim)
         
         if click:
             toggle ^= True # dont ask
@@ -60,7 +61,7 @@ def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggl
         t_color = CLRS['white']
     
     pygame.draw.rect(screen, b_color, btn)
-    draw_text(screen, text, t_color, *pos)
+    draw_text(screen, text, t_color, *text_pos)
     
     return toggle
 
