@@ -28,8 +28,10 @@ class DebugDisplay(Node):
         
         self.cmd_q = Queue()
         self.cam_q = Queue()
+        self.ping_q = Queue()
         self.screen = pygame.display.set_mode(SIZE) # testing
         self.FONT = pygame.font.SysFont('monospace', FONT_SIZE)
+        self.ping_count = 0 # used to identify pings received from ui
         
         self.board = chess.Board()
         self.board_rendered = None
@@ -46,6 +48,12 @@ class DebugDisplay(Node):
             String, # TODO: this should be image
             'camera_debug',
             self.cam_q.put,
+            10
+        )
+        self.ui_ping_sub = self.create_subscription(
+            String,
+            'ui_ping',
+            self.ping_q.put,
             10
         )
         self.timer = self.create_timer(
@@ -116,6 +124,16 @@ class DebugDisplay(Node):
                 x = 512, 
                 y = pos*FONT_SIZE + 10
             )
+
+        # draw ping count
+        while not self.ping_q.empty():
+            self.ping_q.get() # dump q
+            self.ping_count += 1
+        self._draw_text(
+            text = f'pings received: {self.ping_count}',
+            x = 512,
+            y = 995
+        )
 
         # draw camera vision with extras
         if self.camera_viewer is None:
