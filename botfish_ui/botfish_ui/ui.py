@@ -76,18 +76,11 @@ class UIController(Node):
                         self.ui_ping_pub.publish(ping)
                         self.is_player_turn = False
 
-        # TODO: the white half of the timer i think               
+        # TODO: the white half of the timer i think         
         pygame.draw.rect(
             self.screen, 
             (255,255,255,255),
             pygame.Rect(0, 0, DIM[0]//2, DIM[1])
-        )
-        
-        # button ig
-        pygame.draw.rect(
-            self.screen, 
-            (100,100,100), 
-            pygame.Rect(100, 30, 20, 20)
         )
         
         # TODO: mfin timers n whatnot

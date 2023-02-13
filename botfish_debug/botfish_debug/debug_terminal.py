@@ -39,6 +39,7 @@ class DebugTerminal(Node):
 
     def update(self):
         msg = String()
+        # TODO: somthin to do with a queue
         # while self.q:
         #     print(self.q.pop(0))
 
@@ -47,8 +48,8 @@ class DebugTerminal(Node):
             return
 
         elif cmd_tokens[0] == 'help':
-            # TODO: this
-            print('you got this bro')
+            # TODO: this, also list topics or smthn
+            print('you got this bro :)')
 
         elif cmd_tokens[0] in self.STPWRDS:
             msg.data = 'stop'
