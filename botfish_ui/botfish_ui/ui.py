@@ -58,7 +58,7 @@ def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggl
         t_color = CLRS['white']
     
     pygame.draw.rect(screen, b_color, btn)
-    draw_text(text, t_color, *pos)
+    draw_text(screen, text, t_color, *pos)
     
     return toggle
 
