@@ -100,7 +100,7 @@ class DebugDisplay(Node):
         last = max(0, self.board.move_stack - 10)
         for pos, idx in enumerate(range(last, len(self.board.move_stack))):
             self._draw_text(
-                f'{str(idx).rjust(3)}: ({'white' if idx%2==0 else 'black'}) {self.board.move_stack[idx]}',
+                f'{str(idx).rjust(3)}: ({"white" if idx%2==0 else "black"}) {self.board.move_stack[idx]}',
                 pos*FONT_SIZE + 3
             )
 
