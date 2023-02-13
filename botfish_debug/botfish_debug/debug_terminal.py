@@ -9,7 +9,7 @@ from time import sleep
 
 class DebugTerminal(Node):
     PERIOD_s = 1/32 # 32 UpS
-    STPWRDS = ('exit', 'quit', 'stop', 'end', 'GET ME OUT OF THIS CHAIR YOU IDIOT')
+    STPWRDS = ('exit', 'quit', 'quit()', 'stop', 'end', 'GET ME OUT OF THIS CHAIR YOU IDIOT')
     
     def __init__(self):
         super().__init__('debug_terminal')

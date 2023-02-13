@@ -81,7 +81,7 @@ class DebugDisplay(Node):
             elif cmd_tokens[0] == 'push':
                 try:
                     for move in cmd_tokens[1:]:
-                        self.board.push(move)
+                        self.board.push(chess.Move.from_uci(move))
                 except:
                     pass
                 board_update = True
