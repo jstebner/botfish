@@ -51,6 +51,12 @@ class DebugDisplay(Node):
         )
         render.seek(0)
         self.board_rendered = pygame.image.load(render)
+    
+    def _draw_text(self, text, y):
+        text_obj = self.FONT.render(text, True, (255,255,255))
+        text_rect = text_obj.get_rect()
+        text_rect.topleft = (512, y)
+        self.screen.blit(text_obj, text_rect)
 
     def __del__(self):
         pass # maybe delete extra file or smthn idk
@@ -79,12 +85,14 @@ class DebugDisplay(Node):
                 except:
                     pass
                 board_update = True
+                self._draw_text(' '.join(cmd_tokens), 0)
 
             elif cmd_tokens[0] == 'pop':
                 depth = int(cmd_tokens[1])
                 for _ in range(min(depth, len(self.board.move_stack))):
                     self.board.pop()
                 board_update = True
+                
                 
         if board_update:
             self._render_board()
