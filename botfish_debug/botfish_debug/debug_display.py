@@ -15,7 +15,7 @@ from multiprocessing import Queue
 
 SIZE = (512 + 256,1024)
 WIDGET_SIZE = 512
-FONT_SIZE = 25
+FONT_SIZE = 20
 HISTORY = 20
 
 class DebugDisplay(Node):
@@ -124,8 +124,8 @@ class DebugDisplay(Node):
             
             self._draw_text(
                 text = 'Camera Disconnected',
-                x = 0,
-                y = 512
+                x = 200,
+                y = 750
             )
         
         pygame.display.update()
