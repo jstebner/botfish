@@ -4,7 +4,7 @@ import io
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String
+from std_msgs.msg import String # TODO: also import msg for images
 
 import chess
 import chess.svg
@@ -15,7 +15,8 @@ from multiprocessing import Queue
 
 SIZE = (512 + 256,1024)
 WIDGET_SIZE = 512
-FONT_SIZE = 15
+FONT_SIZE = 25
+HISTORY = 20
 
 class DebugDisplay(Node):
     PERIOD_s = 1/10 # 10 UpS
@@ -23,20 +24,29 @@ class DebugDisplay(Node):
 
     def __init__(self):
         pygame.init()
+        pygame.display.set_caption('Debug')
         super().__init__('debug_display')
         
-        pygame.display.set_caption('Debug')
-        self.q = Queue()
+        self.cmd_q = Queue()
+        self.cam_q = Queue()
         self.screen = pygame.display.set_mode(SIZE) # testing
-        self.FONT = pygame.font.SysFont('Calibri', FONT_SIZE)
+        self.FONT = pygame.font.SysFont('monospace', FONT_SIZE)
+        
         self.board = chess.Board()
         self.board_rendered = None
         self._render_board()
+        self.camera_viewer = None
         
-        self.sub = self.create_subscription(
+        self.update_debug_board_sub = self.create_subscription(
             String,
             'update_debug_board',
-            self.q.put,
+            self.cmd_q.put,
+            10
+        )
+        self.camera_debug_sub = self.create_subscription(
+            String, # TODO: this should be image
+            'camera_debug',
+            self.cam_q.put,
             10
         )
         self.timer = self.create_timer(
@@ -53,14 +63,11 @@ class DebugDisplay(Node):
         render.seek(0)
         self.board_rendered = pygame.image.load(render)
     
-    def _draw_text(self, text, y):
+    def _draw_text(self, text, x, y):
         text_obj = self.FONT.render(text, True, (255,255,255))
         text_rect = text_obj.get_rect()
-        text_rect.topleft = (512, y)
+        text_rect.topleft = (x, y)
         self.screen.blit(text_obj, text_rect)
-
-    def __del__(self):
-        pass # maybe delete extra file or smthn idk
 
     def update(self):
         self.screen.fill((0,0,0))
@@ -73,8 +80,8 @@ class DebugDisplay(Node):
                 sys.exit()
 
         # process cmd queue
-        while not self.q.empty():
-            cmd_tokens = self.q.get().data.split()
+        while not self.cmd_q.empty():
+            cmd_tokens = self.cmd_q.get().data.split()
             if cmd_tokens[0] == 'stop':
                 pygame.quit()
                 sys.exit()
@@ -94,18 +101,34 @@ class DebugDisplay(Node):
                     self.board.pop()
                 board_update = True
                 
+        # process cam queue
+        while not self.cam_q.empty():
+            self.camera_viewer = self.cam_q.get() # dump queue
+        
+        # draw board
         if board_update:
             self._render_board()
+        self.screen.blit(self.board_rendered, (0,0))
         
-        last = max(0, len(self.board.move_stack) - 10)
+        # draw move stack
+        last = max(0, len(self.board.move_stack) - HISTORY)
         for pos, idx in enumerate(range(last, len(self.board.move_stack))):
             self._draw_text(
-                f'{str(idx).rjust(3)}: ({"white" if idx%2==0 else "black"}) {self.board.move_stack[idx]}',
-                pos*FONT_SIZE + 3
+                text = f'{str(idx).rjust(3)}: [{"WHITE" if idx%2==0 else "BLACK"}] {self.board.move_stack[idx]}', # we do a lil string formatting
+                x = 512, 
+                y = pos*FONT_SIZE + 5
             )
 
-        self.screen.blit(self.board_rendered, (0,0))
-        # also render move stack
+        # draw camera vision with extras
+        if self.camera_viewer is None:
+            pygame.draw.rect(self.screen, (100,100,100), pygame.Rect(0, 512, *WIDGET_SIZE))
+            
+            self._draw_text(
+                text = 'Camera Disconnected',
+                x = 0,
+                y = 512
+            )
+        
         pygame.display.update()
 
 def main(args=None):
