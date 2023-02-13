@@ -34,7 +34,8 @@ class UIController(Node):
         self.gamestate_sub = self.create_subscription(
             String,
             'gamestate',
-            self.gamestate_q.put
+            self.gamestate_q.put,
+            10
         )
         self.debug_cmd_sub = self.create_subscription(
             String,
