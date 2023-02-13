@@ -115,7 +115,7 @@ class DebugDisplay(Node):
             self._draw_text(
                 text = f'{str(idx).rjust(3)}: [{"WHITE" if idx%2==0 else "BLACK"}] {self.board.move_stack[idx]}', # we do a lil string formatting
                 x = 512, 
-                y = pos*FONT_SIZE + 5
+                y = pos*FONT_SIZE + 10
             )
 
         # draw camera vision with extras
@@ -124,8 +124,8 @@ class DebugDisplay(Node):
             
             self._draw_text(
                 text = 'Camera Disconnected',
-                x = 200,
-                y = 750
+                x = 170,
+                y = 745
             )
         
         pygame.display.update()
