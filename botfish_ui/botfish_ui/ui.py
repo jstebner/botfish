@@ -78,8 +78,8 @@ class UIController(Node):
                 'func': self.start_screen,
                 'btns': {
                     'test': {
-                        'toggle' = False,
-                        'params' = ("test",(50, 50),(200,100))
+                        'toggle' : False,
+                        'params' : ("test",(50, 50),(200,100))
                     },
                 }
             },
