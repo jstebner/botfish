@@ -110,6 +110,9 @@ class UIController(Node):
             if cmd_tokens[0] == 'stop':
                 pygame.quit()
                 sys.exit()
+            
+            elif cmd_tokens[0] == 'switch':
+                self.is_player_turn ^= True # dont ask
         
         
         

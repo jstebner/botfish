@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'debug_terminal = botfish_debug.debug_terminal:main',
-            'debug_display = botfish_debug.debug_display:main'
+            'terminal = botfish_debug.debug_terminal:main',
+            'display = botfish_debug.debug_display:main'
         ],
     },
 )
