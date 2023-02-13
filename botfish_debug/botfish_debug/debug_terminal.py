@@ -75,8 +75,9 @@ class DebugTerminal(Node):
             elif not cmd_tokens[1].isdigit():
                 print('gimme a num idot')
                 return
-            msg.data = cmd_tokens[1]
-            self.update_debug_board_pub.publish()
+            
+            msg.data = ' '.join(cmd_tokens)
+            self.update_debug_board_pub.publish(msg)
 
         else:
             msg.data = ' '.join(cmd_tokens)
