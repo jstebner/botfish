@@ -150,7 +150,7 @@ class UIController(Node):
     
     def start_screen(self, pos, clicking): # setup params n whatnot
         # start
-        for id, data in self.screens['start']['btns']:
+        for id, data in self.screens['start']['btns'].items():
             draw_button(
                 self.screen,
                 *data['params'],
