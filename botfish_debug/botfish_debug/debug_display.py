@@ -57,7 +57,7 @@ class DebugDisplay(Node):
     def _render_board(self):
         render = io.BytesIO()
         cairosvg.svg2png(
-            chess.svg.board(self.board, size=512),
+            chess.svg.board(self.board, size=WIDGET_SIZE),
             write_to=render
         )
         render.seek(0)
@@ -121,7 +121,7 @@ class DebugDisplay(Node):
 
         # draw camera vision with extras
         if self.camera_viewer is None:
-            pygame.draw.rect(self.screen, (100,100,100), pygame.Rect(0, 512, *WIDGET_SIZE))
+            pygame.draw.rect(self.screen, (100,100,100), pygame.Rect(0, 512, WIDGET_SIZE, WIDGET_SIZE))
             
             self._draw_text(
                 text = 'Camera Disconnected',
