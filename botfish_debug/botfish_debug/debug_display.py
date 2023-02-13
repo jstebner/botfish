@@ -93,7 +93,6 @@ class DebugDisplay(Node):
                 except:
                     pass
                 board_update = True
-                self._draw_text(' '.join(cmd_tokens), 0)
 
             elif cmd_tokens[0] == 'pop':
                 depth = int(cmd_tokens[1])
