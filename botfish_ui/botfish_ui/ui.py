@@ -13,6 +13,7 @@ pygame.init()
 # UTILS
 DIM = (1920//2, 1080//2) # rmv //2 for final
 PERIOD_s = 1/32 # 32 UpS
+EXPAND = 1.05 # make btn go big by 5%
 SMOLFONT = pygame.font.SysFont('monospace', 10)
 BEEGFONT = pygame.font.SysFont('monospace', 30)
 CLRS = { # TODO: make these better and more
@@ -35,8 +36,6 @@ def draw_rect(screen, color, x, y, dims):
     pygame.draw.rect(screen, color, rectangle)
 
 def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggle: bool, mpos: tuple, click: bool) -> bool:
-    EXPAND = 1.05 # make btn go big by 5%
-    
     text_pos = (
         int(dim[0]/2 - len(text)*SMOLFONT/2),
         int(dim[1]/2 - SMOLFONT/2),
@@ -148,13 +147,14 @@ class UIController(Node):
         self.screens[self.curr_screen]['func'](mouse_pos, clicking)
         pygame.display.update()
     
-    def start_screen(self, pos, clicking): # setup params n whatnot
+    def start_screen(self, mpos, clicking): # setup params n whatnot
         # start
         for id, data in self.screens['start']['btns'].items():
-            draw_button(
+            data['toggle'] = draw_button(
                 self.screen,
                 *data['params'],
-                pos, 
+                data['toggle'],
+                mpos, 
                 clicking
             )
         
