@@ -35,8 +35,10 @@ def draw_rect(screen, color, x, y, dims):
     rectangle = pygame.Rect(x, y, *dims)
     pygame.draw.rect(screen, color, rectangle)
 
-def draw_button(screen: pygame.display, text: str, pos: list, dim: list, toggle: bool, mpos: tuple, click: bool) -> bool:
+def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggle: bool, mpos: tuple, click: bool) -> bool:
     smolfont_size = 10
+    pos = list(pos) # removes reference 
+    dim = list(dim)
     text_pos = (
         int(dim[0]/2 - len(text)*smolfont_size/2),
         int(dim[1]/2 - smolfont_size/2),
@@ -80,7 +82,7 @@ class UIController(Node):
                 'btns': {
                     'test': {
                         'toggle' : False,
-                        'params' : ("test",[50, 50],[200,100])
+                        'params' : ("test",(50, 50),(200,100))
                     },
                 }
             },
