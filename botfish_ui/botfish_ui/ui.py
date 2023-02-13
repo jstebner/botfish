@@ -41,8 +41,8 @@ def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggl
     pos = list(pos) # removes reference 
     dim = list(dim)
     text_pos = ( # FIXME: offcenter
-        int(dim[0]/2 - len(text)*smolfont_size/2),
-        int(dim[1]/2 - smolfont_size/2),
+        int(pos[0] + dim[0]/2 - len(text)*smolfont_size/2),
+        int(pos[1] + dim[1]/2 - smolfont_size/2),
     )
     btn = pygame.Rect(*pos, *dim)
     if btn.collidepoint(mpos): # hover
@@ -50,7 +50,7 @@ def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggl
         pos[1] -= int(dim[1]*(EXPAND-1)/2)
         dim[0] *= EXPAND
         dim[1] *= EXPAND
-        btn = pygame.Rect(*pos, *dim) # FIXME: goes down or smthn
+        btn = pygame.Rect(*pos, *dim)
         
         if click:
             toggle ^= True # dont ask
