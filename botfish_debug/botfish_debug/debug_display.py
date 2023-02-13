@@ -17,10 +17,9 @@ SIZE = (512 + 256,1024)
 WIDGET_SIZE = 512
 FONT_SIZE = 20
 HISTORY = 20
+PERIOD_s = 1/10 # 10 UpS
 
 class DebugDisplay(Node):
-    PERIOD_s = 1/10 # 10 UpS
-    DIRPATH = os.path.dirname(__file__)
 
     def __init__(self):
         pygame.init()
@@ -50,7 +49,7 @@ class DebugDisplay(Node):
             10
         )
         self.timer = self.create_timer(
-            self.PERIOD_s,
+            PERIOD_s,
             self.update
         )
     
@@ -121,12 +120,13 @@ class DebugDisplay(Node):
         # draw camera vision with extras
         if self.camera_viewer is None:
             pygame.draw.rect(self.screen, (100,100,100), pygame.Rect(0, 512, WIDGET_SIZE, WIDGET_SIZE))
-            
             self._draw_text(
                 text = 'Camera Disconnected',
-                x = 170,
+                x = 160,
                 y = 745
             )
+        else:
+            pass # idk bro figure it out
         
         pygame.display.update()
 
