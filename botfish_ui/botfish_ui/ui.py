@@ -35,12 +35,12 @@ def draw_rect(screen, color, x, y, dims):
     rectangle = pygame.Rect(x, y, *dims)
     pygame.draw.rect(screen, color, rectangle)
 
-# TODO: please for the love of god why cant this just work
+# nightmare
 def draw_button(screen: pygame.display, text: str, pos: tuple, dim: tuple, toggle: bool, mpos: tuple, click: bool) -> bool:
     smolfont_size = 30
     pos = list(pos) # removes reference 
     dim = list(dim)
-    text_pos = ( # FIXME: offcenter
+    text_pos = ( # TODO: maybe make this a lil cuter or smthn
         int(pos[0] + dim[0]/2 - len(text)*smolfont_size/2),
         int(pos[1] + dim[1]/2 - smolfont_size/2),
     )
@@ -78,6 +78,7 @@ class UIController(Node):
         self.gamestate_q = Queue()
         self.is_player_turn = True # TODO: make this depend on the game or whatev
         self.curr_screen = 'start'
+        # lord forgive me for what im about to do
         self.screens = {
             'start': {
                 'func': self.start_screen,
