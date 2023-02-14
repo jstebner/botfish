@@ -1,17 +1,20 @@
-import sys
-import os
 import io
+import os
+import sys
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String # TODO: also import msg for images
+from std_msgs.msg import String  # TODO: also import msg for images
 
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+
+from multiprocessing import Queue
+
+import cairosvg
 import chess
 import chess.svg
 import pygame
-import cairosvg
 from pygame.locals import *
-from multiprocessing import Queue
 
 SIZE = (512 + 256,1024)
 WIDGET_SIZE = 512
@@ -22,7 +25,6 @@ PERIOD_s = 1/10 # 10 UpS
 class DebugDisplay(Node):
 
     def __init__(self):
-        pygame.init()
         pygame.display.set_caption('Debug')
         super().__init__('debug_display')
         
@@ -149,6 +151,7 @@ class DebugDisplay(Node):
         pygame.display.update()
 
 def main(args=None):
+    pygame.init()
     rclpy.init(args=args)
 
     node = DebugDisplay()

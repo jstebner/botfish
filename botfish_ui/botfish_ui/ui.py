@@ -1,13 +1,15 @@
+import os
 import sys
+from multiprocessing import Queue
 
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+
+import pygame
 import rclpy
+from pygame.locals import *
 from rclpy.node import Node
 from std_msgs.msg import String
 
-from multiprocessing import Queue
-
-import pygame
-from pygame.locals import *
 
 pygame.init()
 # UTILS
@@ -83,9 +85,14 @@ class UIController(Node):
             'start': {
                 'func': self.start_screen,
                 'btns': {
+                    # TEST button
                     'test': {
                         'toggle' : False,
-                        'params' : ("test",(50, 50),(200,100))
+                        'params' : (
+                            "test", # display text
+                            (50, 50), # position
+                            (200,100) # dimension
+                        )
                     },
                 }
             },

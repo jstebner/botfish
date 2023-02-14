@@ -5,7 +5,6 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 
-from time import sleep
 
 class DebugTerminal(Node):
     PERIOD_s = 1/32 # 32 UpS
@@ -82,7 +81,6 @@ class DebugTerminal(Node):
 def main(args=None):
     # please oh please for the love of God dont judge me for this
     Popen('ros2 run botfish_debug display', shell=True)
-    sleep(1) # aesthetic reasons dw abt it
     
     rclpy.init(args=args)
 
