@@ -9,16 +9,17 @@ from multiprocessing import Queue
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide" # why couldnt this just be an arg bro
 import pygame
 from pygame.locals import *
+import time
 
 SD = 2 # scaledown # TODO: change to 1 for final
 
 # UTILS
 pygame.init() # initing here cuz i need for global font
 DIM = (1920//SD, 1080//SD)
-EXPAND = 1.16 # make btn go big by 10%
+EXPAND = 1.16 # make btn go big by 16%
 EXPAND = 1 + (EXPAND-1)/SD
-SMOLFONT = pygame.font.SysFont('monospace', 30//SD, bold=True)
-BEEGFONT = pygame.font.SysFont('monospace', 60//SD, bold=True)
+SMOLFONT = pygame.font.SysFont('monospace', 36//SD, bold=True)
+BEEGFONT = pygame.font.SysFont('monospace', 100//SD, bold=True)
 CLRS = {
     'white':    (249,246,240),  # F9 F6 F0
     'black':    (23,21,21),     # 17 15 15
@@ -51,38 +52,101 @@ class UIController(Node):
         self.is_player_turn = True # TODO: make this depend on the game or whatev
         self.foreground = None
         self.curr_screen = 'start'
+        self.times = (600, 600) # 0: white, 1: black
         # lord forgive me for what im about to do
         self.windows = {
             'start': {
                 'func': self.start_screen,
+                'text': {
+                    'title': [
+                        'Botfish',
+                        'white',
+                        (100,95),
+                        BEEGFONT,
+                    ],
+                    'config': [
+                        'config:',
+                        'white',
+                        (1100, 150),
+                        SMOLFONT
+                    ]
+                },
                 'btns': {
+                    'bot_is_white': {
+                        'params' : [
+                            'Bot Plays White',  # display text
+                            (1100, 250),         # position
+                            (360, 100),         # dimension
+                            'white'             # toggled color
+                        ],
+                        'group': 'color'           # group assignment
+                    },
+                    'bot_is_black': {
+                        'params': [
+                            'Bot Plays Black',
+                            (1460, 250),
+                            (360, 100),
+                            'white'
+                        ],
+                        'group': 'color'
+                    },
+                    
+                    'left': {
+                        'params': [
+                            'Bot is Left',
+                            (1100, 400),
+                            (360, 100),
+                            'white'
+                        ],
+                        'group': 'bot_side'
+                    },
+                    'right': {
+                        'params': [
+                            'Bot is Right',
+                            (1460, 400),
+                            (360, 100),
+                            'white'
+                        ],
+                        'group': 'bot_side'
+                    },
+                    
                     'easy_diff': {
                         'params' : [
-                            'ez',       # display text
-                            (150, 50),  # position
-                            (200,100),  # dimension
-                            'green',    # toggled color
+                            'ez',
+                            (1100, 550),
+                            (240,100),
+                            'green'
                         ],
-                        'group': 'difficulty', # group assignment
+                        'group': 'difficulty'
                     },
                     'medi_diff': {
                         'params' : [
                             'mid',
-                            (350, 50),
-                            (200,100),
-                            'yellow',
+                            (1340, 550),
+                            (240,100),
+                            'yellow'
                         ],
-                        'group': 'difficulty',
+                        'group': 'difficulty'
                     },
                     'hard_diff': {
                         'params' : [
                             'uhoh',
-                            (550, 50),
-                            (200,100),
+                            (1580, 550),
+                            (240, 100),
                             'red'
                         ],
-                        'group': 'difficulty',
+                        'group': 'difficulty'
                     },
+
+                    'start': {
+                        'params': [
+                            '< Begin >',
+                            (1100, 750), #(200->X, 800)
+                            (720,100),
+                            'white'
+                        ],
+                        'group': None
+                    }
                 }
             },
             'play': {
@@ -105,6 +169,7 @@ class UIController(Node):
             for btn_id in self.windows[window_id]['btns']:
                 # assign button group
                 self.windows[window_id]['btns'][btn_id]['toggle'] = False # assign default state
+                self.windows[window_id]['btns'][btn_id]['curr_scale'] = 1.0 # use for scale interpolation
                 group_id = self.windows[window_id]['btns'][btn_id]['group']
                 if group_id is None:
                     continue
@@ -141,14 +206,14 @@ class UIController(Node):
             self.update # idk if this is scuffed but whatev
         )
 
-    def _draw_text(self, text, color, x, y, font):
+    def _draw_text(self, text, color, pos, font):
         text_obj = font.render(text, True, color)
         text_rect = text_obj.get_rect()
-        text_rect.topleft = scaler(x, y)
+        text_rect.topleft = scaler(*pos)
         self.screen.blit(text_obj, text_rect)
         
-    def _draw_rect(self, color, x, y, dims):
-        rectangle = pygame.Rect(scaler(x), scaler(y), *scaler(*dims))
+    def _draw_rect(self, color, pos, dims):
+        rectangle = pygame.Rect(*scaler(*pos), *scaler(*dims))
         pygame.draw.rect(self.screen, color, rectangle)
 
     # nightmare
@@ -173,12 +238,16 @@ class UIController(Node):
 
         btn = pygame.Rect(*pos, *dim)
         if btn.collidepoint(mpos): # hover
-            pos[0] -= int(dim[0]*(EXPAND-1)/2)
-            pos[1] -= int(dim[1]*(EXPAND-1)/2)
-            dim[0] *= EXPAND
-            dim[1] *= EXPAND
+            if self.windows[screen_id]['btns'][btn_id]['curr_scale'] < EXPAND:
+                self.windows[screen_id]['btns'][btn_id]['curr_scale'] += 0.02
+            interp_exp = self.windows[screen_id]['btns'][btn_id]['curr_scale']
+            
+            pos[0] -= int(dim[0]*(interp_exp-1)/2)
+            pos[1] -= int(dim[1]*(interp_exp-1)/2)
+            dim[0] *= interp_exp
+            dim[1] *= interp_exp
             btn = pygame.Rect(*pos, *dim)
-            self.foreground = ((b_color, btn), (text, t_color, *unscaler(*text_pos)))
+            self.foreground = ((b_color, btn), (text, t_color, unscaler(*text_pos)))
             
             if click:
                 if group:
@@ -191,14 +260,24 @@ class UIController(Node):
                 else:
                     toggle ^= True # dont ask
         else:
+            if self.windows[screen_id]['btns'][btn_id]['curr_scale'] > 1:
+                self.windows[screen_id]['btns'][btn_id]['curr_scale'] -= 0.02
+            interp_exp = self.windows[screen_id]['btns'][btn_id]['curr_scale']
+            pos[0] -= int(dim[0]*(interp_exp-1)/2)
+            pos[1] -= int(dim[1]*(interp_exp-1)/2)
+            dim[0] *= interp_exp
+            dim[1] *= interp_exp
+            btn = pygame.Rect(*pos, *dim)
             pygame.draw.rect(self.screen, b_color, btn)
-            self._draw_text(text, t_color, *unscaler(*text_pos), SMOLFONT)
+            self._draw_text(text, t_color, unscaler(*text_pos), SMOLFONT)
         
         self.windows[screen_id]['btns'][btn_id]['toggle'] = toggle
 
-    def _draw_buttons(self, screen_id: str, mpos: tuple, clicking: bool):
+    def _draw_content(self, screen_id: str, mpos: tuple, clicking: bool):
+        for txt_params in self.windows[screen_id]['text'].values():
+            self._draw_text(*txt_params)
+        
         self.foreground = None
-
         for btn_id in self.windows[screen_id]['btns']:
             self._draw_button(screen_id, btn_id, mpos, clicking)
             
@@ -233,7 +312,7 @@ class UIController(Node):
         pygame.display.update()
 
     def start_screen(self, mpos, clicking): # setup params n whatnot
-        self._draw_buttons('start', mpos, clicking)
+        self._draw_content('start', mpos, clicking)
     
     
     def play_screen(self, mpos, clicking): # timer
@@ -241,7 +320,7 @@ class UIController(Node):
         self._draw_rect(
             screen=self.screen,
             color=CLRS['white'],
-            x=0, y=0,
+            pos=(0,0),
             dims=(DIM[0]//2, DIM[1])
         )
         
