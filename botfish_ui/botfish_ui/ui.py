@@ -10,32 +10,34 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide" # why couldnt this just be an 
 import pygame
 from pygame.locals import *
 
+SD = 2 # scaledown # TODO: change to 1 for final
+
 # UTILS
 pygame.init() # initing here cuz i need for global font
-SD = 2 # scaledown # TODO: change to 1 for final
 DIM = (1920//SD, 1080//SD)
 EXPAND = 1.16 # make btn go big by 10%
 EXPAND = 1 + (EXPAND-1)/SD
-SMOLFONT = pygame.font.SysFont('monospace', 30//SD)
-BEEGFONT = pygame.font.SysFont('monospace', 60//SD)
-CLRS = { # TODO: make these better and more
-    'white': (255,255,255),
-    'black': (0,0,0),
-    'gray50': (50,50,50),
-    'gray150': (150,150,150),
-    'gray200': (200,200,200)
+SMOLFONT = pygame.font.SysFont('monospace', 30//SD, bold=True)
+BEEGFONT = pygame.font.SysFont('monospace', 60//SD, bold=True)
+CLRS = {
+    'white':    (249,246,240),  # F9 F6 F0
+    'black':    (23,21,21),     # 17 15 15
+    'gray':     (160,158,164),  # A0 9E A4
+    'red':      (219,31,72),    # db 1f 48
+    'green':    (184,238,48),   # b8 ee 30
+    'yellow':   (249,208,48),   # f9 d0 30
 }
 def scaler(*args):
     return [arg//SD for arg in args]
 def unscaler(*args): # you have no right to justdge me for this
     return [arg*SD for arg in args]
 
-# make this better or smthn idk
+# TODO: make this better or smthn idk
 def close():
     pygame.quit()
     sys.exit()
 
-PERIOD_s = 1/32 # 32 UpS
+PERIOD_s = 1/40 # 40 UpS
 class UIController(Node):
     def __init__(self):
         # pygame.init()
@@ -50,41 +52,36 @@ class UIController(Node):
         self.foreground = None
         self.curr_screen = 'start'
         # lord forgive me for what im about to do
-        self.screens = {
+        self.windows = {
             'start': {
                 'func': self.start_screen,
                 'btns': {
-                    # TEST button
-                    'test1': {
-                        'toggle' : False, # default value
-                        'params' : (
-                            "test", # display text
-                            (50, 50), # position
-                            (200,100) # dimension
-                        ),
-                        # TODO: make the buttons turn other ones on and off and whatever
-                        'enables_when_off' : [], # turn this boy on when he go off
-                        'disables_when_on' : ['test2', 'test3'], # turn these guys off when he go on
+                    'easy_diff': {
+                        'params' : [
+                            'ez',       # display text
+                            (150, 50),  # position
+                            (200,100),  # dimension
+                            'green',    # toggled color
+                        ],
+                        'group': 'difficulty', # group assignment
                     },
-                    'test2': {
-                        'toggle' : False,
-                        'params' : (
-                            "teeest",
-                            (50, 150),
-                            (200,100)
-                        ),
-                        'enables_when_off' : [],
-                        'disables_when_on' : ['test'],
+                    'medi_diff': {
+                        'params' : [
+                            'mid',
+                            (350, 50),
+                            (200,100),
+                            'yellow',
+                        ],
+                        'group': 'difficulty',
                     },
-                    'test3': {
-                        'toggle' : False,
-                        'params' : (
-                            "teeeeest", # display text
-                            (50, 250), # position
-                            (200,100) # dimension
-                        ),
-                        'enables_when_off' : [],
-                        'disables_when_on' : [],
+                    'hard_diff': {
+                        'params' : [
+                            'uhoh',
+                            (550, 50),
+                            (200,100),
+                            'red'
+                        ],
+                        'group': 'difficulty',
                     },
                 }
             },
@@ -101,6 +98,21 @@ class UIController(Node):
                 }
             }
         }
+        # take "input" data from above make it good ig idk
+        for window_id in self.windows:
+            # add button groups
+            self.windows[window_id]['grps'] = dict()
+            for btn_id in self.windows[window_id]['btns']:
+                # assign button group
+                self.windows[window_id]['btns'][btn_id]['toggle'] = False # assign default state
+                group_id = self.windows[window_id]['btns'][btn_id]['group']
+                if group_id is None:
+                    continue
+                if group_id not in self.windows[window_id]['grps']:
+                    self.windows[window_id]['grps'][group_id] = [btn_id]
+                    self.windows[window_id]['btns'][btn_id]['toggle'] = True
+                else:
+                    self.windows[window_id]['grps'][group_id].append(btn_id)
         
         self.ui_ping_pub = self.create_publisher(
             String,
@@ -140,7 +152,11 @@ class UIController(Node):
         pygame.draw.rect(self.screen, color, rectangle)
 
     # nightmare
-    def _draw_button(self, text: str, pos: tuple, dim: tuple, toggle: bool, mpos: tuple, click: bool) -> bool:
+    def _draw_button(self, screen_id: str, btn_id: str, mpos: tuple, click: bool) -> bool:
+        text, pos, dim, color = self.windows[screen_id]['btns'][btn_id]['params']
+        toggle = self.windows[screen_id]['btns'][btn_id]['toggle']
+        group = self.windows[screen_id]['btns'][btn_id]['group']
+
         pos = scaler(*pos) # removes reference 
         dim = scaler(*dim)
         text_pos = (
@@ -149,10 +165,10 @@ class UIController(Node):
         )
 
         if toggle:
-            b_color = CLRS['white']
-            t_color = CLRS['gray50']
+            b_color = CLRS[color]
+            t_color = CLRS['black']
         else:
-            b_color = CLRS['gray50']
+            b_color = CLRS['gray']
             t_color = CLRS['white']
 
         btn = pygame.Rect(*pos, *dim)
@@ -165,31 +181,31 @@ class UIController(Node):
             self.foreground = ((b_color, btn), (text, t_color, *unscaler(*text_pos)))
             
             if click:
-                toggle ^= True # dont ask
-
-            return toggle
+                if group:
+                    if not toggle:
+                        toggle = True
+                        for anti_btn_id in self.windows[screen_id]['grps'][group]:
+                            if btn_id == anti_btn_id:
+                                continue
+                            self.windows[screen_id]['btns'][anti_btn_id]['toggle'] = False
+                else:
+                    toggle ^= True # dont ask
+        else:
+            pygame.draw.rect(self.screen, b_color, btn)
+            self._draw_text(text, t_color, *unscaler(*text_pos), SMOLFONT)
         
-        pygame.draw.rect(self.screen, b_color, btn)
-        self._draw_text(text, t_color, *unscaler(*text_pos), SMOLFONT)
-        
-        return toggle
+        self.windows[screen_id]['btns'][btn_id]['toggle'] = toggle
 
-    def _draw_buttons(self, screen_id, mpos, clicking):
+    def _draw_buttons(self, screen_id: str, mpos: tuple, clicking: bool):
         self.foreground = None
-        for id, data in self.screens[screen_id]['btns'].items():
-            data['toggle'] = self._draw_button(
-                *data['params'],
-                data['toggle'],
-                mpos, 
-                clicking
-            )
 
+        for btn_id in self.windows[screen_id]['btns']:
+            self._draw_button(screen_id, btn_id, mpos, clicking)
             
         if self.foreground:
             pygame.draw.rect(self.screen, *(self.foreground[0]))
             self._draw_text(*(self.foreground[1]), SMOLFONT)
         
-
 
     def event_listener(self):
         mx, my = pygame.mouse.get_pos()
@@ -213,7 +229,7 @@ class UIController(Node):
     def update(self,): # screen "skeleton"
         self.screen.fill(CLRS['black'])
         mouse_pos, clicking = self.event_listener()
-        self.screens[self.curr_screen]['func'](mouse_pos, clicking)
+        self.windows[self.curr_screen]['func'](mouse_pos, clicking)
         pygame.display.update()
 
     def start_screen(self, mpos, clicking): # setup params n whatnot

@@ -37,6 +37,7 @@ class DebugTerminal(Node):
             return
         
         # cmds that need parsing
+        # TODO: add calibrate command
         elif cmd_tokens[0] == 'help':
             # TODO: this, also list topics or smthn
             # stop, stopall, push (uci), pop (int), help, switch
