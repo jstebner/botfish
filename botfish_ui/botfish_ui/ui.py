@@ -16,9 +16,9 @@ SD = 2 # scaledown # TODO: change to 1 for final
 # UTILS
 pygame.init() # initing here cuz i need for global font
 DIM = (1920//SD, 1080//SD)
-EXPAND = 1.16 # make btn go big by 16%
+EXPAND = 1.14 # make btn go big by 16%
 EXPAND = 1 + (EXPAND-1)/SD
-SMOLFONT = pygame.font.SysFont('monospace', 36//SD, bold=True)
+SMOLFONT = pygame.font.SysFont('monospace', 32//SD, bold=True)
 BEEGFONT = pygame.font.SysFont('monospace', 100//SD, bold=True)
 CLRS = {
     'white':    (249,246,240),  # F9 F6 F0
@@ -72,16 +72,18 @@ class UIController(Node):
                     ]
                 },
                 'btns': {
-                    'bot_is_white': {
+                    'white': {
                         'params' : [
                             'Bot Plays White',  # display text
-                            (1100, 250),         # position
+                            (1100, 250),        # position
                             (360, 100),         # dimension
                             'white'             # toggled color
                         ],
-                        'group': 'color'           # group assignment
+                        'group': 'color'        # group assignment
+                        # 'toggle': False
+                        # 'curr_scale': 1.0
                     },
-                    'bot_is_black': {
+                    'black': {
                         'params': [
                             'Bot Plays Black',
                             (1460, 250),
@@ -138,7 +140,7 @@ class UIController(Node):
                         'group': 'difficulty'
                     },
 
-                    'start': {
+                    'start_btn': {
                         'params': [
                             '< Begin >',
                             (1100, 750), #(200->X, 800)
@@ -151,15 +153,28 @@ class UIController(Node):
             },
             'play': {
                 'func': self.play_screen,
-                'btns': {
+                'text': {
+            
+                },
+                'rect': {
+                    'bigboy': {
+                        'params': [
+                            'white',
+                            (1027, 0), # TODO: make this change or smthn
+                            (960, 1080),
+                        ],
 
-                }
+                    }
+                },
             },
             'end': {
                 'func': self.end_screen,
+                'text': {
+            
+                },
                 'btns': {
 
-                }
+                },
             }
         }
         # take "input" data from above make it good ig idk
@@ -167,9 +182,9 @@ class UIController(Node):
             # add button groups
             self.windows[window_id]['grps'] = dict()
             for btn_id in self.windows[window_id]['btns']:
-                # assign button group
                 self.windows[window_id]['btns'][btn_id]['toggle'] = False # assign default state
-                self.windows[window_id]['btns'][btn_id]['curr_scale'] = 1.0 # use for scale interpolation
+                self.windows[window_id]['btns'][btn_id]['curr_scale'] = 1.0 # use for scale interp
+                # assign button group
                 group_id = self.windows[window_id]['btns'][btn_id]['group']
                 if group_id is None:
                     continue
@@ -178,15 +193,17 @@ class UIController(Node):
                     self.windows[window_id]['btns'][btn_id]['toggle'] = True
                 else:
                     self.windows[window_id]['grps'][group_id].append(btn_id)
+            for rect_id in self.windows[window_id]['rect']:
+                self.windows[window_id]['rect'][rect_id]['curr_scale'] = 1.0 # use for scale interp
         
         self.ui_ping_pub = self.create_publisher(
             String,
             'ui_ping',
             10
         )
-        self.ui_config_pub = self.create_publisher(
+        self.ui_msg_pub = self.create_publisher(
             String,
-            'ui_config',
+            'ui_msg',
             10
         )
         self.gamestate_sub = self.create_subscription(
@@ -237,6 +254,7 @@ class UIController(Node):
             t_color = CLRS['white']
 
         btn = pygame.Rect(*pos, *dim)
+        # TODO: make this not shitty
         if btn.collidepoint(mpos): # hover
             if self.windows[screen_id]['btns'][btn_id]['curr_scale'] < EXPAND:
                 self.windows[screen_id]['btns'][btn_id]['curr_scale'] += 0.02
@@ -249,6 +267,7 @@ class UIController(Node):
             btn = pygame.Rect(*pos, *dim)
             self.foreground = ((b_color, btn), (text, t_color, unscaler(*text_pos)))
             
+            # bro what is this
             if click:
                 if group:
                     if not toggle:
@@ -295,13 +314,13 @@ class UIController(Node):
             if event.type == MOUSEBUTTONDOWN:
                 clicking = True
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+                if event.key == K_ESCAPE: # TODO: maybe make this esc menu
                     close()
                 if event.key == K_SPACE:
-                    if self.is_player_turn:
-                        ping = String()
-                        ping.data = f'ping'
-                        self.ui_ping_pub.publish(ping)
+                    if self.is_player_turn and self.curr_screen == 'play':
+                        msg = String()
+                        msg.data = 'PING'
+                        self.ui_msg_pub.publish(msg)
                         self.is_player_turn = False
         return (mx, my), clicking
     
@@ -313,16 +332,30 @@ class UIController(Node):
 
     def start_screen(self, mpos, clicking): # setup params n whatnot
         self._draw_content('start', mpos, clicking)
-    
+        if self.windows['start']['btns']['start_btn']['toggle']:
+            args = {}
+            for btn_id, data in self.windows['start']['btns'].items():
+                if btn_id == 'start_btn':
+                    continue
+                if data['group'] is None:
+                    args[btn_id] = data['toggle']
+                elif data['toggle']:
+                    args[data['group']] = btn_id
+            
+            if args['color'] == 'white':
+                wlbr = args['bot_side'] == 'left'
+            else:
+                wlbr = args['bot_side'] == 'right'
+            del args['bot_side']
+            
+            msg = String()
+            msg.data = ' '.join(f'{key}={val}' for key, val in args.items())
+            self.ui_msg_pub.publish(msg)
+            self.curr_screen = 'play'
     
     def play_screen(self, mpos, clicking): # timer
         # TODO: the white half of the timer i think         
-        self._draw_rect(
-            screen=self.screen,
-            color=CLRS['white'],
-            pos=(0,0),
-            dims=(DIM[0]//2, DIM[1])
-        )
+        self._draw_content('play', mpos, clicking)
         
         # TODO: mfin timers n whatnot
         

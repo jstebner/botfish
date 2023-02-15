@@ -27,7 +27,7 @@ class DebugDisplay(Node):
         
         self.cmd_q = Queue()
         self.cam_q = Queue()
-        self.ping_q = Queue()
+        self.ui_q = Queue()
         self.screen = pygame.display.set_mode(SIZE) # testing
         self.FONT = pygame.font.SysFont('monospace', FONT_SIZE)
         self.ping_count = 0 # used to identify pings received from ui
@@ -49,10 +49,10 @@ class DebugDisplay(Node):
             self.cam_q.put,
             10
         )
-        self.ui_ping_sub = self.create_subscription(
+        self.ui_msg_sub = self.create_subscription(
             String,
-            'ui_ping',
-            self.ping_q.put,
+            'ui_msg',
+            self.ui_q.put,
             10
         )
         self.timer = self.create_timer(
@@ -125,8 +125,8 @@ class DebugDisplay(Node):
             )
 
         # draw ping count
-        while not self.ping_q.empty():
-            self.ping_q.get() # dump q
+        while not self.ui_q.empty():
+            self.ui_q.get() # dump q
             self.ping_count += 1
         self._draw_text(
             text = f'pings received: {self.ping_count}',
