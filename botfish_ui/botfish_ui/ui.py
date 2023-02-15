@@ -71,6 +71,9 @@ class UIController(Node):
                         SMOLFONT
                     ]
                 },
+                'rect': {
+            
+                },
                 'btns': {
                     'white': {
                         'params' : [
@@ -160,16 +163,22 @@ class UIController(Node):
                     'bigboy': {
                         'params': [
                             'white',
-                            (1027, 0), # TODO: make this change or smthn
-                            (960, 1080),
+                            (1094.4, 0), # TODO: make this change or smthn
+                            (825.6, 1080),
                         ],
 
                     }
                 },
+                'btns': {
+            
+                }
             },
             'end': {
                 'func': self.end_screen,
                 'text': {
+            
+                },
+                'rect': {
             
                 },
                 'btns': {
@@ -296,6 +305,9 @@ class UIController(Node):
         for txt_params in self.windows[screen_id]['text'].values():
             self._draw_text(*txt_params)
         
+        for rect_data in self.windows[screen_id]['rect'].values():
+            self._draw_rect(*rect_data['params'])
+        
         self.foreground = None
         for btn_id in self.windows[screen_id]['btns']:
             self._draw_button(screen_id, btn_id, mpos, clicking)
@@ -347,6 +359,8 @@ class UIController(Node):
             else:
                 wlbr = args['bot_side'] == 'right'
             del args['bot_side']
+            if wlbr:
+                self.windows['play']['rect']['bigboy']['params'][1] = (0,0) # move box to left
             
             msg = String()
             msg.data = ' '.join(f'{key}={val}' for key, val in args.items())
