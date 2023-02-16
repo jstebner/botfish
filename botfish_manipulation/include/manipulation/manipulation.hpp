@@ -35,7 +35,7 @@ namespace manip {
 
         /// @brief Calculates the xyz/quaternion that the end effector of the robot needs to go to
         /// @param msg string msg containing the move outputted by the engine, format will be startingLocationEndingLocation ex: e2e4
-        void calculate_trajectory(std_msgs::msg::String::SharedPtr &msg);
+        void calculate_trajectory(std_msgs::msg::String::SharedPtr msg);
 
         /// @brief Converts string moves to xy locations
         /// @param move string move recieved in the calculate_trajectory callback

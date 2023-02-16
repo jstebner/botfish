@@ -11,7 +11,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.5);
 
     _engine_move_sub = this->create_subscription<std_msgs::msg::String>(
-        "/engine_move", 10, std::bind(&Manipulation::calculate_trajectory, this, std::placeholders::_1));
+            "/engine_move", 10, std::bind(&Manipulation::calculate_trajectory, this, std::placeholders::_1));
 
     auto const logger = rclcpp::get_logger("manipulation");
 
@@ -24,7 +24,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     move_group_interface->setGoalTolerance(_goal_tolerance);
 }
 
-void manip::Manipulation::calculate_trajectory(std_msgs::msg::String::SharedPtr &msg) {
+void manip::Manipulation::calculate_trajectory(std_msgs::msg::String::SharedPtr msg) {
     std::tuple<manip::cell_location, manip::cell_location> parsed_moves = parse_move(msg->data);
     _target_pose.position.x = this->_starting_position.position.x + std::get<0>(parsed_moves).x_dist;
     _target_pose.position.y = this->_starting_position.position.y + std::get<1>(parsed_moves).y_dist;
