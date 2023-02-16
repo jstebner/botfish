@@ -97,12 +97,15 @@ void manip::Manipulation::grab(bool position) {
         //Set data to 0.0 to prep for open later
         pos.data = 0.0;
     }
+
+    //Move to grab height to be able to interact with pieces
     _target_pose.position.y = _grab_height;
     plan_execute();
 
     //Open/close the gripper
     this->_gripper_pub->get()->publish(pos);
 
+    //Return to movement height
     _target_pose.position.y = _move_height;
     plan_execute();
 }
