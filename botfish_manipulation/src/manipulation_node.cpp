@@ -53,8 +53,9 @@ std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string mo
         manip::cell_location loc{};
         char letter = i[0];
         std::string num(1, i[1]);
+        letter = toupper(letter);
         const unsigned int index = letter - 'A';
-        unsigned int value = letter_to_value[index];
+        int value = letter_to_value[index];
         loc.x_dist = (double) value * _cell_offset;
         loc.y_dist = (double) std::stoi(num) * _cell_offset;
         parsed_moves.push_back(loc);
