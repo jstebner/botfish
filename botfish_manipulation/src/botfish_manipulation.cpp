@@ -28,7 +28,10 @@ int main(int argc, char* argv[])
     return msg;
   }();
   move_group_interface.setPoseTarget(target_pose);
-  move_group_interface.setGoalTolerance(0.5);
+  move_group_interface.setPoseReferenceFrame("right_arm_podest_link");
+  move_group_interface.setEndEffector("right_arm_6_link");
+
+  move_group_interface.setGoalTolerance(0.015);
 
   // Create a plan to that target pose
   auto const [success, plan] = [&move_group_interface] {
