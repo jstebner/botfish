@@ -4,6 +4,7 @@
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <std_msgs/msg/string.hpp>
+#include <std_msgs/msg/float64.hpp>
 #include <geometry_msgs/msg/quaternion.hpp>
 #include <vector>
 
@@ -25,8 +26,12 @@ namespace manip {
         std::optional<std::shared_ptr<rclcpp::Subscription<std_msgs::msg::String>>> _engine_move_sub =
                 std::nullopt;
 
+        std::optional<std::shared_ptr<rclcpp::Publisher<std_msgs::msg::Float64>>>
+                _gripper_pub = std::nullopt;
+
         double _cell_offset{};
         double _grab_height{};
+        double _move_height{};
         double _goal_tolerance{};
         std::string _end_effector_link{};
         std::string _reference_link{};
@@ -48,6 +53,9 @@ namespace manip {
         /// @breif grabs piece from board using grippers
         /// @param position whether were grasping or releasing, true = grasping, false = releasing
         void grab(bool position);
+
+        ///@brief Plan and execute pose currently in _target_pose
+        void plan_execute();
 
         /// @brief Converts string moves to xy locations
         /// @param move string move recieved in the move_cb callback

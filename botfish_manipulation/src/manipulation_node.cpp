@@ -8,6 +8,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _reference_link = this->declare_parameter("reference_link", "right_arm_podent_link");
     _moveit_group = this->declare_parameter("move_group", "right_arm");
     _grab_height = this->declare_parameter("grab_height", 0.352);
+    _move_height = this->declare_parameter("move_height", 0.1);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.0125);
 
     //_hand_orientation = {0.004, -0.003, 0.588, 0.809};
@@ -24,6 +25,8 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _engine_move_sub = this->create_subscription<std_msgs::msg::String>(
             "/engine_move", 10, std::bind(&Manipulation::move_cb, this, std::placeholders::_1));
 
+    _gripper_pub = this->create_publisher<std_msgs::msg::Float64>("/right_gripper/position", 10);
+
     (*move_group_interface) = moveit::planning_interface::MoveGroupInterface(static_cast<const SharedPtr>(this),
                                                                              _moveit_group);
 
@@ -34,9 +37,13 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
 
 void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     std::vector<manip::cell_location> parsed_moves = parse_move(msg->data);
+
+    //Move one piece to an open cell
+    bool grasping = true;
     for (auto i: parsed_moves) {
         actuate(i);
-        grab(true);
+        grab(grasping);
+        grasping = !grasping;
     }
 }
 
@@ -68,11 +75,41 @@ void manip::Manipulation::actuate(manip::cell_location location) {
 
     //Calculate cell location to move to
     _target_pose.position.x = this->_starting_position.position.x + location.x_dist;
+    //z value is y for our current use case
     _target_pose.position.z = this->_starting_position.position.z + location.y_dist;
     _target_pose.position.y = this->_starting_position.position.y;
     _target_pose.orientation = this->_hand_orientation;
-    move_group_interface->setPoseTarget(_target_pose);
 
+    plan_execute();
+
+}
+
+void manip::Manipulation::grab(bool position) {
+    std_msgs::msg::Float64 pos;
+
+    //Ensure that if were grabbing a piece, that the gripper is opened before descending
+    if (position) {
+        pos.data = 0.0;
+        this->_gripper_pub->get()->publish(pos);
+        //Now that gripper is open set data to 1.0 to prep for close later
+        pos.data = 1.0;
+    } else {
+        //Set data to 0.0 to prep for open later
+        pos.data = 0.0;
+    }
+    _target_pose.position.y = _grab_height;
+    plan_execute();
+
+    //Open/close the gripper
+    this->_gripper_pub->get()->publish(pos);
+
+    _target_pose.position.y = _move_height;
+    plan_execute();
+}
+
+void manip::Manipulation::plan_execute() {
+    moveit::planning_interface::MoveGroupInterface::Plan msg;
+    move_group_interface->setPoseTarget(_target_pose);
     //Attempt to plan to that position
     RCLCPP_INFO(this->get_logger(), "Planning movement...");
     auto const plan_ok = static_cast<bool>(move_group_interface->plan(msg));
@@ -89,8 +126,4 @@ void manip::Manipulation::actuate(manip::cell_location location) {
             RCLCPP_INFO(this->get_logger(), "Execution Succeeded!");
         }
     }
-}
-
-void manip::Manipulation::grab(bool position) {
-
 }
