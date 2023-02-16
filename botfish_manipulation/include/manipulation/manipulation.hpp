@@ -9,6 +9,9 @@
 
 namespace manip {
 
+    const unsigned int letter_to_value[] =
+            {1, 2, 3, 4, 5, 6, 7, 8};
+
     struct cell_location {
         double x_dist;
         double y_dist;
