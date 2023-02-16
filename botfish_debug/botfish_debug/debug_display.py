@@ -1,17 +1,18 @@
-import sys
 import os
+import sys
 import io
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String # TODO: also import msg for images
+from std_msgs.msg import String  # TODO: also import msg for images
+from multiprocessing import Queue
 
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+import pygame
+from pygame.locals import *
 import chess
 import chess.svg
-import pygame
 import cairosvg
-from pygame.locals import *
-from multiprocessing import Queue
 
 SIZE = (512 + 256,1024)
 WIDGET_SIZE = 512
@@ -20,16 +21,16 @@ HISTORY = 20
 PERIOD_s = 1/10 # 10 UpS
 
 class DebugDisplay(Node):
-
     def __init__(self):
-        pygame.init()
         pygame.display.set_caption('Debug')
         super().__init__('debug_display')
         
         self.cmd_q = Queue()
         self.cam_q = Queue()
+        self.ui_q = Queue()
         self.screen = pygame.display.set_mode(SIZE) # testing
         self.FONT = pygame.font.SysFont('monospace', FONT_SIZE)
+        self.ping_count = 0 # used to identify pings received from ui
         
         self.board = chess.Board()
         self.board_rendered = None
@@ -46,6 +47,12 @@ class DebugDisplay(Node):
             String, # TODO: this should be image
             'camera_debug',
             self.cam_q.put,
+            10
+        )
+        self.ui_msg_sub = self.create_subscription(
+            String,
+            'ui_msg',
+            self.ui_q.put,
             10
         )
         self.timer = self.create_timer(
@@ -117,6 +124,16 @@ class DebugDisplay(Node):
                 y = pos*FONT_SIZE + 10
             )
 
+        # draw ping count
+        while not self.ui_q.empty():
+            self.ui_q.get() # dump q
+            self.ping_count += 1
+        self._draw_text(
+            text = f'pings received: {self.ping_count}',
+            x = 512,
+            y = 995
+        )
+
         # draw camera vision with extras
         if self.camera_viewer is None:
             pygame.draw.rect(self.screen, (100,100,100), pygame.Rect(0, 512, WIDGET_SIZE, WIDGET_SIZE))
@@ -131,6 +148,7 @@ class DebugDisplay(Node):
         pygame.display.update()
 
 def main(args=None):
+    pygame.init()
     rclpy.init(args=args)
 
     node = DebugDisplay()

@@ -5,11 +5,9 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 
-from time import sleep
 
 class DebugTerminal(Node):
     PERIOD_s = 1/32 # 32 UpS
-    STPWRDS = ('exit', 'quit', 'quit()', 'stop', 'end', 'GET ME OUT OF THIS CHAIR YOU IDIOT')
     
     def __init__(self):
         super().__init__('debug_terminal')
@@ -23,19 +21,10 @@ class DebugTerminal(Node):
             'update_debug_board',
             10
         )
-        self.sub = self.create_subscription(
-            String,
-            'ui_ping',
-            self.display_ping,
-            10
-        )
         self.timer = self.create_timer(
             self.PERIOD_s,
             self.update
         )
-
-    def display_ping(self, msg):
-        print('ping received')
 
     def update(self):
         msg = String()
@@ -46,15 +35,19 @@ class DebugTerminal(Node):
         cmd_tokens = input('botfish-debug:~$ ').lower().split()
         if not cmd_tokens:
             return
-
+        
+        # cmds that need parsing
+        # TODO: add calibrate command
         elif cmd_tokens[0] == 'help':
             # TODO: this, also list topics or smthn
+            # stop, stopall, push (uci), pop (int), help, switch
             print('you got this bro :)')
 
-        elif cmd_tokens[0] in self.STPWRDS:
+        elif cmd_tokens[0] in ['stop', 'stopall']:
             msg.data = 'stop'
-            self.debug_cmd_pub.publish(msg)
             self.update_debug_board_pub.publish(msg)
+            if cmd_tokens[0] == 'stopall':
+                self.debug_cmd_pub.publish(msg)
             sys.exit()
 
         elif cmd_tokens[0] == 'push':
@@ -80,6 +73,7 @@ class DebugTerminal(Node):
             msg.data = ' '.join(cmd_tokens)
             self.update_debug_board_pub.publish(msg)
 
+        # anything else
         else:
             msg.data = ' '.join(cmd_tokens)
             self.debug_cmd_pub.publish(msg)
@@ -87,8 +81,7 @@ class DebugTerminal(Node):
 
 def main(args=None):
     # please oh please for the love of God dont judge me for this
-    Popen('ros2 run botfish_debug debug_display', shell=True)
-    sleep(1) # aesthetic reasons dw abt it
+    Popen('ros2 run botfish_debug display', shell=True)
     
     rclpy.init(args=args)
 
