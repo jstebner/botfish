@@ -1,5 +1,6 @@
 #include <rclcpp/rclcpp.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
+#include <moveit/planning_scene_interface/planning_scene_interface.h>
 #include "manipulation/manipulation.hpp"
 
 manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulation", options) {
@@ -40,11 +41,12 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
 
     //Move one piece to an open cell
     bool grasping = true;
-    for (auto i: parsed_moves) {
+    actuate(parsed_moves.at(0));
+    /*for (auto i: parsed_moves) {
         actuate(i);
-        grab(grasping);
-        grasping = !grasping;
-    }
+        //grab(grasping);
+        //grasping = !grasping;
+    }*/
 }
 
 std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string move) {
@@ -113,6 +115,34 @@ void manip::Manipulation::grab(bool position) {
 void manip::Manipulation::plan_execute() {
     moveit::planning_interface::MoveGroupInterface::Plan msg;
     move_group_interface->setPoseTarget(_target_pose);
+
+    auto frame_id = move_group_interface->getPlanningFrame();
+    moveit_msgs::msg::CollisionObject collision_object;
+    collision_object.header.frame_id = frame_id;
+    collision_object.id = "box1";
+    shape_msgs::msg::SolidPrimitive primitive;
+
+    // Define the size of the box in meters
+    primitive.type = primitive.BOX;
+    primitive.dimensions.resize(3);
+    primitive.dimensions[primitive.BOX_X] = 5.0;
+    primitive.dimensions[primitive.BOX_Y] = 5.0;
+    primitive.dimensions[primitive.BOX_Z] = 0.0;
+
+    // Define the pose of the box (relative to the frame_id)
+    geometry_msgs::msg::Pose box_pose;
+    box_pose.orientation.w = 1.0;
+    box_pose.position.x = 0.25;
+    box_pose.position.y = -0.5;
+    box_pose.position.z = 0.01;
+
+    collision_object.primitives.push_back(primitive);
+    collision_object.primitive_poses.push_back(box_pose);
+    collision_object.operation = collision_object.ADD;
+    // Add the collision object to the scene
+    moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
+    planning_scene_interface.applyCollisionObject(collision_object);
+
     //Attempt to plan to that position
     RCLCPP_INFO(this->get_logger(), "Planning movement...");
     auto const plan_ok = static_cast<bool>(move_group_interface->plan(msg));
