@@ -12,7 +12,6 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _move_height = this->declare_parameter("move_height", 0.1);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.0125);
 
-    //_hand_orientation = {0.004, -0.003, 0.588, 0.809};
     _hand_orientation.x = 0.004;
     _hand_orientation.y = -0.003;
     _hand_orientation.z = 0.588;
