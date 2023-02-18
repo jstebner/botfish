@@ -163,13 +163,13 @@ class UIController(Node):
                 'func': self.play_screen,
                 'text': {
                     'left_time': [
-                        '00:00.00',
+                        '10:00.00',
                         'black',
                         (0,0), # TODO: make this good
                         BEEGFONT
                     ],
                     'right_time': [
-                        '00:00.00',
+                        '10:00.00',
                         'white',
                         (960,0), # TODO: make this good
                         BEEGFONT
@@ -429,13 +429,16 @@ class UIController(Node):
     def play_screen(self, mpos, clicking): # timer
         # was gonna add this to the framework above but i dont wanna and this will literally only every be used once
         bigboy = self.windows['play']['rect']['bigboy']
-        if self.is_left and bigboy['curr_scale'] < EXPAND:
+        if self.is_left and bigboy['curr_scale'] < 2*EXPAND - 1:
             bigboy['curr_scale'] += 0.01
-        if not self.is_left and bigboy['curr_scale'] > EXPAND:
+        if not self.is_left and bigboy['curr_scale'] > 2*EXPAND - 1:
             bigboy['curr_scale'] -= 0.01
             
         # TODO: the chess_timers
-            
+        self.chess_timers[not self.is_left][1] -= time() - self.chess_timers[not self.is_left][0]
+        self.chess_timers[not self.is_left][0] = time()
+        self.windows['play']['text'][f'{"left" if self.is_left else "right"}_time'][0] = '{0:02.0f}:{1:.02f}'.format(*divmod(self.chess_timers[not self.is_left], 60)) # please dont ask
+        
         self._draw_content('play', mpos, clicking)
         
         
