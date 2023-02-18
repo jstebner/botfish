@@ -15,7 +15,7 @@ import pygame
 from pygame.locals import *
 from time import time
 
-SD = 1 # scaledown # TODO: change to 1 for final
+SD = 2 # scaledown # TODO: change to 1 for final
 
 # UTILS
 pygame.init() # initing here cuz i need for global font
@@ -440,8 +440,8 @@ class UIController(Node):
             (1080 - BEEGFONT.size(self.windows['play']['text']['left_time'][0])[1]) / 2
         )
         self.windows['play']['text']['right_time'][2] = (
-            960 + (bigboy['params'][2][0] * bigboy['curr_scale'] - BEEGFONT.size(self.windows['play']['text']['right_time'][0])[0]) / 2,
-            (1080 - BEEGFONT.size(self.windows['play']['text']['right_time'][0])[1]) / 2
+            960 + (bigboy['params'][2][0] * bigboy['curr_scale'] - unscaler(BEEGFONT.size(self.windows['play']['text']['right_time'][0])[0])) / 2,
+            (1080 - unscaler(BEEGFONT.size(self.windows['play']['text']['right_time'][0])[1])) / 2
         )
 
         
