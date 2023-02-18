@@ -11,13 +11,13 @@ import pygame
 from pygame.locals import *
 from time import time
 
-SD = 1 # scaledown # TODO: change to 1 for final
+SD = 2 # scaledown # TODO: change to 1 for final
 
 # UTILS
 pygame.init() # initing here cuz i need for global font
 DIM = (1920//SD, 1080//SD)
 EXPAND = 1.14 # make btn go big by 16%
-EXPAND = 1 + (EXPAND-1)/SD
+EXPAND = 1 + (EXPAND-1)
 SMOLFONT = pygame.font.SysFont('monospace', 32//SD, bold=True)
 BEEGFONT = pygame.font.SysFont('monospace', 100//SD, bold=True)
 CLRS = {
