@@ -435,13 +435,14 @@ class UIController(Node):
             bigboy['curr_scale'] -= 0.04
             # TODO: change the position of timers
 
+        # avert your eyes
         self.windows['play']['text']['left_time'][2] = (
-            (bigboy['params'][2][0] * bigboy['curr_scale'] - unscaler(BEEGFONT.size(self.windows['play']['text']['left_time'][0])[0],)) / 2,
-            (1080 - unscaler(BEEGFONT.size(self.windows['play']['text']['left_time'][0])[1],)) / 2
+            (bigboy['params'][2][0] * bigboy['curr_scale'] - unscaler(BEEGFONT.size(self.windows['play']['text']['left_time'][0])[0])[0]) / 2,
+            (1080 - unscaler(BEEGFONT.size(self.windows['play']['text']['left_time'][0])[1])[0]) / 2
         )
         self.windows['play']['text']['right_time'][2] = (
-            960 + (bigboy['params'][2][0] * bigboy['curr_scale'] - unscaler(BEEGFONT.size(self.windows['play']['text']['right_time'][0])[0],)) / 2,
-            (1080 - unscaler(BEEGFONT.size(self.windows['play']['text']['right_time'][0])[1],)) / 2
+            960 + (bigboy['params'][2][0] * bigboy['curr_scale'] - unscaler(BEEGFONT.size(self.windows['play']['text']['right_time'][0])[0])[0]) / 2,
+            (1080 - unscaler(BEEGFONT.size(self.windows['play']['text']['right_time'][0])[1])[0]) / 2
         )
 
         
