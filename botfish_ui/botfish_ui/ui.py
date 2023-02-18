@@ -356,7 +356,7 @@ class UIController(Node):
                 close()
             
             elif cmd_tokens[0] == 'switch':
-                self.is_player_turn ^= True # dont ask
+                self.switch()
         
         while not self.gamestate_q.empty():
             tokens = self.gamestate_q.get().data.split()
@@ -373,15 +373,20 @@ class UIController(Node):
                 if event.key == K_ESCAPE: # TODO: make this esc menu
                     close()
                 if event.key == K_SPACE:
-                    if self.is_player_turn and self.curr_screen == 'play':
+                    # if self.is_player_turn and self.curr_screen == 'play':
+                    if self.curr_screen == 'play':
                         msg = String()
-                        msg.data = 'PING'
+                        msg.data = 'ping'
                         self.ui_msg_pub.publish(msg)
-                        self.is_player_turn = False
+                        self.switch()
         return (mx, my), clicking
 
+    # just dont ask
     def switch(self):
-        pass
+        self.is_left ^= True # dont ask
+        self.is_player_turn ^= True # dont ask
+        self.chess_timers[self.is_left] = None # dont ask
+        self.chess_timers[not self.is_left] = time() # dont ask
     
     def update(self,): # screen "skeleton"
         self.screen.fill(CLRS[self.bg_clr])
@@ -424,7 +429,7 @@ class UIController(Node):
     def play_screen(self, mpos, clicking): # timer
         # was gonna add this to the framework above but i dont wanna and this will literally only every be used once
         bigboy = self.windows['play']['rect']['bigboy']
-        if self.is_left and bigboy['curr_scale'] < 2*EXPAND:
+        if self.is_left and bigboy['curr_scale'] < EXPAND:
             bigboy['curr_scale'] += 0.01
         if not self.is_left and bigboy['curr_scale'] > EXPAND:
             bigboy['curr_scale'] -= 0.01

@@ -124,16 +124,20 @@ class DebugDisplay(Node):
                 y = pos*FONT_SIZE + 10
             )
 
-        # draw ping count
+        # TODO: make this do more than just get pings
         while not self.ui_q.empty():
-            self.ui_q.get() # dump q
-            self.ping_count += 1
+            msg = self.ui_q.get().data
+            if msg == 'ping':
+                self.ping_count += 1
+
+        # draw ping count
         self._draw_text(
             text = f'pings received: {self.ping_count}',
             x = 512,
             y = 995
         )
 
+        # TODO: make this the actual camera
         # draw camera vision with extras
         if self.camera_viewer is None:
             pygame.draw.rect(self.screen, (100,100,100), pygame.Rect(0, 512, WIDGET_SIZE, WIDGET_SIZE))
