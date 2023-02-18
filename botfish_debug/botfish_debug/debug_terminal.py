@@ -6,9 +6,8 @@ from rclpy.node import Node
 from std_msgs.msg import String
 
 
+PERIOD_s = 1/10 # 10 UpS
 class DebugTerminal(Node):
-    PERIOD_s = 1/32 # 32 UpS
-    
     def __init__(self):
         super().__init__('debug_terminal')
         self.debug_cmd_pub = self.create_publisher(
@@ -22,13 +21,13 @@ class DebugTerminal(Node):
             10
         )
         self.timer = self.create_timer(
-            self.PERIOD_s,
+            PERIOD_s,
             self.update
         )
 
     def update(self):
         msg = String()
-        # TODO: somthin to do with a queue
+        # TODO: receive input from somewhere or smthn idk
         # while self.q:
         #     print(self.q.pop(0))
 
@@ -38,6 +37,7 @@ class DebugTerminal(Node):
         
         # cmds that need parsing
         # TODO: add calibrate command
+        # TODO: add a way to manual publish to a topic
         elif cmd_tokens[0] == 'help':
             # TODO: this, also list topics or smthn
             # stop, stopall, push (uci), pop (int), help, switch

@@ -9,7 +9,7 @@ from multiprocessing import Queue
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide" # why couldnt this just be an arg bro
 import pygame
 from pygame.locals import *
-import time
+from time import time
 
 SD = 2 # scaledown # TODO: change to 1 for final
 
@@ -51,8 +51,13 @@ class UIController(Node):
         self.gamestate_q = Queue()
         self.is_player_turn = True # TODO: make this depend on the game or whatev
         self.foreground = None
+        self.bg_clr = 'black'
+        self.is_left = True
+        self.timers = [
+            [None, 600], # prev_ts, total_t
+            [None, 600],
+        ]
         self.curr_screen = 'start'
-        self.times = (600, 600) # 0: white, 1: black
         # lord forgive me for what im about to do
         self.windows = {
             'start': {
@@ -157,14 +162,25 @@ class UIController(Node):
             'play': {
                 'func': self.play_screen,
                 'text': {
-            
+                    'left_time': [
+                        '00:00.00',
+                        'black',
+                        (0,0), # TODO: make this good
+                        BEEGFONT
+                    ],
+                    'right': [
+                        '00:00.00',
+                        'white',
+                        (960,0), # TODO: make this good
+                        BEEGFONT
+                    ]
                 },
                 'rect': {
                     'bigboy': {
                         'params': [
-                            'white',
-                            (1094.4, 0), # TODO: make this change or smthn
-                            (825.6, 1080),
+                            'white', # clr duh
+                            (0, 0), # pos
+                            (825.6, 1080), # dim
                         ],
 
                     }
@@ -175,6 +191,18 @@ class UIController(Node):
             },
             'end': {
                 'func': self.end_screen,
+                'text': {
+            
+                },
+                'rect': {
+            
+                },
+                'btns': {
+
+                },
+            },
+            'pause': {
+                'func': self.pause_screen,
                 'text': {
             
                 },
@@ -302,11 +330,15 @@ class UIController(Node):
         self.windows[screen_id]['btns'][btn_id]['toggle'] = toggle
 
     def _draw_content(self, screen_id: str, mpos: tuple, clicking: bool):
+        # handling logic here bc i dont wanna make a new widget "class"
+        for rect_data in self.windows[screen_id]['rect'].values():
+            clr, pos, dim = rect_data['params']
+            dim = list(dim)
+            dim = [dim[0]*rect_data['curr_scale'], dim[1]*rect_data['curr_scale']]
+            self._draw_rect(clr, pos, dim)
+        
         for txt_params in self.windows[screen_id]['text'].values():
             self._draw_text(*txt_params)
-        
-        for rect_data in self.windows[screen_id]['rect'].values():
-            self._draw_rect(*rect_data['params'])
         
         self.foreground = None
         for btn_id in self.windows[screen_id]['btns']:
@@ -318,6 +350,18 @@ class UIController(Node):
         
 
     def event_listener(self):
+        while not self.debug_q.empty():
+            cmd_tokens = self.debug_q.get().data.split()
+            if cmd_tokens[0] == 'stop':
+                close()
+            
+            elif cmd_tokens[0] == 'switch':
+                self.is_player_turn ^= True # dont ask
+        
+        while not self.gamestate_q.empty():
+            tokens = self.gamestate_q.get().data.split()
+            
+        
         mx, my = pygame.mouse.get_pos()
         clicking = False
         for event in pygame.event.get():
@@ -326,7 +370,7 @@ class UIController(Node):
             if event.type == MOUSEBUTTONDOWN:
                 clicking = True
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE: # TODO: maybe make this esc menu
+                if event.key == K_ESCAPE: # TODO: make this esc menu
                     close()
                 if event.key == K_SPACE:
                     if self.is_player_turn and self.curr_screen == 'play':
@@ -335,15 +379,20 @@ class UIController(Node):
                         self.ui_msg_pub.publish(msg)
                         self.is_player_turn = False
         return (mx, my), clicking
+
+    def switch(self):
+        pass
     
     def update(self,): # screen "skeleton"
-        self.screen.fill(CLRS['black'])
+        self.screen.fill(CLRS[self.bg_clr])
         mouse_pos, clicking = self.event_listener()
         self.windows[self.curr_screen]['func'](mouse_pos, clicking)
         pygame.display.update()
 
     def start_screen(self, mpos, clicking): # setup params n whatnot
         self._draw_content('start', mpos, clicking)
+
+        # end of screen
         if self.windows['start']['btns']['start_btn']['toggle']:
             args = {}
             for btn_id, data in self.windows['start']['btns'].items():
@@ -359,8 +408,13 @@ class UIController(Node):
             else:
                 wlbr = args['bot_side'] == 'right'
             del args['bot_side']
-            if wlbr:
-                self.windows['play']['rect']['bigboy']['params'][1] = (0,0) # move box to left
+            if not wlbr:
+                self.windows['play']['rect']['bigboy']['params'][0] = 'black'
+                self.windows['play']['text']['left_time'][1] = 'white'
+                self.windows['play']['text']['right_time'][1] = 'black'
+                self.bg_clr = 'white'
+                self.is_left = False
+            self.timers[not self.is_left][0] = time() # dont ask
             
             msg = String()
             msg.data = ' '.join(f'{key}={val}' for key, val in args.items())
@@ -368,22 +422,23 @@ class UIController(Node):
             self.curr_screen = 'play'
     
     def play_screen(self, mpos, clicking): # timer
-        # TODO: the white half of the timer i think         
+        # was gonna add this to the framework above but i dont wanna and this will literally only every be used once
+        bigboy = self.windows['play']['rect']['bigboy']
+        if self.is_left and bigboy['curr_scale'] < 2*EXPAND:
+            bigboy['curr_scale'] += 0.01
+            
+        # TODO: the timers
+            
         self._draw_content('play', mpos, clicking)
         
-        # TODO: mfin timers n whatnot
         
-        # process debug queue
-        while not self.debug_q.empty():
-            cmd_tokens = self.debug_q.get().data.split()
-            if cmd_tokens[0] == 'stop':
-                close()
-            
-            elif cmd_tokens[0] == 'switch':
-                self.is_player_turn ^= True # dont ask
         
 
     def end_screen(self, mpos, clicking): # gameover / cleanup n whatnot
+        pass
+    
+
+    def pause_screen(self, mpos, clicking):
         pass
 
 
