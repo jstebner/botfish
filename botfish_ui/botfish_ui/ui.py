@@ -15,12 +15,12 @@ import pygame
 from pygame.locals import *
 from time import time
 
-SD = 2 # scaledown # TODO: change to 1 for final
+SD = 1 # scaledown # TODO: change to 1 for final
 
 # UTILS
 pygame.init() # initing here cuz i need for global font
 DIM = (1920//SD, 1080//SD)
-EXPAND = 1.14 # make btn go big by 16%
+EXPAND = 1.16 # make btn go big by 16%
 SMOLFONT = pygame.font.SysFont('monospace', 32//SD, bold=True)
 BEEGFONT = pygame.font.SysFont('monospace', 100//SD, bold=True)
 CLRS = {
@@ -426,10 +426,10 @@ class UIController(Node):
         # was gonna add this to the framework above but i dont wanna and this will literally only every be used once
         bigboy = self.windows['play']['rect']['bigboy']
         if self.is_left and bigboy['curr_scale'] < EXPAND:
-            bigboy['curr_scale'] += 0.02
+            bigboy['curr_scale'] += 0.04
             # TODO: change the position of timers
         if not self.is_left and bigboy['curr_scale'] > 2 - EXPAND:
-            bigboy['curr_scale'] -= 0.02
+            bigboy['curr_scale'] -= 0.04
             # TODO: change the position of timers
 
         # SMOLFONT.size(text)
