@@ -15,7 +15,7 @@ import pygame
 from pygame.locals import *
 from time import time
 
-SD = 1 # scaledown # TODO: change to 1 for final
+SD = 2 # scaledown # TODO: change to 1 for final
 
 # UTILS
 pygame.init() # initing here cuz i need for global font
@@ -27,9 +27,9 @@ CLRS = {
     'white':    (249,246,240),  # F9 F6 F0
     'black':    (23,21,21),     # 17 15 15
     'gray':     (160,158,164),  # A0 9E A4
-    'red':      (219,31,72),    # db 1f 48
-    'green':    (184,238,48),   # b8 ee 30
-    'yellow':   (249,208,48),   # f9 d0 30
+    'red':      (219,31,72),    # DB 1F 48
+    'green':    (184,238,48),   # B8 EE 30
+    'yellow':   (249,208,48),   # F9 D0 30
 }
 def scaler(*args):
     return [arg//SD for arg in args]
@@ -295,6 +295,7 @@ class UIController(Node):
 
         btn = pygame.Rect(*pos, *dim)
         # TODO: make this not shitty
+        # TODO: also make draw order queue with prior by curr_scale
         if btn.collidepoint(mpos): # hover
             if self.windows[screen_id]['btns'][btn_id]['curr_scale'] < EXPAND:
                 self.windows[screen_id]['btns'][btn_id]['curr_scale'] += 0.02
@@ -416,6 +417,8 @@ class UIController(Node):
                 self.bg_clr = 'white'
                 self.is_left = False 
             self.chess_timers[not self.is_left][0] = time() # dont ask
+            self.chess_timers[0][1] = 600
+            self.chess_timers[1][1] = 600
             
             msg = String()
             msg.data = ' '.join(f'{key}={val}' for key, val in args.items())
@@ -432,14 +435,13 @@ class UIController(Node):
             bigboy['curr_scale'] -= 0.04
             # TODO: change the position of timers
 
-        # SMOLFONT.size(text)
         self.windows['play']['text']['left_time'][2] = (
-            (bigboy['params'][2][0] * bigboy['curr_scale'] - SMOLFONT.size(self.windows['play']['text']['left_time'][0])[0]) / 2,
-            (1080 - SMOLFONT.size(self.windows['play']['text']['left_time'][0])[1]) / 2
+            (bigboy['params'][2][0] * bigboy['curr_scale'] - BEEGFONT.size(self.windows['play']['text']['left_time'][0])[0]) / 2,
+            (1080 - BEEGFONT.size(self.windows['play']['text']['left_time'][0])[1]) / 2
         )
         self.windows['play']['text']['right_time'][2] = (
-            960 + (bigboy['params'][2][0] * bigboy['curr_scale'] - SMOLFONT.size(self.windows['play']['text']['right_time'][0])[0]) / 2,
-            (1080 - SMOLFONT.size(self.windows['play']['text']['right_time'][0])[1]) / 2
+            960 + (bigboy['params'][2][0] * bigboy['curr_scale'] - BEEGFONT.size(self.windows['play']['text']['right_time'][0])[0]) / 2,
+            (1080 - BEEGFONT.size(self.windows['play']['text']['right_time'][0])[1]) / 2
         )
 
         
