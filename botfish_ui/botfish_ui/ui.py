@@ -1,3 +1,7 @@
+# note for the future: 
+#   never let me do frontend
+#       - jong
+
 import os
 import sys
 
@@ -48,7 +52,7 @@ class UIController(Node):
 
         self.debug_q = Queue()
         self.gamestate_q = Queue()
-        self.is_player_turn = True # TODO: make this depend on the game or whatev
+        self.is_player_turn = True
         self.foreground = None
         self.bg_clr = 'black'
         self.is_left = True
@@ -328,14 +332,7 @@ class UIController(Node):
         
         self.windows[screen_id]['btns'][btn_id]['toggle'] = toggle
 
-    def _draw_content(self, screen_id: str, mpos: tuple, clicking: bool):
-        # handling logic here bc i dont wanna make a new widget "class"
-        # for rect_data in self.windows[screen_id]['rect'].values():
-        #     clr, pos, dim = rect_data['params']
-        #     dim = list(dim)
-        #     dim[0] = dim[0]*rect_data['curr_scale'] # only scale horizontally
-        #     self._draw_rect(clr, pos, dim)
-        
+    def _draw_content(self, screen_id: str, mpos: tuple, clicking: bool): 
         for txt_params in self.windows[screen_id]['text'].values():
             self._draw_text(*txt_params)
         
@@ -435,8 +432,7 @@ class UIController(Node):
             bigboy['curr_scale'] -= 0.02
             # TODO: change the position of timers
 
-            
-        # TODO: the chess_timers
+        
         self.chess_timers[not self.is_left][1] -= time() - self.chess_timers[not self.is_left][0]
         self.chess_timers[not self.is_left][0] = time()
         self.windows['play']['text'][f'{"left" if self.is_left else "right"}_time'][0] = '{0:02.0f}:{1:05.2f}'.format(*divmod(self.chess_timers[not self.is_left][1], 60)) # please dont ask
