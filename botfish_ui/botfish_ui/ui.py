@@ -438,8 +438,8 @@ class UIController(Node):
             (1080 - SMOLFONT.size(self.windows['play']['text']['left_time'][0])[1]) / 2
         )
         self.windows['play']['text']['right_time'][2] = (
-            (bigboy['params'][2][0] * bigboy['curr_scale'] - SMOLFONT.size(self.windows['play']['text']['right_time'][0])[0]) / 2,
-            960 + (1080 - SMOLFONT.size(self.windows['play']['text']['right_time'][0])[1]) / 2
+            960 + (bigboy['params'][2][0] * bigboy['curr_scale'] - SMOLFONT.size(self.windows['play']['text']['right_time'][0])[0]) / 2,
+            (1080 - SMOLFONT.size(self.windows['play']['text']['right_time'][0])[1]) / 2
         )
 
         
