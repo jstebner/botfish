@@ -431,13 +431,16 @@ class UIController(Node):
         bigboy = self.windows['play']['rect']['bigboy']
         if self.is_left and bigboy['curr_scale'] < 2*EXPAND - 1:
             bigboy['curr_scale'] += 0.01
+            print(bigboy['curr_scale'])
         if not self.is_left and bigboy['curr_scale'] > 1:
             bigboy['curr_scale'] -= 0.01
+            print(bigboy['curr_scale'])
+
             
         # TODO: the chess_timers
         self.chess_timers[not self.is_left][1] -= time() - self.chess_timers[not self.is_left][0]
         self.chess_timers[not self.is_left][0] = time()
-        self.windows['play']['text'][f'{"left" if self.is_left else "right"}_time'][0] = '{0:02.0f}:{1:0.02f}'.format(*divmod(self.chess_timers[not self.is_left][1], 60)) # please dont ask
+        self.windows['play']['text'][f'{"left" if self.is_left else "right"}_time'][0] = '{0:02.0f}:{1:05.2f}'.format(*divmod(self.chess_timers[not self.is_left][1], 60)) # please dont ask
         
         self._draw_content('play', mpos, clicking)
         
