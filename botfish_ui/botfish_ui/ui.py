@@ -330,11 +330,11 @@ class UIController(Node):
 
     def _draw_content(self, screen_id: str, mpos: tuple, clicking: bool):
         # handling logic here bc i dont wanna make a new widget "class"
-        for rect_data in self.windows[screen_id]['rect'].values():
-            clr, pos, dim = rect_data['params']
-            dim = list(dim)
-            dim[0] = dim[0]*rect_data['curr_scale'] # only scale horizontally
-            self._draw_rect(clr, pos, dim)
+        # for rect_data in self.windows[screen_id]['rect'].values():
+        #     clr, pos, dim = rect_data['params']
+        #     dim = list(dim)
+        #     dim[0] = dim[0]*rect_data['curr_scale'] # only scale horizontally
+        #     self._draw_rect(clr, pos, dim)
         
         for txt_params in self.windows[screen_id]['text'].values():
             self._draw_text(*txt_params)
@@ -441,7 +441,10 @@ class UIController(Node):
         self.chess_timers[not self.is_left][0] = time()
         self.windows['play']['text'][f'{"left" if self.is_left else "right"}_time'][0] = '{0:02.0f}:{1:05.2f}'.format(*divmod(self.chess_timers[not self.is_left][1], 60)) # please dont ask
         
-        self._draw_rect(*bigboy['params'])
+        clr, pos, dim = bigboy['params']
+        dim = list(dim)
+        dim[0] = dim[0]*bigboy['curr_scale'] # only scale horizontally
+        self._draw_rect(clr, pos, dim)
         self._draw_text(*self.windows['play']['text']['left_time'])
         self._draw_text(*self.windows['play']['text']['right_time'])
         
