@@ -168,7 +168,7 @@ class UIController(Node):
                         (0,0), # TODO: make this good
                         BEEGFONT
                     ],
-                    'right': [
+                    'right_time': [
                         '00:00.00',
                         'white',
                         (960,0), # TODO: make this good
@@ -426,6 +426,8 @@ class UIController(Node):
         bigboy = self.windows['play']['rect']['bigboy']
         if self.is_left and bigboy['curr_scale'] < 2*EXPAND:
             bigboy['curr_scale'] += 0.01
+        if not self.is_left and bigboy['curr_scale'] > EXPAND:
+            bigboy['curr_scale'] -= 0.01
             
         # TODO: the chess_timers
             
