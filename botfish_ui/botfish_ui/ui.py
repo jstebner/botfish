@@ -53,7 +53,7 @@ class UIController(Node):
         self.foreground = None
         self.bg_clr = 'black'
         self.is_left = True
-        self.timers = [
+        self.chess_timers = [
             [None, 600], # prev_ts, total_t
             [None, 600],
         ]
@@ -414,7 +414,7 @@ class UIController(Node):
                 self.windows['play']['text']['right_time'][1] = 'black'
                 self.bg_clr = 'white'
                 self.is_left = False
-            self.timers[not self.is_left][0] = time() # dont ask
+            self.chess_timers[not self.is_left][0] = time() # dont ask
             
             msg = String()
             msg.data = ' '.join(f'{key}={val}' for key, val in args.items())
@@ -427,7 +427,7 @@ class UIController(Node):
         if self.is_left and bigboy['curr_scale'] < 2*EXPAND:
             bigboy['curr_scale'] += 0.01
             
-        # TODO: the timers
+        # TODO: the chess_timers
             
         self._draw_content('play', mpos, clicking)
         
