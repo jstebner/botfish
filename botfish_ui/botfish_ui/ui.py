@@ -15,7 +15,7 @@ import pygame
 from pygame.locals import *
 from time import time
 
-SD = 2 # scaledown # TODO: change to 1 for final
+SD = 1 # scaledown # TODO: change to 1 for final
 
 # UTILS
 pygame.init() # initing here cuz i need for global font
