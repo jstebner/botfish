@@ -168,13 +168,13 @@ class UIController(Node):
                     'left_time': [
                         '10:00.00',
                         'black',
-                        (0,0), # TODO: make this good
+                        (0,0),
                         BEEGFONT
                     ],
                     'right_time': [
                         '10:00.00',
                         'white',
-                        (960,0), # TODO: make this good
+                        (960,0),
                         BEEGFONT
                     ]
                 },
@@ -430,11 +430,10 @@ class UIController(Node):
         bigboy = self.windows['play']['rect']['bigboy']
         if self.is_left and bigboy['curr_scale'] < EXPAND:
             bigboy['curr_scale'] += 0.04
-            # TODO: change the position of timers
         if not self.is_left and bigboy['curr_scale'] > 2 - EXPAND:
             bigboy['curr_scale'] -= 0.04
-            # TODO: change the position of timers
 
+        # TODO: timers be actin funny when they go negative but like do i really need to fix that
         # avert your eyes
         self.windows['play']['text']['left_time'][2] = (
             (bigboy['params'][2][0] * bigboy['curr_scale'] - unscaler(BEEGFONT.size(self.windows['play']['text']['left_time'][0])[0])[0]) / 2,
@@ -457,15 +456,15 @@ class UIController(Node):
         self._draw_text(*self.windows['play']['text']['left_time'])
         self._draw_text(*self.windows['play']['text']['right_time'])
         
-        
-        
+    def pause_screen(self, mpos, clicking):
+        # TODO: this
+        pass
 
     def end_screen(self, mpos, clicking): # gameover / cleanup n whatnot
+        # TODO: this
         pass
     
 
-    def pause_screen(self, mpos, clicking):
-        pass
 
 
 def main(args=None):
