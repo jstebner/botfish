@@ -11,7 +11,7 @@ import pygame
 from pygame.locals import *
 from time import time
 
-SD = 2 # scaledown # TODO: change to 1 for final
+SD = 1 # scaledown # TODO: change to 1 for final
 
 # UTILS
 pygame.init() # initing here cuz i need for global font
@@ -334,7 +334,7 @@ class UIController(Node):
         for rect_data in self.windows[screen_id]['rect'].values():
             clr, pos, dim = rect_data['params']
             dim = list(dim)
-            dim = [dim[0]*rect_data['curr_scale'], dim[1]*rect_data['curr_scale']]
+            dim[0] = dim[0]*rect_data['curr_scale'] # only scale horizontally
             self._draw_rect(clr, pos, dim)
         
         for txt_params in self.windows[screen_id]['text'].values():
