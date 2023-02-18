@@ -385,8 +385,8 @@ class UIController(Node):
     def switch(self):
         self.is_left ^= True # dont ask
         self.is_player_turn ^= True # dont ask
-        self.chess_timers[self.is_left] = None # dont ask
-        self.chess_timers[not self.is_left] = time() # dont ask
+        self.chess_timers[self.is_left][0] = None # dont ask
+        self.chess_timers[not self.is_left][0] = time() # dont ask
     
     def update(self,): # screen "skeleton"
         self.screen.fill(CLRS[self.bg_clr])
