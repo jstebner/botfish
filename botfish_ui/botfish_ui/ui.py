@@ -414,7 +414,7 @@ class UIController(Node):
                 self.windows['play']['text']['left_time'][1] = 'white'
                 self.windows['play']['text']['right_time'][1] = 'black'
                 self.bg_clr = 'white'
-                self.is_left = False
+                self.is_left = False 
             self.chess_timers[not self.is_left][0] = time() # dont ask
             
             msg = String()
@@ -431,6 +431,16 @@ class UIController(Node):
         if not self.is_left and bigboy['curr_scale'] > 2 - EXPAND:
             bigboy['curr_scale'] -= 0.02
             # TODO: change the position of timers
+
+        # SMOLFONT.size(text)
+        self.windows['play']['text']['left_time'][2] = (
+            (bigboy['params'][2][0] * bigboy['curr_scale'] - SMOLFONT.size(self.windows['play']['text']['left_time'][0])[0]) / 2,
+            (1080 - SMOLFONT.size(self.windows['play']['text']['left_time'][0])[1]) / 2
+        )
+        self.windows['play']['text']['right_time'][2] = (
+            (bigboy['params'][2][0] * bigboy['curr_scale'] - SMOLFONT.size(self.windows['play']['text']['right_time'][0])[0]) / 2,
+            960 + (1080 - SMOLFONT.size(self.windows['play']['text']['right_time'][0])[1]) / 2
+        )
 
         
         self.chess_timers[not self.is_left][1] -= time() - self.chess_timers[not self.is_left][0]
