@@ -17,7 +17,6 @@ SD = 2 # scaledown # TODO: change to 1 for final
 pygame.init() # initing here cuz i need for global font
 DIM = (1920//SD, 1080//SD)
 EXPAND = 1.14 # make btn go big by 16%
-EXPAND = 1 + (EXPAND-1)
 SMOLFONT = pygame.font.SysFont('monospace', 32//SD, bold=True)
 BEEGFONT = pygame.font.SysFont('monospace', 100//SD, bold=True)
 CLRS = {
@@ -430,11 +429,11 @@ class UIController(Node):
         # was gonna add this to the framework above but i dont wanna and this will literally only every be used once
         bigboy = self.windows['play']['rect']['bigboy']
         if self.is_left and bigboy['curr_scale'] < EXPAND:
-            bigboy['curr_scale'] += 0.01
-            print(bigboy['curr_scale'])
+            bigboy['curr_scale'] += 0.02
+            # TODO: change the position of timers
         if not self.is_left and bigboy['curr_scale'] > 2 - EXPAND:
-            bigboy['curr_scale'] -= 0.01
-            print(bigboy['curr_scale'])
+            bigboy['curr_scale'] -= 0.02
+            # TODO: change the position of timers
 
             
         # TODO: the chess_timers
@@ -442,7 +441,9 @@ class UIController(Node):
         self.chess_timers[not self.is_left][0] = time()
         self.windows['play']['text'][f'{"left" if self.is_left else "right"}_time'][0] = '{0:02.0f}:{1:05.2f}'.format(*divmod(self.chess_timers[not self.is_left][1], 60)) # please dont ask
         
-        self._draw_content('play', mpos, clicking)
+        self._draw_rect(*bigboy['params'])
+        self._draw_text(*self.windows['play']['text']['left_time'])
+        self._draw_text(*self.windows['play']['text']['right_time'])
         
         
         
