@@ -437,7 +437,7 @@ class UIController(Node):
         # TODO: the chess_timers
         self.chess_timers[not self.is_left][1] -= time() - self.chess_timers[not self.is_left][0]
         self.chess_timers[not self.is_left][0] = time()
-        self.windows['play']['text'][f'{"left" if self.is_left else "right"}_time'][0] = '{0:02.0f}:{1:.02f}'.format(*divmod(self.chess_timers[not self.is_left], 60)) # please dont ask
+        self.windows['play']['text'][f'{"left" if self.is_left else "right"}_time'][0] = '{0:02.0f}:{1:.02f}'.format(*divmod(self.chess_timers[not self.is_left][1], 60)) # please dont ask
         
         self._draw_content('play', mpos, clicking)
         
