@@ -180,7 +180,7 @@ class UIController(Node):
                         'params': [
                             'white', # clr duh
                             (0, 0), # pos
-                            (825.6, 1080), # dim
+                            (960, 1080), # dim
                         ],
 
                     }
@@ -429,10 +429,10 @@ class UIController(Node):
     def play_screen(self, mpos, clicking): # timer
         # was gonna add this to the framework above but i dont wanna and this will literally only every be used once
         bigboy = self.windows['play']['rect']['bigboy']
-        if self.is_left and bigboy['curr_scale'] < 2*EXPAND - 1:
+        if self.is_left and bigboy['curr_scale'] < EXPAND:
             bigboy['curr_scale'] += 0.01
             print(bigboy['curr_scale'])
-        if not self.is_left and bigboy['curr_scale'] > 1:
+        if not self.is_left and bigboy['curr_scale'] > 2 - EXPAND:
             bigboy['curr_scale'] -= 0.01
             print(bigboy['curr_scale'])
 
