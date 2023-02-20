@@ -76,7 +76,7 @@ class UIController(Node):
                     'config': [
                         'config:',
                         'white',
-                        (1100, 150),
+                        (1100, 100),
                         SMOLFONT
                     ]
                 },
@@ -87,7 +87,7 @@ class UIController(Node):
                     'white': {
                         'params': [
                             'bot plays white',  # display text
-                            (1100, 250),        # position
+                            (1100, 200),        # position
                             (360, 100),         # dimension
                             'white'             # toggled color
                         ],
@@ -98,7 +98,7 @@ class UIController(Node):
                     'black': {
                         'params': [
                             'bot plays black',
-                            (1460, 250),
+                            (1460, 200),
                             (360, 100),
                             'white'
                         ],
@@ -108,7 +108,7 @@ class UIController(Node):
                     'left': {
                         'params': [
                             'bot is left',
-                            (1100, 400),
+                            (1100, 350),
                             (360, 100),
                             'white'
                         ],
@@ -117,7 +117,7 @@ class UIController(Node):
                     'right': {
                         'params': [
                             'bot is right',
-                            (1460, 400),
+                            (1460, 350),
                             (360, 100),
                             'white'
                         ],
@@ -127,7 +127,7 @@ class UIController(Node):
                     'easy_diff': {
                         'params' : [
                             'ez',
-                            (1100, 550),
+                            (1100, 500),
                             (240,100),
                             'green'
                         ],
@@ -136,7 +136,7 @@ class UIController(Node):
                     'medi_diff': {
                         'params' : [
                             'mid',
-                            (1340, 550),
+                            (1340, 500),
                             (240,100),
                             'yellow'
                         ],
@@ -145,7 +145,7 @@ class UIController(Node):
                     'hard_diff': {
                         'params' : [
                             'uhoh',
-                            (1580, 550),
+                            (1580, 500),
                             (240, 100),
                             'red'
                         ],
@@ -154,7 +154,7 @@ class UIController(Node):
                     'start_btn': {
                         'params': [
                             '- begin -',
-                            (1100, 700), #(200->X, 800)
+                            (1100, 650), #(200->X, 800)
                             (720,100),
                             'white'
                         ],
@@ -163,7 +163,7 @@ class UIController(Node):
                     'quit': {
                         'params': [
                             'quit',
-                            (1460, 850),
+                            (1460, 800),
                             (360, 100),
                             'red'
                         ],
@@ -458,6 +458,7 @@ class UIController(Node):
         else:
             wlbr = args['bot_side'] == 'right'
         del args['bot_side']
+        del args['quit']
         if not wlbr:
             self.windows['play']['rect']['bigboy']['params'][0] = 'black'
             self.windows['play']['text']['left_time'][1] = 'white'
@@ -473,10 +474,12 @@ class UIController(Node):
         self.chess_timers[not self.is_left][0] = time() # dont ask
         self.chess_timers[0][1] = 600
         self.chess_timers[1][1] = 600
+        self.windows['play']['text']['left_time'][0] = '10:00.00'
+        self.windows['play']['text']['right_time'][0] = '10:00.00'
         
         msg = String()
         msg.data = ' '.join(f'{key}={val}' for key, val in args.items())
-        print(msg.data)
+        # print(msg.data)
         self.ui_msg_pub.publish(msg)
         self.curr_screen = 'play'
     
