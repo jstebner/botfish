@@ -54,8 +54,9 @@ class UIController(Node):
         self.gamestate_q = Queue()
         self.is_player_turn = True
         self.foreground = None
-        self.bg_clr = 'black'
+        self.play_bg_clr = 'black'
         self.is_left = True
+        self.paused = False
         self.chess_timers = [
             [None, 600], # prev_ts, total_t
             [None, 600],
@@ -67,7 +68,7 @@ class UIController(Node):
                 'func': self.start_screen,
                 'text': {
                     'title': [
-                        'Botfish',
+                        'botfish :)',
                         'white',
                         (100,95),
                         BEEGFONT,
@@ -84,8 +85,8 @@ class UIController(Node):
                 },
                 'btns': {
                     'white': {
-                        'params' : [
-                            'Bot Plays White',  # display text
+                        'params': [
+                            'bot plays white',  # display text
                             (1100, 250),        # position
                             (360, 100),         # dimension
                             'white'             # toggled color
@@ -96,7 +97,7 @@ class UIController(Node):
                     },
                     'black': {
                         'params': [
-                            'Bot Plays Black',
+                            'bot plays black',
                             (1460, 250),
                             (360, 100),
                             'white'
@@ -106,7 +107,7 @@ class UIController(Node):
                     
                     'left': {
                         'params': [
-                            'Bot is Left',
+                            'bot is left',
                             (1100, 400),
                             (360, 100),
                             'white'
@@ -115,7 +116,7 @@ class UIController(Node):
                     },
                     'right': {
                         'params': [
-                            'Bot is Right',
+                            'bot is right',
                             (1460, 400),
                             (360, 100),
                             'white'
@@ -150,13 +151,21 @@ class UIController(Node):
                         ],
                         'group': 'difficulty'
                     },
-
                     'start_btn': {
                         'params': [
-                            '< Begin >',
-                            (1100, 750), #(200->X, 800)
+                            '- begin -',
+                            (1100, 700), #(200->X, 800)
                             (720,100),
                             'white'
+                        ],
+                        'group': None
+                    },
+                    'quit': {
+                        'params': [
+                            'quit',
+                            (1460, 850),
+                            (360, 100),
+                            'red'
                         ],
                         'group': None
                     }
@@ -207,13 +216,44 @@ class UIController(Node):
             'pause': {
                 'func': self.pause_screen,
                 'text': {
-            
+                    'title': [
+                        'paused',
+                        'white',
+                        (0,0), # TODOL amke this good
+                        BEEGFONT
+                    ]
                 },
                 'rect': {
             
                 },
                 'btns': {
-
+                    'unpause': {
+                        'params': [
+                            'unpause',
+                            (100, 100), # TODO: make this good
+                            (300, 100), # TODO: make this good
+                            'white'
+                        ],
+                        'group': None
+                    },
+                    'home': {
+                        'params': [
+                            'go home',
+                            (100, 250), # TODO: make this good
+                            (300, 100), # TODO: make this good
+                            'white'
+                        ],
+                        'group': None
+                    },
+                    'quit': {
+                        'params': [
+                            'quit app',
+                            (100, 400), # TODO: make this good
+                            (300, 100), # TODO: make this good
+                            'red'
+                        ],
+                        'group': None
+                    },
                 },
             }
         }
@@ -334,6 +374,7 @@ class UIController(Node):
         self.windows[screen_id]['btns'][btn_id]['toggle'] = toggle
 
     def _draw_content(self, screen_id: str, mpos: tuple, clicking: bool): 
+        # TODO: rewrite this to render objects, put on pq, then draw
         for txt_params in self.windows[screen_id]['text'].values():
             self._draw_text(*txt_params)
         
@@ -344,9 +385,16 @@ class UIController(Node):
         if self.foreground:
             pygame.draw.rect(self.screen, *(self.foreground[0]))
             self._draw_text(*(self.foreground[1]), SMOLFONT)
-        
+
+    # just dont ask
+    def switch(self):
+        self.is_left ^= True # dont ask
+        self.is_player_turn ^= True # dont ask
+        self.chess_timers[self.is_left][0] = None # you can ask abt this one tho
+        self.chess_timers[not self.is_left][0] = time() # dont ask        
 
     def event_listener(self):
+        # TODO: make
         while not self.debug_q.empty():
             cmd_tokens = self.debug_q.get().data.split()
             if cmd_tokens[0] == 'stop':
@@ -355,10 +403,11 @@ class UIController(Node):
             elif cmd_tokens[0] == 'switch':
                 self.switch()
         
+        # TODO: make this
         while not self.gamestate_q.empty():
             tokens = self.gamestate_q.get().data.split()
+
             
-        
         mx, my = pygame.mouse.get_pos()
         clicking = False
         for event in pygame.event.get():
@@ -367,8 +416,10 @@ class UIController(Node):
             if event.type == MOUSEBUTTONDOWN:
                 clicking = True
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE: # TODO: make this esc menu
-                    close()
+                if event.key == K_ESCAPE and self.curr_screen in ['play', 'pause']:
+                    if self.paused: # unpausing
+                        self.chess_timers[not self.is_left][0] = time()
+                    self.paused ^= True # dont ask
                 if event.key == K_SPACE:
                     # if self.is_player_turn and self.curr_screen == 'play':
                     if self.curr_screen == 'play':
@@ -377,53 +428,57 @@ class UIController(Node):
                         self.ui_msg_pub.publish(msg)
                         self.switch()
         return (mx, my), clicking
-
-    # just dont ask
-    def switch(self):
-        self.is_left ^= True # dont ask
-        self.is_player_turn ^= True # dont ask
-        self.chess_timers[self.is_left][0] = None # dont ask
-        self.chess_timers[not self.is_left][0] = time() # dont ask
     
     def update(self,): # screen "skeleton"
-        self.screen.fill(CLRS[self.bg_clr])
+        self.screen.fill(CLRS[self.play_bg_clr if not self.paused else 'black'])
         mouse_pos, clicking = self.event_listener()
-        self.windows[self.curr_screen]['func'](mouse_pos, clicking)
+        self.windows[self.curr_screen if not self.paused else 'pause']['func'](mouse_pos, clicking)
         pygame.display.update()
 
     def start_screen(self, mpos, clicking): # setup params n whatnot
-        self._draw_content('start', mpos, clicking)
+        if self.windows['start']['btns']['quit']['toggle']:
+            close()
 
+        if not self.windows['start']['btns']['start_btn']['toggle']:
+            self._draw_content('start', mpos, clicking)
+            return
+        
         # end of screen
-        if self.windows['start']['btns']['start_btn']['toggle']:
-            args = {}
-            for btn_id, data in self.windows['start']['btns'].items():
-                if btn_id == 'start_btn':
-                    continue
-                if data['group'] is None:
-                    args[btn_id] = data['toggle']
-                elif data['toggle']:
-                    args[data['group']] = btn_id
-            
-            if args['color'] == 'white':
-                wlbr = args['bot_side'] == 'left'
-            else:
-                wlbr = args['bot_side'] == 'right'
-            del args['bot_side']
-            if not wlbr:
-                self.windows['play']['rect']['bigboy']['params'][0] = 'black'
-                self.windows['play']['text']['left_time'][1] = 'white'
-                self.windows['play']['text']['right_time'][1] = 'black'
-                self.bg_clr = 'white'
-                self.is_left = False 
-            self.chess_timers[not self.is_left][0] = time() # dont ask
-            self.chess_timers[0][1] = 600
-            self.chess_timers[1][1] = 600
-            
-            msg = String()
-            msg.data = ' '.join(f'{key}={val}' for key, val in args.items())
-            self.ui_msg_pub.publish(msg)
-            self.curr_screen = 'play'
+        args = {}
+        for btn_id, data in self.windows['start']['btns'].items():
+            if btn_id == 'start_btn':
+                continue
+            if data['group'] is None:
+                args[btn_id] = data['toggle']
+            elif data['toggle']:
+                args[data['group']] = btn_id
+        
+        if args['color'] == 'white':
+            wlbr = args['bot_side'] == 'left'
+        else:
+            wlbr = args['bot_side'] == 'right'
+        del args['bot_side']
+        if not wlbr:
+            self.windows['play']['rect']['bigboy']['params'][0] = 'black'
+            self.windows['play']['text']['left_time'][1] = 'white'
+            self.windows['play']['text']['right_time'][1] = 'black'
+            self.play_bg_clr = 'white'
+            self.is_left = False
+        else:
+            self.windows['play']['rect']['bigboy']['params'][0] = 'white'
+            self.windows['play']['text']['left_time'][1] = 'black'
+            self.windows['play']['text']['right_time'][1] = 'white'
+            self.play_bg_clr = 'black'
+            self.is_left = True
+        self.chess_timers[not self.is_left][0] = time() # dont ask
+        self.chess_timers[0][1] = 600
+        self.chess_timers[1][1] = 600
+        
+        msg = String()
+        msg.data = ' '.join(f'{key}={val}' for key, val in args.items())
+        print(msg.data)
+        self.ui_msg_pub.publish(msg)
+        self.curr_screen = 'play'
     
     def play_screen(self, mpos, clicking): # timer
         # was gonna add this to the framework above but i dont wanna and this will literally only every be used once
@@ -443,7 +498,6 @@ class UIController(Node):
             960 + (bigboy['params'][2][0] * bigboy['curr_scale'] - unscaler(BEEGFONT.size(self.windows['play']['text']['right_time'][0])[0])[0]) / 2,
             (1080 - unscaler(BEEGFONT.size(self.windows['play']['text']['right_time'][0])[1])[0]) / 2
         )
-
         
         self.chess_timers[not self.is_left][1] -= time() - self.chess_timers[not self.is_left][0]
         self.chess_timers[not self.is_left][0] = time()
@@ -457,8 +511,21 @@ class UIController(Node):
         self._draw_text(*self.windows['play']['text']['right_time'])
         
     def pause_screen(self, mpos, clicking):
-        # TODO: this
-        pass
+        if self.windows['pause']['btns']['quit']['toggle']:
+            close()
+
+        if self.windows['pause']['btns']['unpause']['toggle']:
+            self.windows['pause']['btns']['unpause']['toggle'] = False
+            self.paused = False
+
+        if self.windows['pause']['btns']['home']['toggle']:
+            self.windows['pause']['btns']['home']['toggle'] = False
+            self.windows['start']['btns']['start_btn']['toggle'] = False
+            self.curr_screen = 'start'
+            self.play_bg_clr = 'black'
+            self.paused = False
+
+        self._draw_content('pause', mpos, clicking)
 
     def end_screen(self, mpos, clicking): # gameover / cleanup n whatnot
         # TODO: this
