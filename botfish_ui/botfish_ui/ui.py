@@ -219,7 +219,7 @@ class UIController(Node):
                     'title': [
                         'paused',
                         'white',
-                        (0,0), # TODOL amke this good
+                        (100,95), # TODOL amke this good
                         BEEGFONT
                     ]
                 },
@@ -230,8 +230,8 @@ class UIController(Node):
                     'unpause': {
                         'params': [
                             'unpause',
-                            (100, 100), # TODO: make this good
-                            (300, 100), # TODO: make this good
+                            (100, 300), # TODO: make this good
+                            (250, 100), # TODO: make this good
                             'white'
                         ],
                         'group': None
@@ -239,8 +239,8 @@ class UIController(Node):
                     'home': {
                         'params': [
                             'go home',
-                            (100, 250), # TODO: make this good
-                            (300, 100), # TODO: make this good
+                            (100, 450), # TODO: make this good
+                            (250, 100), # TODO: make this good
                             'white'
                         ],
                         'group': None
@@ -248,8 +248,8 @@ class UIController(Node):
                     'quit': {
                         'params': [
                             'quit app',
-                            (100, 400), # TODO: make this good
-                            (300, 100), # TODO: make this good
+                            (100, 600), # TODO: make this good
+                            (250, 100), # TODO: make this good
                             'red'
                         ],
                         'group': None
