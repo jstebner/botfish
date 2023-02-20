@@ -41,6 +41,22 @@ def close():
     pygame.quit()
     sys.exit()
 
+class PriorQueue:
+    def __init__(self):
+        self.q = list()
+    def push(self, key, val):
+        if key == -1:
+            self.q.append((key, val))
+        for i, item in enumerate(self.q):
+            if item[0] > key:
+                self.q.insert(i, (key, val))
+                break
+    def pop(self):
+        item = self.q.pop(0)
+        return item[1]
+    def empty(self):
+        return len(self.q) != 0
+
 PERIOD_s = 1/40 # 40 UpS
 class UIController(Node):
     def __init__(self):
@@ -230,8 +246,8 @@ class UIController(Node):
                     'unpause': {
                         'params': [
                             'unpause',
-                            (100, 300), # TODO: make this good
-                            (250, 100), # TODO: make this good
+                            (100, 300),
+                            (250, 100),
                             'white'
                         ],
                         'group': None
@@ -239,8 +255,8 @@ class UIController(Node):
                     'home': {
                         'params': [
                             'go home',
-                            (100, 450), # TODO: make this good
-                            (250, 100), # TODO: make this good
+                            (100, 450),
+                            (250, 100),
                             'white'
                         ],
                         'group': None
@@ -248,8 +264,8 @@ class UIController(Node):
                     'quit': {
                         'params': [
                             'quit app',
-                            (100, 600), # TODO: make this good
-                            (250, 100), # TODO: make this good
+                            (100, 600),
+                            (250, 100),
                             'red'
                         ],
                         'group': None
