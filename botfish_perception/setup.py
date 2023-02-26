@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'standin = botfish_perception.standin:main'
+            'perception = botfish_perception.perception:main'
         ],
     },
 )

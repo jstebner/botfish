@@ -36,11 +36,6 @@ def scaler(*args):
 def unscaler(*args): # you have no right to justdge me for this
     return [arg*SD for arg in args]
 
-# TODO: make this better or smthn idk
-def close():
-    pygame.quit()
-    sys.exit()
-
 class PriorQueue:
     def __init__(self):
         self.q = list()
@@ -292,11 +287,6 @@ class UIController(Node):
             for rect_id in self.windows[window_id]['rect']:
                 self.windows[window_id]['rect'][rect_id]['curr_scale'] = 1.0 # use for scale interp
         
-        self.ui_ping_pub = self.create_publisher(
-            String,
-            'ui_ping',
-            10
-        )
         self.ui_msg_pub = self.create_publisher(
             String,
             'ui_msg',
@@ -318,6 +308,15 @@ class UIController(Node):
             PERIOD_s,
             self.update # idk if this is scuffed but whatev
         )
+    
+    # TODO: make this better or smthn idk
+    def close(self):
+        msg = String()
+        msg.data = 'stopall'
+        self.ui_msg_pub.pulish(msg)
+
+        pygame.quit()
+        sys.exit()
 
     def _draw_text(self, text, color, pos, font):
         text_obj = font.render(text, True, color)
@@ -413,7 +412,7 @@ class UIController(Node):
         # TODO: make
         while not self.debug_q.empty():
             cmd_tokens = self.debug_q.get().data.split()
-            if cmd_tokens[0] == 'stop':
+            if cmd_tokens[0] == 'stopall':
                 close()
             
             elif cmd_tokens[0] == 'switch':
@@ -495,7 +494,7 @@ class UIController(Node):
         
         msg = String()
         msg.data = ' '.join(f'{key}={val}' for key, val in args.items())
-        # print(msg.data)
+        print(msg.data)
         self.ui_msg_pub.publish(msg)
         self.curr_screen = 'play'
     
