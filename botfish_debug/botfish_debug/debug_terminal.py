@@ -15,15 +15,19 @@ class DebugTerminal(Node):
             'debug_cmd',
             10
         )
-        self.update_debug_board_pub = self.create_publisher(
+        self.player_move_pub = self.create_publisher(
             String,
-            'update_debug_board',
+            'player_move',
             10
         )
         self.timer = self.create_timer(
             PERIOD_s,
             self.update
         )
+    
+    def _uci_check(self, s):
+        # TODO: make this
+        return True
 
     def update(self):
         msg = String()
@@ -36,29 +40,41 @@ class DebugTerminal(Node):
             return
         
         # cmds that need parsing
-        # TODO: add calibrate command
-        # TODO: add a way to manual publish to a topic
         elif cmd_tokens[0] == 'help':
-            # TODO: this, also list topics or smthn
-            # stop, stopall, push (uci), pop (int), help, switch
+            # stop, stopall, push (uci), pop (int), help, switch, emote (key), svn
             print('you got this bro :)')
 
         elif cmd_tokens[0] in ['stop', 'stopall']:
-            msg.data = 'stop'
-            self.update_debug_board_pub.publish(msg)
-            if cmd_tokens[0] == 'stopall':
-                self.debug_cmd_pub.publish(msg)
+            msg.data = cmd_tokens[0]
+            self.debug_cmd_pub.publish(msg)
             sys.exit()
+
+        elif cmd_tokens[0] == 'svn': # spoof vision node
+            if len(cmd_tokens) == 1:
+                print('need move to spoof')
+                return
+            if len(cmd_tokens) > 2:
+                print('too many args')
+                return
+            if not self._uci_check(cmd_tokens[1]):
+                print('move is invalid')
+                return
+            
+            msg.data = ' '.join(cmd_tokens)
+            self.player_move_pub.publish(msg)
+            return
 
         elif cmd_tokens[0] == 'push':
             if len(cmd_tokens) == 1:
                 print('need a move to push bozo')
                 return
-            # TODO: check each arg for ok
+            ok = True
             for move in cmd_tokens[1:]:
-                pass
-            msg.data = ' '.join(cmd_tokens)
-            self.update_debug_board_pub.publish(msg)
+                if not self._uci_check(move):
+                    ok = False
+                    print(f'{move} is invalid')
+            if not ok:
+                return
         
         elif cmd_tokens[0] == 'pop':
             if len(cmd_tokens) > 2:
@@ -69,14 +85,29 @@ class DebugTerminal(Node):
             elif not cmd_tokens[1].isdigit():
                 print('gimme a num idot')
                 return
-            
-            msg.data = ' '.join(cmd_tokens)
-            self.update_debug_board_pub.publish(msg)
+        
+        elif cmd_tokens[0] == 'emote':
+            if len(cmd_tokens) == 1:
+                print('need which emote man')
+                return
+            if len(cmd_tokens) > 2:
+                print('too many args')
+                return
+            if cmd_tokens[1] == '--list':
+                print('available emotes:\n -wave\n -calibrate') # TODO: update as necessary
+                return
+            if cmd_tokens[1] not in [ # TODO: update as necessary
+                'wave',
+                'calibrate'
+            ]:
+                print('invalid emote')
+                return
 
-        # anything else
         else:
-            msg.data = ' '.join(cmd_tokens)
-            self.debug_cmd_pub.publish(msg)
+            pass # TODO: idk man
+        
+        msg.data = ' '.join(cmd_tokens)
+        self.debug_cmd_pub.publish(msg)
 
 
 def main(args=None):

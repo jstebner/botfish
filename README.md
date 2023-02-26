@@ -2,12 +2,6 @@
 
 Integration of Stockfish and UM-D R2ED Humanoid Robot for autonomous chess playing.
 
-## Description
-
-TODO: this
-
-## Getting Started
-
 ### Dependencies
 
 * REVIEW: Requires Python 3.10 on Ubunutu 22 
@@ -25,13 +19,19 @@ py 3.10 -m pip install -r requirements
 ### Usage
 
 ```
-py ./botfish.py [args]
+# source your workspace
+# build workspace
+
+# TODO: make the launch file for botfish infra
+
+# run this for debug terminal and display
+ros2 run botfish_debug terminal
 ```
 
 ## Help
 
 ```
-py ./botfish.py --help
+# TODO: this
 ```
 
 ## Authors
@@ -40,9 +40,4 @@ py ./botfish.py --help
 * [Christian Cuevas](https://github.com/cdawgc8)
 * [Jordan Krasan](https://github.com/JordanKra)
 * [James Elugbemi](https://github.com/James-Elugbemi)
-* [William Castle](https://github.com/SOUP-404)
-
-## Version History
-
-* 0.1
-    * Initial Release
+* [William Castle](https://github.com/wicastle)

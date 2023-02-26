@@ -37,15 +37,15 @@ class DebugDisplay(Node):
         self._render_board()
         self.camera_viewer = None
         
-        self.update_debug_board_sub = self.create_subscription(
+        self.debug_cmd_sub = self.create_subscription(
             String,
-            'update_debug_board',
+            'debug_cmd',
             self.cmd_q.put,
             10
         )
-        self.camera_debug_sub = self.create_subscription(
+        self.camera_feed_sub = self.create_subscription(
             String, # TODO: this should be image
-            'camera_debug',
+            'camera_feed',
             self.cam_q.put,
             10
         )
@@ -76,6 +76,7 @@ class DebugDisplay(Node):
         self.screen.blit(text_obj, text_rect)
 
     def update(self):
+        # TODO: add supplementals to board like arrows n stuff
         self.screen.fill((0,0,0))
         board_update = False
 
@@ -88,7 +89,7 @@ class DebugDisplay(Node):
         # process cmd queue
         while not self.cmd_q.empty():
             cmd_tokens = self.cmd_q.get().data.split()
-            if cmd_tokens[0] == 'stop':
+            if cmd_tokens[0] in ['stop', 'stopall']:
                 pygame.quit()
                 sys.exit()
 
@@ -108,7 +109,7 @@ class DebugDisplay(Node):
                 
         # process cam queue
         while not self.cam_q.empty():
-            self.camera_viewer = self.cam_q.get() # dump queue
+            self.camera_viewer = self.cam_q.get() # dump queue for now
         
         # draw board
         if board_update:
@@ -125,6 +126,7 @@ class DebugDisplay(Node):
             )
 
         # TODO: make this do more than just get pings
+        # process ui queue
         while not self.ui_q.empty():
             msg = self.ui_q.get().data
             if msg == 'ping':
