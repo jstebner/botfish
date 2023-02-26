@@ -316,7 +316,7 @@ class UIController(Node):
         self.ui_msg_pub.pulish(msg)
 
         pygame.quit()
-        sys.exit()
+        exit()
 
     def _draw_text(self, text, color, pos, font):
         text_obj = font.render(text, True, color)
@@ -413,7 +413,7 @@ class UIController(Node):
         while not self.debug_q.empty():
             cmd_tokens = self.debug_q.get().data.split()
             if cmd_tokens[0] == 'stopall':
-                close()
+                self.close()
             
             elif cmd_tokens[0] == 'switch':
                 self.switch()
@@ -427,7 +427,7 @@ class UIController(Node):
         clicking = False
         for event in pygame.event.get():
             if event.type == QUIT:
-                close()
+                self.close()
             if event.type == MOUSEBUTTONDOWN:
                 clicking = True
             if event.type == KEYDOWN:
@@ -452,7 +452,7 @@ class UIController(Node):
 
     def start_screen(self, mpos, clicking): # setup params n whatnot
         if self.windows['start']['btns']['quit']['toggle']:
-            close()
+            self.close()
 
         if not self.windows['start']['btns']['start_btn']['toggle']:
             self._draw_content('start', mpos, clicking)
@@ -530,7 +530,7 @@ class UIController(Node):
         
     def pause_screen(self, mpos, clicking):
         if self.windows['pause']['btns']['quit']['toggle']:
-            close()
+            self.close()
 
         if self.windows['pause']['btns']['unpause']['toggle']:
             self.windows['pause']['btns']['unpause']['toggle'] = False
