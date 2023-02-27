@@ -5,6 +5,7 @@
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <std_msgs/msg/string.hpp>
 #include <std_msgs/msg/float64.hpp>
+#include <std_msgs/msg/float64_multi_array.hpp>
 #include <geometry_msgs/msg/quaternion.hpp>
 #include <vector>
 
