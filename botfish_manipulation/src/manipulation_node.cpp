@@ -30,8 +30,13 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     (*move_group_interface) = moveit::planning_interface::MoveGroupInterface(static_cast<const SharedPtr>(this),
                                                                              _moveit_group);
 
+    RCLCPP_INFO(this->get_logger(), "Setting reference link to %s", _reference_link.c_str());
     move_group_interface->setPoseReferenceFrame(_reference_link);
+
+    RCLCPP_INFO(this->get_logger(), "Setting end effector to %s", _end_effector_link.c_str());
     move_group_interface->setEndEffector(_end_effector_link);
+
+    RCLCPP_INFO(this->get_logger(), "Setting goal tolerance to %f", _goal_tolerance);
     move_group_interface->setGoalTolerance(_goal_tolerance);
 }
 
@@ -67,6 +72,9 @@ std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string mo
         loc.x_dist = (double) value * _cell_offset;
         loc.y_dist = (double) std::stoi(num) * _cell_offset;
         parsed_moves.push_back(loc);
+    }
+    for(auto i : parsed_moves){
+        RCLCPP_INFO(this->get_logger(), "Cell location: %f, %f", this->_starting_position.position.x + i.x_dist, this->_starting_position.position.z + i.y_dist);
     }
     return parsed_moves;
 }

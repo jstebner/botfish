@@ -1,3 +1,5 @@
+import sys
+
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
@@ -8,6 +10,8 @@ from time import sleep
 class Engine(Node):
     def __init__(self):
         super().__init__('engine')
+        self.settings = {'path': None} # TODO: make this use actual engine path idk how tho
+        
         self.gamestate_pub = self.create_publisher(
             String,
             'gamestate',
@@ -37,35 +41,53 @@ class Engine(Node):
             10
         )
     
-    # TODO: this
+    
+    # TODO: this ig
     def process_ui_msg(self, msg):
         data_tokens = msg.data.split()
         if data_tokens[0] == 'ping':
-            pass
+            pass # i think we do not care
 
         elif data_tokens[0] == 'stopall':
-            pass
+            exit() # TODO: make this good or smthn
 
         else: # startup
-            self.settings = {
-                key: val 
-                for item in data_tokens for key, val in item.split('=')
-            }
+            for item in data_tokens:
+                key, val = item.split('=')
+                self.settings[key] = val
             self.start_engine()
 
 
-    # TODO: this
+    # TODO: this ig?
     def process_player_move(self, msg):
         move = msg.data
+        if not self.sf.is_move_correct(move):
+            return
+        self.sf.make_moves_from_current_position([move])
+        
+        move = self.sf.get_best_move()
+        self.sf.make_moves_from_current_position([move])
+        return move
+        
 
     # TODO: this
     def process_debug_cmd(self, msg):
         cmd_tokens = msg.data.split()
+        
     
-    # TODO: this
+    # REVIEW: this
     def start_engine(self):
-        # NEEDS: engine_path, level, color, side
-        pass
+        # NEEDS: engine_path, level, color
+        self.sf = Stockfish(
+            path = self.settings['path'],
+            parameters = {
+                'UCI_Elo': {'easy_dff':500, 'medi_diff':1000, 'hard_diff':2500}[self.settings['difficulty']],
+                'UCI_LimitStength': True,
+                'Slow Mover': 0,
+                'Ponder': False
+            }
+        )
+
 
 def main(args=None):
     rclpy.init(args=args)

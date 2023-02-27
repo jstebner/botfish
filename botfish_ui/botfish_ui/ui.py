@@ -318,7 +318,7 @@ class UIController(Node):
         self.ui_msg_pub.pulish(msg)
 
         pygame.quit()
-        sys.exit()
+        exit()
 
     def _draw_text(self, text, color, pos, font):
         text_obj = font.render(text, True, color)
