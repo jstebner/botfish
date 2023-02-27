@@ -9,6 +9,8 @@ from std_msgs.msg import String
 PERIOD_s = 1/10 # 10 UpS
 class DebugTerminal(Node):
     def __init__(self):
+        start_display()
+        
         super().__init__('debug_terminal')
         self.debug_cmd_pub = self.create_publisher(
             String,
@@ -48,6 +50,12 @@ class DebugTerminal(Node):
             msg.data = cmd_tokens[0]
             self.debug_cmd_pub.publish(msg)
             sys.exit()
+        
+        elif cmd_tokens[0] == 'display':
+            if len(cmd_tokens) != 1:
+                print('display dont take args')
+                return
+            start_display()
 
         elif cmd_tokens[0] == 'svn': # spoof vision node
             if len(cmd_tokens) == 1:
@@ -60,7 +68,7 @@ class DebugTerminal(Node):
                 print('move is invalid')
                 return
             
-            msg.data = ' '.join(cmd_tokens)
+            msg.data = f'push {cmd_tokens[1]}'
             self.player_move_pub.publish(msg)
             return
 
@@ -104,16 +112,17 @@ class DebugTerminal(Node):
                 return
 
         else:
-            pass # TODO: idk man
+            print('huh')
         
         msg.data = ' '.join(cmd_tokens)
         self.debug_cmd_pub.publish(msg)
 
-
-def main(args=None):
+def start_display():
     # please oh please for the love of God dont judge me for this
     Popen('ros2 run botfish_debug display', shell=True)
-    
+
+def main(args=None):
+    print(__file__)
     rclpy.init(args=args)
 
     node = DebugTerminal()

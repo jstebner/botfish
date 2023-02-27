@@ -10,6 +10,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('lib/python3.10/site-packages/botfish_engine',
+            ['logo.png']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

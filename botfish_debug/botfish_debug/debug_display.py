@@ -55,6 +55,18 @@ class DebugDisplay(Node):
             self.ui_q.put,
             10
         )
+        self.player_move_sub = self.create_subscription(
+            String,
+            'player_move',
+            self.cmd_q.put,
+            10
+        )
+        self.bot_move_sub = self.create_subscription(
+            String,
+            'bot_move',
+            self.cmd_q.put,
+            10
+        )
         self.timer = self.create_timer(
             PERIOD_s,
             self.update

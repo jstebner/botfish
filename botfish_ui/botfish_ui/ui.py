@@ -36,6 +36,8 @@ def scaler(*args):
 def unscaler(*args): # you have no right to justdge me for this
     return [arg*SD for arg in args]
 
+LOGO = pygame.image.load(os.path.join(os.path.dirname(__file__), 'logo.png'))
+
 class PriorQueue:
     def __init__(self):
         self.q = list()
@@ -413,7 +415,7 @@ class UIController(Node):
         while not self.debug_q.empty():
             cmd_tokens = self.debug_q.get().data.split()
             if cmd_tokens[0] == 'stopall':
-                close()
+                self.close()
             
             elif cmd_tokens[0] == 'switch':
                 self.switch()
@@ -427,7 +429,7 @@ class UIController(Node):
         clicking = False
         for event in pygame.event.get():
             if event.type == QUIT:
-                close()
+                self.close()
             if event.type == MOUSEBUTTONDOWN:
                 clicking = True
             if event.type == KEYDOWN:
@@ -436,8 +438,7 @@ class UIController(Node):
                         self.chess_timers[not self.is_left][0] = time()
                     self.paused ^= True # dont ask
                 if event.key == K_SPACE:
-                    # if self.is_player_turn and self.curr_screen == 'play':
-                    if self.curr_screen == 'play':
+                    if self.is_player_turn and self.curr_screen == 'play':
                         msg = String()
                         msg.data = 'ping'
                         self.ui_msg_pub.publish(msg)
@@ -452,8 +453,10 @@ class UIController(Node):
 
     def start_screen(self, mpos, clicking): # setup params n whatnot
         if self.windows['start']['btns']['quit']['toggle']:
-            close()
+            self.close()
 
+        self.screen.blit(LOGO, (100,100))
+        
         if not self.windows['start']['btns']['start_btn']['toggle']:
             self._draw_content('start', mpos, clicking)
             return
@@ -530,7 +533,7 @@ class UIController(Node):
         
     def pause_screen(self, mpos, clicking):
         if self.windows['pause']['btns']['quit']['toggle']:
-            close()
+            self.close()
 
         if self.windows['pause']['btns']['unpause']['toggle']:
             self.windows['pause']['btns']['unpause']['toggle'] = False
