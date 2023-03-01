@@ -28,11 +28,11 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
 }
 
 void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
-    std::vector<manip::cell_location> parsed_moves = parse_move(msg->data);
+    manip::cell_location parsed_move = parse_move(msg->data);
 
     //Move one piece to an open cell
     bool grasping = true;
-    actuate(parsed_moves.at(0));
+    actuate(parsed_move);
     /*for (auto i: parsed_moves) {
         actuate(i);
         //grab(grasping);
@@ -40,31 +40,22 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     }*/
 }
 
-std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string move) {
-    std::vector<manip::cell_location> parsed_moves;
-    std::vector<std::string> locations;
-
-    //Break move string into starting and ending cells
-    locations.push_back(move.substr(0, 2));
-    locations.push_back(move.substr(2, 3));
+manip::cell_location manip::Manipulation::parse_move(std::string move) {
+    manip::cell_location loc{};
 
     //Convert letter val to number and multiply both letter and number by cell offset to get location
-    for (auto i: locations) {
-        manip::cell_location loc{};
-        char letter = i[0];
-        std::string num(1, i[1]);
-        letter = toupper(letter);
-        const unsigned int index = letter - 'A';
-        int value = letter_to_value[index];
-        loc.x_dist = (double) value * _cell_offset;
-        loc.y_dist = (double) std::stoi(num) * _cell_offset;
-        parsed_moves.push_back(loc);
-    }
-    for (auto i: parsed_moves) {
-        RCLCPP_INFO(this->get_logger(), "Cell location: %f, %f", this->_starting_position.position.x + i.x_dist,
-                    this->_starting_position.position.z + i.y_dist);
-    }
-    return parsed_moves;
+    char letter = move[0]; //Grab char in first position, ex: A1 -> A
+    std::string num(1, move[1]); //Convert num in second position to a string
+    letter = toupper(letter);
+    const unsigned int index = letter - 'A'; //Get index of the char from first position in array
+    int value = letter_to_value[index]; //Get that number from array
+    loc.x_dist = ((double) (value - 1)) *
+                 _cell_offset; //Convert to x_dist ensuring that value is reduced by one because 0 indexing
+    loc.y_dist = ((double) (std::stoi(num) - 1)) * _cell_offset; //Same as above but convert to num using std::stoi
+
+    RCLCPP_INFO(this->get_logger(), "Cell location: %f, %f", this->_starting_position.position.x + loc.x_dist,
+                this->_starting_position.position.z + loc.y_dist);
+    return loc;
 }
 
 void manip::Manipulation::actuate(manip::cell_location location) {
@@ -113,7 +104,8 @@ void manip::Manipulation::plan_execute() {
     move_group_interface->setPoseTarget(_target_pose);
 
     //Attempt to plan to that position
-    RCLCPP_INFO(this->get_logger(), "Planning movement to x: %f, y: %f, z: %f", _target_pose.position.x, _target_pose.position.y, _target_pose.position.z);
+    RCLCPP_INFO(this->get_logger(), "Planning movement to x: %f, y: %f, z: %f", _target_pose.position.x,
+                _target_pose.position.y, _target_pose.position.z);
     auto const plan_ok = static_cast<bool>(move_group_interface->plan(msg));
     if (!plan_ok) {
         RCLCPP_ERROR(this->get_logger(), "Failed to plan!!!");

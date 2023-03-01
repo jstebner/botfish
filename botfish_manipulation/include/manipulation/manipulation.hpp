@@ -22,6 +22,9 @@ namespace manip {
     class Manipulation : public rclcpp::Node {
     public:
         explicit Manipulation(rclcpp::NodeOptions options);
+
+        ///@brief Given a MoveGroupInterface this function will set up that interface to use to move pieces
+        ///@param interface the MoveGroupInterface pointer to use for plans
         void setup_moveit(moveit::planning_interface::MoveGroupInterface *interface);
 
 
@@ -84,6 +87,6 @@ namespace manip {
         /// @brief Converts string moves to xy locations
         /// @param move string move recieved in the move_cb callback
         /// @return tuple of two cell_location structs each containing two doubles for both x and y location
-        std::vector<cell_location> parse_move(std::string move);
+        cell_location parse_move(std::string move);
     };
 }
