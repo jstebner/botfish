@@ -22,6 +22,8 @@ namespace manip {
     class Manipulation : public rclcpp::Node {
     public:
         explicit Manipulation(rclcpp::NodeOptions options);
+        void setup_moveit(moveit::planning_interface::MoveGroupInterface *interface);
+
 
     private:
         std::optional<std::shared_ptr<rclcpp::Subscription<std_msgs::msg::String>>> _engine_move_sub =
@@ -61,7 +63,7 @@ namespace manip {
         //Pose to plan to
         geometry_msgs::msg::Pose _target_pose{};
 
-        moveit::planning_interface::MoveGroupInterface *move_group_interface = nullptr;
+        moveit::planning_interface::MoveGroupInterface* move_group_interface = nullptr;
 
         /// @brief Callback for moves from the engine
         /// @param msg string msg containing the move outputted by the engine, format will be startingLocationEndingLocation ex: e2e4
@@ -77,6 +79,7 @@ namespace manip {
 
         ///@brief Plan and execute pose currently in _target_pose
         void plan_execute();
+
 
         /// @brief Converts string moves to xy locations
         /// @param move string move recieved in the move_cb callback

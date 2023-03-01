@@ -6,66 +6,25 @@
 manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulation", options) {
     _cell_offset = this->declare_parameter("cell_offset", 0.05);
     _end_effector_link = this->declare_parameter("end_effector", "right_hand_base_link");
-    _reference_link = this->declare_parameter("reference_link", "right_arm_podent_link");
+    _reference_link = this->declare_parameter("reference_link", "right_arm_podest_link");
     _moveit_group = this->declare_parameter("move_group", "right_arm");
     _grab_height = this->declare_parameter("grab_height", 0.352);
-    _move_height = this->declare_parameter("move_height", 0.100);
+    _move_height = this->declare_parameter("move_height", 0.352);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.0125);
 
     _hand_orientation.x = 0.004;
     _hand_orientation.y = -0.003;
     _hand_orientation.z = 0.588;
     _hand_orientation.w = 0.809;
-
-    _starting_position.position.x = 0.055;
-    _starting_position.position.y = 0.100;
-    _starting_position.position.z = 0.512;
+    _starting_position.position.x = -0.095;
+    _starting_position.position.y = _move_height;
+    _starting_position.position.z = 0.312;
     _starting_position.orientation = _hand_orientation;
 
     _engine_move_sub = this->create_subscription<std_msgs::msg::String>(
             "/engine_move", 10, std::bind(&Manipulation::move_cb, this, std::placeholders::_1));
 
     _gripper_pub = this->create_publisher<std_msgs::msg::Float64>("/right_gripper/position", 10);
-
-    (*move_group_interface) = moveit::planning_interface::MoveGroupInterface(static_cast<const SharedPtr>(this),
-                                                                             _moveit_group);
-
-    RCLCPP_INFO(this->get_logger(), "Setting reference link to %s...", _reference_link.c_str());
-    move_group_interface->setPoseReferenceFrame(_reference_link);
-
-    RCLCPP_INFO(this->get_logger(), "Setting end effector to %s...", _end_effector_link.c_str());
-    move_group_interface->setEndEffector(_end_effector_link);
-
-    RCLCPP_INFO(this->get_logger(), "Setting goal tolerance to %f...", _goal_tolerance);
-    move_group_interface->setGoalTolerance(_goal_tolerance);
-
-    RCLCPP_INFO(this->get_logger(), "Creating collision box...");
-    auto frame_id = move_group_interface->getPlanningFrame();
-    moveit_msgs::msg::CollisionObject collision_object;
-    collision_object.header.frame_id = frame_id;
-    collision_object.id = "box1";
-    shape_msgs::msg::SolidPrimitive primitive;
-
-    // Define the size of the box in meters
-    primitive.type = primitive.BOX;
-    primitive.dimensions.resize(3);
-    primitive.dimensions[primitive.BOX_X] = 5.0;
-    primitive.dimensions[primitive.BOX_Y] = 5.0;
-    primitive.dimensions[primitive.BOX_Z] = 0.0;
-
-    // Define the pose of the box (relative to the frame_id)
-    geometry_msgs::msg::Pose box_pose;
-    box_pose.orientation.w = 1.0;
-    box_pose.position.x = 0.25;
-    box_pose.position.y = -0.5;
-    box_pose.position.z = 0.01;
-
-    collision_object.primitives.push_back(primitive);
-    collision_object.primitive_poses.push_back(box_pose);
-    collision_object.operation = collision_object.ADD;
-    // Add the collision object to the scene
-    moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
-    planning_scene_interface.applyCollisionObject(collision_object);
 }
 
 void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
@@ -149,12 +108,12 @@ void manip::Manipulation::grab(bool position) {
 }
 
 void manip::Manipulation::plan_execute() {
-    //TODO: Break this up into separate plan/execute functions
+    //TODO: Break this up into separate plan/execute functions, Potentially add async planning
     moveit::planning_interface::MoveGroupInterface::Plan msg;
     move_group_interface->setPoseTarget(_target_pose);
 
     //Attempt to plan to that position
-    RCLCPP_INFO(this->get_logger(), "Planning movement...");
+    RCLCPP_INFO(this->get_logger(), "Planning movement to x: %f, y: %f, z: %f", _target_pose.position.x, _target_pose.position.y, _target_pose.position.z);
     auto const plan_ok = static_cast<bool>(move_group_interface->plan(msg));
     if (!plan_ok) {
         RCLCPP_ERROR(this->get_logger(), "Failed to plan!!!");
@@ -169,4 +128,50 @@ void manip::Manipulation::plan_execute() {
             RCLCPP_INFO(this->get_logger(), "Execution Succeeded!");
         }
     }
+}
+
+void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInterface *interface) {
+    RCLCPP_INFO(this->get_logger(), "Creating move group interface...");
+
+    move_group_interface = interface;
+
+    RCLCPP_INFO(this->get_logger(), "Setting reference link to %s...", _reference_link.c_str());
+    move_group_interface->setPoseReferenceFrame(_reference_link);
+
+    RCLCPP_INFO(this->get_logger(), "Setting end effector to %s...", _end_effector_link.c_str());
+    move_group_interface->setEndEffectorLink(_end_effector_link);
+
+    RCLCPP_INFO(this->get_logger(), "Setting goal tolerance to %f...", _goal_tolerance);
+    move_group_interface->setGoalTolerance(_goal_tolerance);
+
+    RCLCPP_INFO(this->get_logger(), "Creating collision box...");
+    auto frame_id = move_group_interface->getPlanningFrame();
+    moveit_msgs::msg::CollisionObject collision_object;
+    collision_object.header.frame_id = frame_id;
+    collision_object.id = "box1";
+    shape_msgs::msg::SolidPrimitive primitive;
+
+    // Define the size of the box in meters
+    primitive.type = primitive.BOX;
+    primitive.dimensions.resize(3);
+    primitive.dimensions[primitive.BOX_X] = 5.0;
+    primitive.dimensions[primitive.BOX_Y] = 5.0;
+    primitive.dimensions[primitive.BOX_Z] = 0.0;
+
+    // Define the pose of the box (relative to the frame_id)
+    geometry_msgs::msg::Pose box_pose;
+    box_pose.orientation.w = 1.0;
+    box_pose.position.x = 0.25;
+    box_pose.position.y = -0.5;
+    box_pose.position.z = 0.01;
+
+    collision_object.primitives.push_back(primitive);
+    collision_object.primitive_poses.push_back(box_pose);
+    collision_object.operation = collision_object.ADD;
+    // Add the collision object to the scene
+    moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
+    planning_scene_interface.applyCollisionObject(collision_object);
+    _target_pose.position = _starting_position.position;
+    _target_pose.orientation = _hand_orientation;
+    plan_execute();
 }
