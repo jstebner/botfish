@@ -1,0 +1,35 @@
+running egg_info
+creating ../build/botfish_engine/botfish_engine.egg-info
+writing ../build/botfish_engine/botfish_engine.egg-info/PKG-INFO
+writing dependency_links to ../build/botfish_engine/botfish_engine.egg-info/dependency_links.txt
+writing entry points to ../build/botfish_engine/botfish_engine.egg-info/entry_points.txt
+writing requirements to ../build/botfish_engine/botfish_engine.egg-info/requires.txt
+writing top-level names to ../build/botfish_engine/botfish_engine.egg-info/top_level.txt
+writing manifest file '../build/botfish_engine/botfish_engine.egg-info/SOURCES.txt'
+reading manifest file '../build/botfish_engine/botfish_engine.egg-info/SOURCES.txt'
+writing manifest file '../build/botfish_engine/botfish_engine.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build
+creating /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib
+creating /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine
+copying botfish_engine/__init__.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine
+copying botfish_engine/engine.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine
+running install
+running install_lib
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine
+copying /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine/__init__.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine
+copying /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine/engine.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine
+byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine/engine.py to engine.cpython-310.pyc
+running install_data
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/ament_index
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/ament_index/resource_index
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/ament_index/resource_index/packages
+copying resource/botfish_engine -> /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/ament_index/resource_index/packages
+copying package.xml -> /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine
+running install_egg_info
+Copying ../build/botfish_engine/botfish_engine.egg-info to /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine-0.0.0-py3.10.egg-info
+running install_scripts
+Installing engine script to /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/botfish_engine
+writing list of installed files to '/home/james-elugbemi/dev_ws/botfish/build/botfish_engine/install.log'

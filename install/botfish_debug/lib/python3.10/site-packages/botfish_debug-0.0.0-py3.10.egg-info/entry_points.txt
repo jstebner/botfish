@@ -1,0 +1,4 @@
+[console_scripts]
+display = botfish_debug.debug_display:main
+terminal = botfish_debug.debug_terminal:main
+

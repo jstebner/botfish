@@ -1,0 +1,6 @@
+source;share/botfish_engine/hook/pythonpath.ps1
+source;share/botfish_engine/hook/pythonpath.dsv
+source;share/botfish_engine/hook/pythonpath.sh
+source;share/botfish_engine/hook/ament_prefix_path.ps1
+source;share/botfish_engine/hook/ament_prefix_path.dsv
+source;share/botfish_engine/hook/ament_prefix_path.sh

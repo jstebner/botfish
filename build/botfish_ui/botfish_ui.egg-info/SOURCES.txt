@@ -1,0 +1,16 @@
+package.xml
+setup.cfg
+setup.py
+../build/botfish_ui/botfish_ui.egg-info/PKG-INFO
+../build/botfish_ui/botfish_ui.egg-info/SOURCES.txt
+../build/botfish_ui/botfish_ui.egg-info/dependency_links.txt
+../build/botfish_ui/botfish_ui.egg-info/entry_points.txt
+../build/botfish_ui/botfish_ui.egg-info/requires.txt
+../build/botfish_ui/botfish_ui.egg-info/top_level.txt
+../build/botfish_ui/botfish_ui.egg-info/zip-safe
+botfish_ui/__init__.py
+botfish_ui/ui.py
+resource/botfish_ui
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py

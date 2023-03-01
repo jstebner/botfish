@@ -1,0 +1,3 @@
+[console_scripts]
+engine = botfish_engine.engine:main
+

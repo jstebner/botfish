@@ -1,0 +1,41 @@
+running egg_info
+creating ../build/botfish_debug/botfish_debug.egg-info
+writing ../build/botfish_debug/botfish_debug.egg-info/PKG-INFO
+writing dependency_links to ../build/botfish_debug/botfish_debug.egg-info/dependency_links.txt
+writing entry points to ../build/botfish_debug/botfish_debug.egg-info/entry_points.txt
+writing requirements to ../build/botfish_debug/botfish_debug.egg-info/requires.txt
+writing top-level names to ../build/botfish_debug/botfish_debug.egg-info/top_level.txt
+writing manifest file '../build/botfish_debug/botfish_debug.egg-info/SOURCES.txt'
+reading manifest file '../build/botfish_debug/botfish_debug.egg-info/SOURCES.txt'
+writing manifest file '../build/botfish_debug/botfish_debug.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build
+creating /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build/lib
+creating /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build/lib/botfish_debug
+copying botfish_debug/debug_terminal.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build/lib/botfish_debug
+copying botfish_debug/debug_display.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build/lib/botfish_debug
+copying botfish_debug/__init__.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build/lib/botfish_debug
+running install
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running install_lib
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages/botfish_debug
+copying /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build/lib/botfish_debug/debug_terminal.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages/botfish_debug
+copying /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build/lib/botfish_debug/debug_display.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages/botfish_debug
+copying /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build/lib/botfish_debug/__init__.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages/botfish_debug
+byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages/botfish_debug/debug_terminal.py to debug_terminal.cpython-310.pyc
+byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages/botfish_debug/debug_display.py to debug_display.cpython-310.pyc
+byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages/botfish_debug/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/ament_index
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/ament_index/resource_index
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/ament_index/resource_index/packages
+copying resource/botfish_debug -> /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/ament_index/resource_index/packages
+copying package.xml -> /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug
+running install_egg_info
+Copying ../build/botfish_debug/botfish_debug.egg-info to /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages/botfish_debug-0.0.0-py3.10.egg-info
+running install_scripts
+Installing display script to /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/botfish_debug
+Installing terminal script to /home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/botfish_debug
+writing list of installed files to '/home/james-elugbemi/dev_ws/botfish/build/botfish_debug/install.log'
