@@ -36,6 +36,8 @@ def scaler(*args):
 def unscaler(*args): # you have no right to justdge me for this
     return [arg*SD for arg in args]
 
+LOGO = pygame.image.load(os.path.join(os.path.dirname(__file__), 'logo.png'))
+
 class PriorQueue:
     def __init__(self):
         self.q = list()
@@ -436,8 +438,7 @@ class UIController(Node):
                         self.chess_timers[not self.is_left][0] = time()
                     self.paused ^= True # dont ask
                 if event.key == K_SPACE:
-                    # if self.is_player_turn and self.curr_screen == 'play':
-                    if self.curr_screen == 'play':
+                    if self.is_player_turn and self.curr_screen == 'play':
                         msg = String()
                         msg.data = 'ping'
                         self.ui_msg_pub.publish(msg)
@@ -454,6 +455,8 @@ class UIController(Node):
         if self.windows['start']['btns']['quit']['toggle']:
             self.close()
 
+        self.screen.blit(LOGO, (100,100))
+        
         if not self.windows['start']['btns']['start_btn']['toggle']:
             self._draw_content('start', mpos, clicking)
             return

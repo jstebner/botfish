@@ -1,0 +1,346 @@
+[8.482s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[8.482s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=12, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7fd4e3ebe860>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7fd4e4785f00>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7fd4e4785f00>>)
+[10.084s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[10.084s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[10.084s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[10.084s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[10.084s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[10.084s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[10.084s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/james-elugbemi/dev_ws/botfish'
+[10.084s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[10.084s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[10.084s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[10.084s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[10.084s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[10.084s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[10.084s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[10.084s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[10.084s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[10.097s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[10.097s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[10.097s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[10.097s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[10.097s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[10.120s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_debug) by extensions ['ignore', 'ignore_ament_install']
+[10.120s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_debug) by extension 'ignore'
+[10.120s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_debug) by extension 'ignore_ament_install'
+[10.120s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_debug) by extensions ['colcon_pkg']
+[10.120s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_debug) by extension 'colcon_pkg'
+[10.121s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_debug) by extensions ['colcon_meta']
+[10.121s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_debug) by extension 'colcon_meta'
+[10.121s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_debug) by extensions ['ros']
+[10.121s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_debug) by extension 'ros'
+[10.137s] DEBUG:colcon.colcon_core.package_identification:Package 'botfish_debug' with type 'ros.ament_python' and name 'botfish_debug'
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_engine) by extensions ['ignore', 'ignore_ament_install']
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_engine) by extension 'ignore'
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_engine) by extension 'ignore_ament_install'
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_engine) by extensions ['colcon_pkg']
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_engine) by extension 'colcon_pkg'
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_engine) by extensions ['colcon_meta']
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_engine) by extension 'colcon_meta'
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_engine) by extensions ['ros']
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_engine) by extension 'ros'
+[10.138s] DEBUG:colcon.colcon_core.package_identification:Package 'botfish_engine' with type 'ros.ament_python' and name 'botfish_engine'
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_manipulation) by extensions ['ignore', 'ignore_ament_install']
+[10.138s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_manipulation) by extension 'ignore'
+[10.139s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_manipulation) by extension 'ignore_ament_install'
+[10.139s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_manipulation) by extensions ['colcon_pkg']
+[10.139s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_manipulation) by extension 'colcon_pkg'
+[10.139s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_manipulation) by extensions ['colcon_meta']
+[10.139s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_manipulation) by extension 'colcon_meta'
+[10.139s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_manipulation) by extensions ['ros']
+[10.139s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_manipulation) by extension 'ros'
+[10.139s] DEBUG:colcon.colcon_core.package_identification:Package 'botfish_manipulation' with type 'ros.ament_cmake' and name 'botfish_manipulation'
+[10.154s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_perception) by extensions ['ignore', 'ignore_ament_install']
+[10.154s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_perception) by extension 'ignore'
+[10.154s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_perception) by extension 'ignore_ament_install'
+[10.154s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_perception) by extensions ['colcon_pkg']
+[10.155s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_perception) by extension 'colcon_pkg'
+[10.155s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_perception) by extensions ['colcon_meta']
+[10.155s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_perception) by extension 'colcon_meta'
+[10.155s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_perception) by extensions ['ros']
+[10.155s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_perception) by extension 'ros'
+[10.170s] DEBUG:colcon.colcon_core.package_identification:Package 'botfish_perception' with type 'ros.ament_python' and name 'botfish_perception'
+[10.171s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_ui) by extensions ['ignore', 'ignore_ament_install']
+[10.171s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_ui) by extension 'ignore'
+[10.171s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_ui) by extension 'ignore_ament_install'
+[10.171s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_ui) by extensions ['colcon_pkg']
+[10.171s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_ui) by extension 'colcon_pkg'
+[10.171s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_ui) by extensions ['colcon_meta']
+[10.171s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_ui) by extension 'colcon_meta'
+[10.171s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_ui) by extensions ['ros']
+[10.171s] Level 1:colcon.colcon_core.package_identification:_identify(botfish_ui) by extension 'ros'
+[10.172s] DEBUG:colcon.colcon_core.package_identification:Package 'botfish_ui' with type 'ros.ament_python' and name 'botfish_ui'
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extensions ['ignore', 'ignore_ament_install']
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extension 'ignore'
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extension 'ignore_ament_install'
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extensions ['colcon_pkg']
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extension 'colcon_pkg'
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extensions ['colcon_meta']
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extension 'colcon_meta'
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extensions ['ros']
+[10.172s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extension 'ros'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extensions ['cmake', 'python']
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extension 'cmake'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extension 'python'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extensions ['python_setup_py']
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(engines) by extension 'python_setup_py'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['ignore', 'ignore_ament_install']
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'ignore'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'ignore_ament_install'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['colcon_pkg']
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'colcon_pkg'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['colcon_meta']
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'colcon_meta'
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['ros']
+[10.173s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'ros'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['cmake', 'python']
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'cmake'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'python'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['python_setup_py']
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'python_setup_py'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extensions ['ignore', 'ignore_ament_install']
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extension 'ignore'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extension 'ignore_ament_install'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extensions ['colcon_pkg']
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extension 'colcon_pkg'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extensions ['colcon_meta']
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extension 'colcon_meta'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extensions ['ros']
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extension 'ros'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extensions ['cmake', 'python']
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extension 'cmake'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extension 'python'
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extensions ['python_setup_py']
+[10.174s] Level 1:colcon.colcon_core.package_identification:_identify(viz_model) by extension 'python_setup_py'
+[10.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[10.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[10.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[10.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[10.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[10.742s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[10.742s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[10.851s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 12 installed packages in /home/james-elugbemi/dev_ws/R2ED/install
+[10.853s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/james-elugbemi/dev_ws/ws_moveit2/install
+[10.862s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 320 installed packages in /home/james-elugbemi/ros2_humble/install
+[10.866s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 267 installed packages in /opt/ros/humble
+[10.873s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[20.109s] Level 5:colcon.colcon_core.verb:set package 'botfish_debug' build argument 'cmake_args' from command line to 'None'
+[20.109s] Level 5:colcon.colcon_core.verb:set package 'botfish_debug' build argument 'cmake_target' from command line to 'None'
+[20.109s] Level 5:colcon.colcon_core.verb:set package 'botfish_debug' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[20.109s] Level 5:colcon.colcon_core.verb:set package 'botfish_debug' build argument 'cmake_clean_cache' from command line to 'False'
+[20.109s] Level 5:colcon.colcon_core.verb:set package 'botfish_debug' build argument 'cmake_clean_first' from command line to 'False'
+[20.109s] Level 5:colcon.colcon_core.verb:set package 'botfish_debug' build argument 'cmake_force_configure' from command line to 'False'
+[20.109s] Level 5:colcon.colcon_core.verb:set package 'botfish_debug' build argument 'ament_cmake_args' from command line to 'None'
+[20.109s] Level 5:colcon.colcon_core.verb:set package 'botfish_debug' build argument 'catkin_cmake_args' from command line to 'None'
+[20.109s] Level 5:colcon.colcon_core.verb:set package 'botfish_debug' build argument 'catkin_skip_building_tests' from command line to 'False'
+[20.109s] DEBUG:colcon.colcon_core.verb:Building package 'botfish_debug' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/james-elugbemi/dev_ws/botfish/build/botfish_debug', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug', 'merge_install': False, 'path': '/home/james-elugbemi/dev_ws/botfish/botfish_debug', 'symlink_install': False, 'test_result_base': None}
+[20.111s] Level 5:colcon.colcon_core.verb:set package 'botfish_engine' build argument 'cmake_args' from command line to 'None'
+[20.111s] Level 5:colcon.colcon_core.verb:set package 'botfish_engine' build argument 'cmake_target' from command line to 'None'
+[20.111s] Level 5:colcon.colcon_core.verb:set package 'botfish_engine' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[20.111s] Level 5:colcon.colcon_core.verb:set package 'botfish_engine' build argument 'cmake_clean_cache' from command line to 'False'
+[20.111s] Level 5:colcon.colcon_core.verb:set package 'botfish_engine' build argument 'cmake_clean_first' from command line to 'False'
+[20.111s] Level 5:colcon.colcon_core.verb:set package 'botfish_engine' build argument 'cmake_force_configure' from command line to 'False'
+[20.111s] Level 5:colcon.colcon_core.verb:set package 'botfish_engine' build argument 'ament_cmake_args' from command line to 'None'
+[20.111s] Level 5:colcon.colcon_core.verb:set package 'botfish_engine' build argument 'catkin_cmake_args' from command line to 'None'
+[20.111s] Level 5:colcon.colcon_core.verb:set package 'botfish_engine' build argument 'catkin_skip_building_tests' from command line to 'False'
+[20.111s] DEBUG:colcon.colcon_core.verb:Building package 'botfish_engine' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/james-elugbemi/dev_ws/botfish/build/botfish_engine', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine', 'merge_install': False, 'path': '/home/james-elugbemi/dev_ws/botfish/botfish_engine', 'symlink_install': False, 'test_result_base': None}
+[20.113s] Level 5:colcon.colcon_core.verb:set package 'botfish_manipulation' build argument 'cmake_args' from command line to 'None'
+[20.113s] Level 5:colcon.colcon_core.verb:set package 'botfish_manipulation' build argument 'cmake_target' from command line to 'None'
+[20.113s] Level 5:colcon.colcon_core.verb:set package 'botfish_manipulation' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[20.113s] Level 5:colcon.colcon_core.verb:set package 'botfish_manipulation' build argument 'cmake_clean_cache' from command line to 'False'
+[20.113s] Level 5:colcon.colcon_core.verb:set package 'botfish_manipulation' build argument 'cmake_clean_first' from command line to 'False'
+[20.114s] Level 5:colcon.colcon_core.verb:set package 'botfish_manipulation' build argument 'cmake_force_configure' from command line to 'False'
+[20.114s] Level 5:colcon.colcon_core.verb:set package 'botfish_manipulation' build argument 'ament_cmake_args' from command line to 'None'
+[20.114s] Level 5:colcon.colcon_core.verb:set package 'botfish_manipulation' build argument 'catkin_cmake_args' from command line to 'None'
+[20.114s] Level 5:colcon.colcon_core.verb:set package 'botfish_manipulation' build argument 'catkin_skip_building_tests' from command line to 'False'
+[20.114s] DEBUG:colcon.colcon_core.verb:Building package 'botfish_manipulation' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/james-elugbemi/dev_ws/botfish/build/botfish_manipulation', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation', 'merge_install': False, 'path': '/home/james-elugbemi/dev_ws/botfish/botfish_manipulation', 'symlink_install': False, 'test_result_base': None}
+[20.116s] Level 5:colcon.colcon_core.verb:set package 'botfish_perception' build argument 'cmake_args' from command line to 'None'
+[20.116s] Level 5:colcon.colcon_core.verb:set package 'botfish_perception' build argument 'cmake_target' from command line to 'None'
+[20.116s] Level 5:colcon.colcon_core.verb:set package 'botfish_perception' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[20.116s] Level 5:colcon.colcon_core.verb:set package 'botfish_perception' build argument 'cmake_clean_cache' from command line to 'False'
+[20.116s] Level 5:colcon.colcon_core.verb:set package 'botfish_perception' build argument 'cmake_clean_first' from command line to 'False'
+[20.116s] Level 5:colcon.colcon_core.verb:set package 'botfish_perception' build argument 'cmake_force_configure' from command line to 'False'
+[20.116s] Level 5:colcon.colcon_core.verb:set package 'botfish_perception' build argument 'ament_cmake_args' from command line to 'None'
+[20.117s] Level 5:colcon.colcon_core.verb:set package 'botfish_perception' build argument 'catkin_cmake_args' from command line to 'None'
+[20.117s] Level 5:colcon.colcon_core.verb:set package 'botfish_perception' build argument 'catkin_skip_building_tests' from command line to 'False'
+[20.117s] DEBUG:colcon.colcon_core.verb:Building package 'botfish_perception' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/james-elugbemi/dev_ws/botfish/build/botfish_perception', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception', 'merge_install': False, 'path': '/home/james-elugbemi/dev_ws/botfish/botfish_perception', 'symlink_install': False, 'test_result_base': None}
+[20.119s] Level 5:colcon.colcon_core.verb:set package 'botfish_ui' build argument 'cmake_args' from command line to 'None'
+[20.119s] Level 5:colcon.colcon_core.verb:set package 'botfish_ui' build argument 'cmake_target' from command line to 'None'
+[20.119s] Level 5:colcon.colcon_core.verb:set package 'botfish_ui' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[20.119s] Level 5:colcon.colcon_core.verb:set package 'botfish_ui' build argument 'cmake_clean_cache' from command line to 'False'
+[20.119s] Level 5:colcon.colcon_core.verb:set package 'botfish_ui' build argument 'cmake_clean_first' from command line to 'False'
+[20.119s] Level 5:colcon.colcon_core.verb:set package 'botfish_ui' build argument 'cmake_force_configure' from command line to 'False'
+[20.119s] Level 5:colcon.colcon_core.verb:set package 'botfish_ui' build argument 'ament_cmake_args' from command line to 'None'
+[20.119s] Level 5:colcon.colcon_core.verb:set package 'botfish_ui' build argument 'catkin_cmake_args' from command line to 'None'
+[20.119s] Level 5:colcon.colcon_core.verb:set package 'botfish_ui' build argument 'catkin_skip_building_tests' from command line to 'False'
+[20.119s] DEBUG:colcon.colcon_core.verb:Building package 'botfish_ui' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/james-elugbemi/dev_ws/botfish/build/botfish_ui', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui', 'merge_install': False, 'path': '/home/james-elugbemi/dev_ws/botfish/botfish_ui', 'symlink_install': False, 'test_result_base': None}
+[20.121s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[20.131s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[20.131s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/james-elugbemi/dev_ws/botfish/botfish_debug' with build type 'ament_python'
+[20.132s] Level 1:colcon.colcon_core.shell:create_environment_hook('botfish_debug', 'ament_prefix_path')
+[20.374s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[20.374s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/hook/ament_prefix_path.ps1'
+[20.412s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/hook/ament_prefix_path.dsv'
+[20.413s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/hook/ament_prefix_path.sh'
+[20.417s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[20.418s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[20.445s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/james-elugbemi/dev_ws/botfish/botfish_engine' with build type 'ament_python'
+[20.445s] Level 1:colcon.colcon_core.shell:create_environment_hook('botfish_engine', 'ament_prefix_path')
+[20.449s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/hook/ament_prefix_path.ps1'
+[20.450s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/hook/ament_prefix_path.dsv'
+[20.450s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/hook/ament_prefix_path.sh'
+[20.455s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[20.455s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[20.483s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/james-elugbemi/dev_ws/botfish/botfish_manipulation' with build type 'ament_cmake'
+[20.483s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/james-elugbemi/dev_ws/botfish/botfish_manipulation'
+[20.487s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[20.488s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[20.515s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/james-elugbemi/dev_ws/botfish/botfish_perception' with build type 'ament_python'
+[20.515s] Level 1:colcon.colcon_core.shell:create_environment_hook('botfish_perception', 'ament_prefix_path')
+[20.520s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/hook/ament_prefix_path.ps1'
+[20.520s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/hook/ament_prefix_path.dsv'
+[20.521s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/hook/ament_prefix_path.sh'
+[20.525s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[20.525s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[20.551s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/james-elugbemi/dev_ws/botfish/botfish_ui' with build type 'ament_python'
+[20.551s] Level 1:colcon.colcon_core.shell:create_environment_hook('botfish_ui', 'ament_prefix_path')
+[20.556s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/hook/ament_prefix_path.ps1'
+[20.556s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/hook/ament_prefix_path.dsv'
+[20.557s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/hook/ament_prefix_path.sh'
+[20.562s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[20.562s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[21.095s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/james-elugbemi/dev_ws/botfish/botfish_debug'
+[21.102s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[21.102s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[21.602s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/james-elugbemi/dev_ws/botfish/botfish_engine'
+[21.607s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[21.607s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[21.635s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/james-elugbemi/dev_ws/botfish/build/botfish_manipulation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/james-elugbemi/dev_ws/R2ED/install/lwa4p_driver:/home/james-elugbemi/dev_ws/R2ED/install/humanoid_controllers:/home/james-elugbemi/dev_ws/R2ED/install/humanoid_control:/home/james-elugbemi/ros2_humble/install/tracetools_test:/home/james-elugbemi/ros2_humble/install/tracetools_launch:/home/james-elugbemi/ros2_humble/install/topic_monitor:/home/james-elugbemi/ros2_humble/install/tf2_tools:/home/james-elugbemi/ros2_humble/install/examples_tf2_py:/home/james-elugbemi/ros2_humble/install/tf2_ros_py:/home/james-elugbemi/ros2_humble/install/sros2:/home/james-elugbemi/ros2_humble/install/rqt_topic:/home/james-elugbemi/ros2_humble/install/rqt_srv:/home/james-elugbemi/ros2_humble/install/rqt_shell:/home/james-elugbemi/ros2_humble/install/rqt_service_caller:/home/james-elugbemi/ros2_humble/install/rqt_reconfigure:/home/james-elugbemi/ros2_humble/install/rqt_py_console:/home/james-elugbemi/ros2_humble/install/rqt_publisher:/home/james-elugbemi/ros2_humble/install/rqt_plot:/home/james-elugbemi/ros2_humble/install/rqt_action:/home/james-elugbemi/ros2_humble/install/rqt_msg:/home/james-elugbemi/ros2_humble/install/rqt_console:/home/james-elugbemi/ros2_humble/install/rqt:/home/james-elugbemi/ros2_humble/install/rqt_graph:/home/james-elugbemi/ros2_humble/install/rqt_gui_py:/home/james-elugbemi/ros2_humble/install/rqt_gui:/home/james-elugbemi/ros2_humble/install/ros2trace:/home/james-elugbemi/ros2_humble/install/ros2topic:/home/james-elugbemi/ros2_humble/install/ros2test:/home/james-elugbemi/ros2_humble/install/ros2component:/home/james-elugbemi/ros2_humble/install/ros2param:/home/james-elugbemi/ros2_humble/install/ros2lifecycle:/home/james-elugbemi/ros2_humble/install/ros2service:/home/james-elugbemi/ros2_humble/install/ros2run:/home/james-elugbemi/ros2_humble/install/ros2launch:/home/james-elugbemi/ros2_humble/install/ros2pkg:/home/james-elugbemi/ros2_humble/install/ros2node:/home/james-elugbemi/ros2_humble/install/ros2multicast:/home/james-elugbemi/ros2_humble/install/ros2interface:/home/james-elugbemi/ros2_humble/install/ros2doctor:/home/james-elugbemi/ros2_humble/install/ros2action:/home/james-elugbemi/ros2_humble/install/ros2cli:/home/james-elugbemi/ros2_humble/install/quality_of_service_demo_py:/home/james-elugbemi/ros2_humble/install/lifecycle_py:/home/james-elugbemi/ros2_humble/install/launch_testing_ros:/home/james-elugbemi/ros2_humble/install/launch_ros:/home/james-elugbemi/ros2_humble/install/examples_rclpy_pointcloud_publisher:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_subscriber:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_service:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_publisher:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_client:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_action_server:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_action_client:/home/james-elugbemi/ros2_humble/install/examples_rclpy_guard_conditions:/home/james-elugbemi/ros2_humble/install/examples_rclpy_executors:/home/james-elugbemi/ros2_humble/install/demo_nodes_py:/home/james-elugbemi/ros2_humble/install/action_tutorials_py:/home/james-elugbemi/ros2_humble/install/ament_uncrustify:/home/james-elugbemi/ros2_humble/install/tracetools_trace:/home/james-elugbemi/ros2_humble/install/tracetools_read:/home/james-elugbemi/ros2_humble/install/test_tracetools_launch:/home/james-elugbemi/ros2_humble/install/test_launch_ros:/home/james-elugbemi/ros2_humble/install/sensor_msgs_py:/home/james-elugbemi/ros2_humble/install/rpyutils:/home/james-elugbemi/ros2_humble/install/rosidl_runtime_py:/home/james-elugbemi/ros2_humble/install/rosidl_cli:/home/james-elugbemi/ros2_humble/install/launch_pytest:/home/james-elugbemi/ros2_humble/install/launch_testing:/home/james-elugbemi/ros2_humble/install/launch_yaml:/home/james-elugbemi/ros2_humble/install/launch_xml:/home/james-elugbemi/ros2_humble/install/launch:/home/james-elugbemi/ros2_humble/install/osrf_pycommon:/home/james-elugbemi/ros2_humble/install/domain_coordinator:/home/james-elugbemi/ros2_humble/install/ament_xmllint:/home/james-elugbemi/ros2_humble/install/ament_pyflakes:/home/james-elugbemi/ros2_humble/install/ament_pycodestyle:/home/james-elugbemi/ros2_humble/install/ament_pep257:/home/james-elugbemi/ros2_humble/install/ament_pclint:/home/james-elugbemi/ros2_humble/install/ament_package:/home/james-elugbemi/ros2_humble/install/ament_mypy:/home/james-elugbemi/ros2_humble/install/ament_lint_cmake:/home/james-elugbemi/ros2_humble/install/ament_flake8:/home/james-elugbemi/ros2_humble/install/ament_copyright:/home/james-elugbemi/ros2_humble/install/ament_lint:/home/james-elugbemi/ros2_humble/install/ament_index_python:/home/james-elugbemi/ros2_humble/install/ament_cpplint:/home/james-elugbemi/ros2_humble/install/ament_cppcheck:/home/james-elugbemi/ros2_humble/install/ament_clang_tidy:/home/james-elugbemi/ros2_humble/install/ament_clang_format:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) /usr/bin/cmake /home/james-elugbemi/dev_ws/botfish/botfish_manipulation -DCMAKE_INSTALL_PREFIX=/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation
+[22.181s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/james-elugbemi/dev_ws/botfish/botfish_perception'
+[22.187s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[22.187s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[22.688s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/james-elugbemi/dev_ws/botfish/botfish_ui'
+[22.692s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[22.692s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[26.990s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/james-elugbemi/dev_ws/botfish/botfish_debug': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_debug/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_debug build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/install.log --single-version-externally-managed
+[26.995s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/james-elugbemi/dev_ws/botfish/botfish_perception': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_perception/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_perception build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/install.log --single-version-externally-managed
+[26.998s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/james-elugbemi/dev_ws/botfish/botfish_ui': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_ui/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_ui build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/install.log --single-version-externally-managed
+[26.999s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/james-elugbemi/dev_ws/botfish/botfish_engine': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_engine/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_engine build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/install.log --single-version-externally-managed
+[27.605s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/james-elugbemi/dev_ws/botfish/botfish_debug' returned '0': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_debug/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_debug build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_debug/install.log --single-version-externally-managed
+[28.065s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug' for CMake module files
+[28.066s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug' for CMake config files
+[28.067s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib'
+[28.067s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/bin'
+[28.067s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/pkgconfig/botfish_debug.pc'
+[28.068s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/lib/python3.10/site-packages'
+[28.068s] Level 1:colcon.colcon_core.shell:create_environment_hook('botfish_debug', 'pythonpath')
+[28.077s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/hook/pythonpath.ps1'
+[28.077s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/hook/pythonpath.dsv'
+[28.078s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/hook/pythonpath.sh'
+[28.078s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/bin'
+[28.078s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(botfish_debug)
+[28.086s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/package.ps1'
+[28.113s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/package.dsv'
+[28.114s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/package.sh'
+[28.115s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/package.bash'
+[28.201s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/botfish_debug/package.zsh'
+[28.265s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/james-elugbemi/dev_ws/botfish/install/botfish_debug/share/colcon-core/packages/botfish_debug)
+[28.273s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception' for CMake module files
+[28.274s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/james-elugbemi/dev_ws/botfish/botfish_perception' returned '0': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_perception/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_perception build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/install.log --single-version-externally-managed
+[28.274s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception' for CMake config files
+[28.274s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib'
+[28.274s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/bin'
+[28.274s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/pkgconfig/botfish_perception.pc'
+[28.274s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages'
+[28.275s] Level 1:colcon.colcon_core.shell:create_environment_hook('botfish_perception', 'pythonpath')
+[28.279s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/hook/pythonpath.ps1'
+[28.279s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/hook/pythonpath.dsv'
+[28.279s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/hook/pythonpath.sh'
+[28.280s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/bin'
+[28.280s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(botfish_perception)
+[28.284s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/package.ps1'
+[28.285s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/package.dsv'
+[28.285s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/package.sh'
+[28.285s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/package.bash'
+[28.285s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception/package.zsh'
+[28.285s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/colcon-core/packages/botfish_perception)
+[28.292s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui' for CMake module files
+[28.293s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui' for CMake config files
+[28.293s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/james-elugbemi/dev_ws/botfish/botfish_ui' returned '0': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_ui/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_ui build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/install.log --single-version-externally-managed
+[28.293s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib'
+[28.294s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/bin'
+[28.294s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/pkgconfig/botfish_ui.pc'
+[28.294s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages'
+[28.294s] Level 1:colcon.colcon_core.shell:create_environment_hook('botfish_ui', 'pythonpath')
+[28.298s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/hook/pythonpath.ps1'
+[28.298s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/hook/pythonpath.dsv'
+[28.299s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/hook/pythonpath.sh'
+[28.299s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/bin'
+[28.299s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(botfish_ui)
+[28.303s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/package.ps1'
+[28.304s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/package.dsv'
+[28.304s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/package.sh'
+[28.304s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/package.bash'
+[28.305s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui/package.zsh'
+[28.305s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/colcon-core/packages/botfish_ui)
+[28.311s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine' for CMake module files
+[28.312s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/james-elugbemi/dev_ws/botfish/botfish_engine' returned '0': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_engine/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_engine build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/install.log --single-version-externally-managed
+[28.312s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine' for CMake config files
+[28.312s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib'
+[28.312s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/bin'
+[28.312s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/pkgconfig/botfish_engine.pc'
+[28.313s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages'
+[28.313s] Level 1:colcon.colcon_core.shell:create_environment_hook('botfish_engine', 'pythonpath')
+[28.317s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/hook/pythonpath.ps1'
+[28.318s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/hook/pythonpath.dsv'
+[28.318s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/hook/pythonpath.sh'
+[28.318s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/bin'
+[28.318s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(botfish_engine)
+[28.323s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/package.ps1'
+[28.323s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/package.dsv'
+[28.323s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/package.sh'
+[28.324s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/package.bash'
+[28.324s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine/package.zsh'
+[28.324s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/colcon-core/packages/botfish_engine)
+[46.111s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/james-elugbemi/dev_ws/botfish/build/botfish_manipulation' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/james-elugbemi/dev_ws/R2ED/install/lwa4p_driver:/home/james-elugbemi/dev_ws/R2ED/install/humanoid_controllers:/home/james-elugbemi/dev_ws/R2ED/install/humanoid_control:/home/james-elugbemi/ros2_humble/install/tracetools_test:/home/james-elugbemi/ros2_humble/install/tracetools_launch:/home/james-elugbemi/ros2_humble/install/topic_monitor:/home/james-elugbemi/ros2_humble/install/tf2_tools:/home/james-elugbemi/ros2_humble/install/examples_tf2_py:/home/james-elugbemi/ros2_humble/install/tf2_ros_py:/home/james-elugbemi/ros2_humble/install/sros2:/home/james-elugbemi/ros2_humble/install/rqt_topic:/home/james-elugbemi/ros2_humble/install/rqt_srv:/home/james-elugbemi/ros2_humble/install/rqt_shell:/home/james-elugbemi/ros2_humble/install/rqt_service_caller:/home/james-elugbemi/ros2_humble/install/rqt_reconfigure:/home/james-elugbemi/ros2_humble/install/rqt_py_console:/home/james-elugbemi/ros2_humble/install/rqt_publisher:/home/james-elugbemi/ros2_humble/install/rqt_plot:/home/james-elugbemi/ros2_humble/install/rqt_action:/home/james-elugbemi/ros2_humble/install/rqt_msg:/home/james-elugbemi/ros2_humble/install/rqt_console:/home/james-elugbemi/ros2_humble/install/rqt:/home/james-elugbemi/ros2_humble/install/rqt_graph:/home/james-elugbemi/ros2_humble/install/rqt_gui_py:/home/james-elugbemi/ros2_humble/install/rqt_gui:/home/james-elugbemi/ros2_humble/install/ros2trace:/home/james-elugbemi/ros2_humble/install/ros2topic:/home/james-elugbemi/ros2_humble/install/ros2test:/home/james-elugbemi/ros2_humble/install/ros2component:/home/james-elugbemi/ros2_humble/install/ros2param:/home/james-elugbemi/ros2_humble/install/ros2lifecycle:/home/james-elugbemi/ros2_humble/install/ros2service:/home/james-elugbemi/ros2_humble/install/ros2run:/home/james-elugbemi/ros2_humble/install/ros2launch:/home/james-elugbemi/ros2_humble/install/ros2pkg:/home/james-elugbemi/ros2_humble/install/ros2node:/home/james-elugbemi/ros2_humble/install/ros2multicast:/home/james-elugbemi/ros2_humble/install/ros2interface:/home/james-elugbemi/ros2_humble/install/ros2doctor:/home/james-elugbemi/ros2_humble/install/ros2action:/home/james-elugbemi/ros2_humble/install/ros2cli:/home/james-elugbemi/ros2_humble/install/quality_of_service_demo_py:/home/james-elugbemi/ros2_humble/install/lifecycle_py:/home/james-elugbemi/ros2_humble/install/launch_testing_ros:/home/james-elugbemi/ros2_humble/install/launch_ros:/home/james-elugbemi/ros2_humble/install/examples_rclpy_pointcloud_publisher:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_subscriber:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_service:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_publisher:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_client:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_action_server:/home/james-elugbemi/ros2_humble/install/examples_rclpy_minimal_action_client:/home/james-elugbemi/ros2_humble/install/examples_rclpy_guard_conditions:/home/james-elugbemi/ros2_humble/install/examples_rclpy_executors:/home/james-elugbemi/ros2_humble/install/demo_nodes_py:/home/james-elugbemi/ros2_humble/install/action_tutorials_py:/home/james-elugbemi/ros2_humble/install/ament_uncrustify:/home/james-elugbemi/ros2_humble/install/tracetools_trace:/home/james-elugbemi/ros2_humble/install/tracetools_read:/home/james-elugbemi/ros2_humble/install/test_tracetools_launch:/home/james-elugbemi/ros2_humble/install/test_launch_ros:/home/james-elugbemi/ros2_humble/install/sensor_msgs_py:/home/james-elugbemi/ros2_humble/install/rpyutils:/home/james-elugbemi/ros2_humble/install/rosidl_runtime_py:/home/james-elugbemi/ros2_humble/install/rosidl_cli:/home/james-elugbemi/ros2_humble/install/launch_pytest:/home/james-elugbemi/ros2_humble/install/launch_testing:/home/james-elugbemi/ros2_humble/install/launch_yaml:/home/james-elugbemi/ros2_humble/install/launch_xml:/home/james-elugbemi/ros2_humble/install/launch:/home/james-elugbemi/ros2_humble/install/osrf_pycommon:/home/james-elugbemi/ros2_humble/install/domain_coordinator:/home/james-elugbemi/ros2_humble/install/ament_xmllint:/home/james-elugbemi/ros2_humble/install/ament_pyflakes:/home/james-elugbemi/ros2_humble/install/ament_pycodestyle:/home/james-elugbemi/ros2_humble/install/ament_pep257:/home/james-elugbemi/ros2_humble/install/ament_pclint:/home/james-elugbemi/ros2_humble/install/ament_package:/home/james-elugbemi/ros2_humble/install/ament_mypy:/home/james-elugbemi/ros2_humble/install/ament_lint_cmake:/home/james-elugbemi/ros2_humble/install/ament_flake8:/home/james-elugbemi/ros2_humble/install/ament_copyright:/home/james-elugbemi/ros2_humble/install/ament_lint:/home/james-elugbemi/ros2_humble/install/ament_index_python:/home/james-elugbemi/ros2_humble/install/ament_cpplint:/home/james-elugbemi/ros2_humble/install/ament_cppcheck:/home/james-elugbemi/ros2_humble/install/ament_clang_tidy:/home/james-elugbemi/ros2_humble/install/ament_clang_format:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) /usr/bin/cmake /home/james-elugbemi/dev_ws/botfish/botfish_manipulation -DCMAKE_INSTALL_PREFIX=/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation
+[46.130s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(botfish_manipulation)
+[46.137s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation' for CMake module files
+[46.137s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation' for CMake config files
+[46.137s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/bin'
+[46.137s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/lib/pkgconfig/botfish_manipulation.pc'
+[46.137s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/lib/python3.10/site-packages'
+[46.137s] Level 1:colcon.colcon_core.environment:checking '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/bin'
+[46.142s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/share/botfish_manipulation/package.ps1'
+[46.142s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/share/botfish_manipulation/package.dsv'
+[46.143s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/share/botfish_manipulation/package.sh'
+[46.143s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/share/botfish_manipulation/package.bash'
+[46.143s] INFO:colcon.colcon_core.shell:Creating package script '/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/share/botfish_manipulation/package.zsh'
+[46.143s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/james-elugbemi/dev_ws/botfish/install/botfish_manipulation/share/colcon-core/packages/botfish_manipulation)
+[46.154s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[46.154s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[46.154s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '1'
+[46.154s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[46.205s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[46.205s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[46.205s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[46.217s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[46.221s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/james-elugbemi/dev_ws/botfish/install/local_setup.ps1'
+[46.263s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/james-elugbemi/dev_ws/botfish/install/_local_setup_util_ps1.py'
+[46.265s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/james-elugbemi/dev_ws/botfish/install/setup.ps1'
+[46.283s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/james-elugbemi/dev_ws/botfish/install/local_setup.sh'
+[46.283s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/james-elugbemi/dev_ws/botfish/install/_local_setup_util_sh.py'
+[46.284s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/james-elugbemi/dev_ws/botfish/install/setup.sh'
+[46.293s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/james-elugbemi/dev_ws/botfish/install/local_setup.bash'
+[46.317s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/james-elugbemi/dev_ws/botfish/install/setup.bash'
+[46.327s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/james-elugbemi/dev_ws/botfish/install/local_setup.zsh'
+[46.332s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/james-elugbemi/dev_ws/botfish/install/setup.zsh'

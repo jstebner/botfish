@@ -1,0 +1,3 @@
+[console_scripts]
+ui = botfish_ui.ui:main
+

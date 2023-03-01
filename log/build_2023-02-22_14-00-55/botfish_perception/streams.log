@@ -1,0 +1,39 @@
+[6.474s] Invoking command in '/home/james-elugbemi/dev_ws/botfish/botfish_perception': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_perception/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_perception build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/install.log --single-version-externally-managed
+[6.903s] running egg_info
+[6.903s] creating ../build/botfish_perception/botfish_perception.egg-info
+[6.904s] writing ../build/botfish_perception/botfish_perception.egg-info/PKG-INFO
+[6.904s] writing dependency_links to ../build/botfish_perception/botfish_perception.egg-info/dependency_links.txt
+[6.904s] writing entry points to ../build/botfish_perception/botfish_perception.egg-info/entry_points.txt
+[6.904s] writing requirements to ../build/botfish_perception/botfish_perception.egg-info/requires.txt
+[6.904s] writing top-level names to ../build/botfish_perception/botfish_perception.egg-info/top_level.txt
+[6.904s] writing manifest file '../build/botfish_perception/botfish_perception.egg-info/SOURCES.txt'
+[6.926s] reading manifest file '../build/botfish_perception/botfish_perception.egg-info/SOURCES.txt'
+[6.927s] writing manifest file '../build/botfish_perception/botfish_perception.egg-info/SOURCES.txt'
+[6.927s] running build
+[6.927s] running build_py
+[6.927s] creating /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build
+[6.928s] creating /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build/lib
+[6.928s] creating /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build/lib/botfish_perception
+[6.928s] copying botfish_perception/__init__.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build/lib/botfish_perception
+[6.928s] copying botfish_perception/standin.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build/lib/botfish_perception
+[6.958s] running install
+[6.996s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[6.996s]   warnings.warn(
+[6.996s] running install_lib
+[6.997s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages/botfish_perception
+[6.998s] copying /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build/lib/botfish_perception/__init__.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages/botfish_perception
+[6.998s] copying /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build/lib/botfish_perception/standin.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages/botfish_perception
+[6.999s] byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages/botfish_perception/__init__.py to __init__.cpython-310.pyc
+[6.999s] byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages/botfish_perception/standin.py to standin.cpython-310.pyc
+[6.999s] running install_data
+[7.000s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/ament_index
+[7.000s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/ament_index/resource_index
+[7.001s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/ament_index/resource_index/packages
+[7.001s] copying resource/botfish_perception -> /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/ament_index/resource_index/packages
+[7.001s] copying package.xml -> /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/share/botfish_perception
+[7.001s] running install_egg_info
+[7.003s] Copying ../build/botfish_perception/botfish_perception.egg-info to /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages/botfish_perception-0.0.0-py3.10.egg-info
+[7.004s] running install_scripts
+[7.040s] Installing standin script to /home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/botfish_perception
+[7.041s] writing list of installed files to '/home/james-elugbemi/dev_ws/botfish/build/botfish_perception/install.log'
+[7.754s] Invoked command in '/home/james-elugbemi/dev_ws/botfish/botfish_perception' returned '0': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_perception/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_perception/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_perception build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_perception/install.log --single-version-externally-managed

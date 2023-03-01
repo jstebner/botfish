@@ -1,0 +1,37 @@
+running egg_info
+creating ../build/botfish_ui/botfish_ui.egg-info
+writing ../build/botfish_ui/botfish_ui.egg-info/PKG-INFO
+writing dependency_links to ../build/botfish_ui/botfish_ui.egg-info/dependency_links.txt
+writing entry points to ../build/botfish_ui/botfish_ui.egg-info/entry_points.txt
+writing requirements to ../build/botfish_ui/botfish_ui.egg-info/requires.txt
+writing top-level names to ../build/botfish_ui/botfish_ui.egg-info/top_level.txt
+writing manifest file '../build/botfish_ui/botfish_ui.egg-info/SOURCES.txt'
+reading manifest file '../build/botfish_ui/botfish_ui.egg-info/SOURCES.txt'
+writing manifest file '../build/botfish_ui/botfish_ui.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build
+creating /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib
+creating /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui
+copying botfish_ui/__init__.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui
+copying botfish_ui/ui.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui
+running install
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running install_lib
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui
+copying /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui/__init__.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui
+copying /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui/ui.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui
+byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui/ui.py to ui.cpython-310.pyc
+running install_data
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/ament_index
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/ament_index/resource_index
+creating /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/ament_index/resource_index/packages
+copying resource/botfish_ui -> /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/ament_index/resource_index/packages
+copying package.xml -> /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui
+running install_egg_info
+Copying ../build/botfish_ui/botfish_ui.egg-info to /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui-0.0.0-py3.10.egg-info
+running install_scripts
+Installing ui script to /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/botfish_ui
+writing list of installed files to '/home/james-elugbemi/dev_ws/botfish/build/botfish_ui/install.log'

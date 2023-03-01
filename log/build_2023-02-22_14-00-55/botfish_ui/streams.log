@@ -1,0 +1,39 @@
+[6.441s] Invoking command in '/home/james-elugbemi/dev_ws/botfish/botfish_ui': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_ui/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_ui build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/install.log --single-version-externally-managed
+[6.877s] running egg_info
+[6.877s] creating ../build/botfish_ui/botfish_ui.egg-info
+[6.877s] writing ../build/botfish_ui/botfish_ui.egg-info/PKG-INFO
+[6.878s] writing dependency_links to ../build/botfish_ui/botfish_ui.egg-info/dependency_links.txt
+[6.878s] writing entry points to ../build/botfish_ui/botfish_ui.egg-info/entry_points.txt
+[6.878s] writing requirements to ../build/botfish_ui/botfish_ui.egg-info/requires.txt
+[6.878s] writing top-level names to ../build/botfish_ui/botfish_ui.egg-info/top_level.txt
+[6.878s] writing manifest file '../build/botfish_ui/botfish_ui.egg-info/SOURCES.txt'
+[6.891s] reading manifest file '../build/botfish_ui/botfish_ui.egg-info/SOURCES.txt'
+[6.892s] writing manifest file '../build/botfish_ui/botfish_ui.egg-info/SOURCES.txt'
+[6.892s] running build
+[6.892s] running build_py
+[6.892s] creating /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build
+[6.892s] creating /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib
+[6.892s] creating /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui
+[6.892s] copying botfish_ui/__init__.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui
+[6.892s] copying botfish_ui/ui.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui
+[6.922s] running install
+[6.960s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[6.960s]   warnings.warn(
+[6.961s] running install_lib
+[6.961s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui
+[6.961s] copying /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui/__init__.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui
+[6.961s] copying /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build/lib/botfish_ui/ui.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui
+[6.964s] byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui/__init__.py to __init__.cpython-310.pyc
+[6.966s] byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui/ui.py to ui.cpython-310.pyc
+[6.967s] running install_data
+[6.967s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/ament_index
+[6.968s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/ament_index/resource_index
+[6.968s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/ament_index/resource_index/packages
+[6.968s] copying resource/botfish_ui -> /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/ament_index/resource_index/packages
+[6.968s] copying package.xml -> /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/share/botfish_ui
+[6.968s] running install_egg_info
+[6.971s] Copying ../build/botfish_ui/botfish_ui.egg-info to /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages/botfish_ui-0.0.0-py3.10.egg-info
+[6.972s] running install_scripts
+[7.008s] Installing ui script to /home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/botfish_ui
+[7.009s] writing list of installed files to '/home/james-elugbemi/dev_ws/botfish/build/botfish_ui/install.log'
+[7.737s] Invoked command in '/home/james-elugbemi/dev_ws/botfish/botfish_ui' returned '0': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_ui/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_ui/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_ui build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_ui/install.log --single-version-externally-managed

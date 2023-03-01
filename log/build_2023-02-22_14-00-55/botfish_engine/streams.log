@@ -1,0 +1,39 @@
+[6.549s] Invoking command in '/home/james-elugbemi/dev_ws/botfish/botfish_engine': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_engine/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_engine build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/install.log --single-version-externally-managed
+[6.984s] running egg_info
+[6.984s] creating ../build/botfish_engine/botfish_engine.egg-info
+[6.984s] writing ../build/botfish_engine/botfish_engine.egg-info/PKG-INFO
+[6.984s] writing dependency_links to ../build/botfish_engine/botfish_engine.egg-info/dependency_links.txt
+[6.985s] writing entry points to ../build/botfish_engine/botfish_engine.egg-info/entry_points.txt
+[6.985s] writing requirements to ../build/botfish_engine/botfish_engine.egg-info/requires.txt
+[6.985s] writing top-level names to ../build/botfish_engine/botfish_engine.egg-info/top_level.txt
+[6.985s] writing manifest file '../build/botfish_engine/botfish_engine.egg-info/SOURCES.txt'
+[7.006s] reading manifest file '../build/botfish_engine/botfish_engine.egg-info/SOURCES.txt'
+[7.006s] writing manifest file '../build/botfish_engine/botfish_engine.egg-info/SOURCES.txt'
+[7.006s] running build
+[7.007s] running build_py
+[7.007s] creating /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build
+[7.007s] creating /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib
+[7.007s] creating /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine
+[7.007s] copying botfish_engine/__init__.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine
+[7.007s] copying botfish_engine/engine.py -> /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine
+[7.020s] running install
+[7.066s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[7.067s]   warnings.warn(
+[7.067s] running install_lib
+[7.068s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine
+[7.069s] copying /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine/__init__.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine
+[7.069s] copying /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build/lib/botfish_engine/engine.py -> /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine
+[7.070s] byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine/__init__.py to __init__.cpython-310.pyc
+[7.070s] byte-compiling /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine/engine.py to engine.cpython-310.pyc
+[7.071s] running install_data
+[7.071s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/ament_index
+[7.071s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/ament_index/resource_index
+[7.072s] creating /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/ament_index/resource_index/packages
+[7.072s] copying resource/botfish_engine -> /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/ament_index/resource_index/packages
+[7.072s] copying package.xml -> /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/share/botfish_engine
+[7.072s] running install_egg_info
+[7.074s] Copying ../build/botfish_engine/botfish_engine.egg-info to /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages/botfish_engine-0.0.0-py3.10.egg-info
+[7.075s] running install_scripts
+[7.112s] Installing engine script to /home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/botfish_engine
+[7.112s] writing list of installed files to '/home/james-elugbemi/dev_ws/botfish/build/botfish_engine/install.log'
+[7.863s] Invoked command in '/home/james-elugbemi/dev_ws/botfish/botfish_engine' returned '0': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/james-elugbemi/dev_ws/botfish/build/botfish_engine/prefix_override:/home/james-elugbemi/dev_ws/botfish/install/botfish_engine/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/botfish_engine build --build-base /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/build install --record /home/james-elugbemi/dev_ws/botfish/build/botfish_engine/install.log --single-version-externally-managed
