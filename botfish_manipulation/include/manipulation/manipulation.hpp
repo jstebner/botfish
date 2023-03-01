@@ -63,10 +63,13 @@ namespace manip {
         //Reference point for calculating where to go to, should be either the A1 cell or one of the corners of the board
         geometry_msgs::msg::Pose _starting_position{};
 
+        //Position to bring the hand to load a new queen from
+        geometry_msgs::msg::Pose _queen_loader_position{};
+
         //Pose to plan to
         geometry_msgs::msg::Pose _target_pose{};
 
-        moveit::planning_interface::MoveGroupInterface* move_group_interface = nullptr;
+        moveit::planning_interface::MoveGroupInterface *move_group_interface = nullptr;
 
         /// @brief Callback for moves from the engine
         /// @param msg string msg containing the move outputted by the engine, format will be startingLocationEndingLocation ex: e2e4

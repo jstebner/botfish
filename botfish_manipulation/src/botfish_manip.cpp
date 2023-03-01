@@ -7,7 +7,8 @@ int main(int argc, char *argv[]) {
     rclcpp::NodeOptions options;
     auto manip_node = std::make_shared<manip::Manipulation>(options);
     exec.add_node(manip_node);
-    moveit::planning_interface::MoveGroupInterface move_group = moveit::planning_interface::MoveGroupInterface(manip_node, "right_arm");
+    moveit::planning_interface::MoveGroupInterface move_group = moveit::planning_interface::MoveGroupInterface(
+            manip_node, "right_arm");
     manip_node->setup_moveit(&move_group);
     exec.spin();
     // Shutdown ROS

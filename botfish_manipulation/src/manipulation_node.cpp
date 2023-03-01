@@ -12,14 +12,23 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _move_height = this->declare_parameter("move_height", 0.352);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.0125);
 
+    //Define constant quaternion to keep the hand at
     _hand_orientation.x = 0.004;
     _hand_orientation.y = -0.003;
     _hand_orientation.z = 0.588;
     _hand_orientation.w = 0.809;
+
+    //Define where the starting position is in coordinate space
     _starting_position.position.x = -0.095;
     _starting_position.position.y = _move_height;
     _starting_position.position.z = 0.312;
     _starting_position.orientation = _hand_orientation;
+
+    //Define where we are going to grab new queens from relative to that position
+    _queen_loader_position.position.x = _starting_position.position.x + 0.42;
+    _queen_loader_position.position.y = _starting_position.position.y;
+    _queen_loader_position.position.z = _starting_position.position.z;
+    _queen_loader_position.orientation = _hand_orientation;
 
     _engine_move_sub = this->create_subscription<std_msgs::msg::String>(
             "/engine_move", 10, std::bind(&Manipulation::move_cb, this, std::placeholders::_1));
@@ -30,14 +39,13 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
 void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     manip::cell_location parsed_move = parse_move(msg->data);
 
-    //Move one piece to an open cell
     bool grasping = true;
+    _target_pose = _queen_loader_position;
+    plan_execute();
     actuate(parsed_move);
-    /*for (auto i: parsed_moves) {
-        actuate(i);
-        //grab(grasping);
-        //grasping = !grasping;
-    }*/
+    _target_pose = _queen_loader_position;
+    plan_execute();
+
 }
 
 manip::cell_location manip::Manipulation::parse_move(std::string move) {
@@ -99,7 +107,6 @@ void manip::Manipulation::grab(bool position) {
 }
 
 void manip::Manipulation::plan_execute() {
-    //TODO: Break this up into separate plan/execute functions, Potentially add async planning
     moveit::planning_interface::MoveGroupInterface::Plan msg;
     move_group_interface->setPoseTarget(_target_pose);
 
@@ -135,6 +142,8 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
 
     RCLCPP_INFO(this->get_logger(), "Setting goal tolerance to %f...", _goal_tolerance);
     move_group_interface->setGoalTolerance(_goal_tolerance);
+    move_group_interface->setMaxVelocityScalingFactor(0.3);
+    move_group_interface->setMaxAccelerationScalingFactor(0.3);
 
     RCLCPP_INFO(this->get_logger(), "Creating collision box...");
     auto frame_id = move_group_interface->getPlanningFrame();
