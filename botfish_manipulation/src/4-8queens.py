@@ -1,9 +1,9 @@
-
-
 import numpy as np
 import itertools as it
-import rospy
+import rclpy
 
+from rclpy.node import Node
+from rclpy.publisher import Publisher
 from std_msgs.msg import String
 
 
@@ -75,10 +75,9 @@ def updateBoard(board: Board, row: int, col: int, forward: bool=True):
             x == row or y == col or  
             # same diagonals
             (x-y) == (row-col) or    
-            (x+y) == (row+col)       # same other diagonal
+            (x+y) == (row+col)       
            ):
             board._collision_matrix[x][y] += 1 if forward else -1
-
 
 #Initialize a board of size nxn
 n = input('Enter a value 4-8: ')
@@ -90,11 +89,26 @@ findNQueens(board)
 #Print the board
 board.display()
 
+rclpy.init(args=None)
+node = rclpy.create_node('Matrix_Publisher')
+publisher = node.create_publisher(String, 'tiles',0)
+
+msg = String()
+            
+msg.data = ""
+
+board2 = Board( int(n) )
+board2._occupancy_matrix = board._occupancy_matrix.transpose(1,0)
+        
 for row in range(int(n)):
     for col in range(int(n)):
-        if board._occupancy_matrix[row][col] == 1:
-            print(str(chr(row + 65)) + "," + str(int(n) - col))
+        if board2._occupancy_matrix[row][col] == 1:
+            print( str( chr(row + 65) ) + "," + str( int(n) - col + (8 - int(n) ) ) )
+            msg.data += str( ( chr(row + 65)) + str( int(n) - col + (8 - int(n) ) ) )
 
-
-
+node.get_logger().info('Message: "%s"' % msg.data)
+publisher.publish(msg)            
+            
+node.destroy_node()
+rclpy.shutdown()
 
