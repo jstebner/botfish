@@ -32,7 +32,7 @@ namespace manip {
         std::optional<std::shared_ptr<rclcpp::Subscription<std_msgs::msg::String>>> _engine_move_sub =
                 std::nullopt;
 
-        std::optional<std::shared_ptr<rclcpp::Publisher<std_msgs::msg::Float64>>>
+        std::optional<std::shared_ptr<rclcpp::Publisher<std_msgs::msg::Float64MultiArray>>>
                 _gripper_pub = std::nullopt;
 
         //distance to the middle of a cell, this should be half the cell length
@@ -48,14 +48,15 @@ namespace manip {
         //Tolerance for planning to goals, number is meters radius of a sphere around the end location
         double _goal_tolerance{};
 
+        std_msgs::msg::Float64MultiArray grabbed{};
+
+        std_msgs::msg::Float64MultiArray released{};
+
         //Link that will be used to move pieces around
         std::string _end_effector_link{};
 
         //Reference to calculate position of _end_effector_link with
         std::string _reference_link{};
-
-        //Group to create interface on
-        std::string _moveit_group{};
 
         //fixed orientation of the hand, will end up being the orientation of the end effector link
         geometry_msgs::msg::Quaternion _hand_orientation{};
@@ -90,6 +91,6 @@ namespace manip {
         /// @brief Converts string moves to xy locations
         /// @param move string move recieved in the move_cb callback
         /// @return tuple of two cell_location structs each containing two doubles for both x and y location
-        cell_location parse_move(std::string move);
+        std::vector<cell_location> parse_move(std::string move);
     };
 }
