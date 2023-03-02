@@ -9,7 +9,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _end_effector_link = this->declare_parameter("end_effector", "right_hand_base_link");
     _reference_link = this->declare_parameter("reference_link", "right_arm_podest_link");
     _grab_height = this->declare_parameter("grab_height", 0.202);
-    _move_height = this->declare_parameter("move_height", 0.202);
+    _move_height = this->declare_parameter("move_height", 0.152);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.0125);
 
     //Define constant quaternion to keep the hand at
@@ -33,6 +33,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
 
     //Fill grab matrix:
     //[0.9,  0.989,  0.99, 0.91, 0.92, 0.9, 0.9, 0.9, 0.9]
+    //TODO: Please god find a better way to do this
     grabbed.data.push_back(0.9);
     grabbed.data.push_back(0.989);
     grabbed.data.push_back(0.99);
