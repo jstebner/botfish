@@ -315,7 +315,7 @@ class UIController(Node):
     def close(self):
         msg = String()
         msg.data = 'stopall'
-        self.ui_msg_pub.pulish(msg)
+        self.ui_msg_pub.publish(msg)
 
         pygame.quit()
         exit()
