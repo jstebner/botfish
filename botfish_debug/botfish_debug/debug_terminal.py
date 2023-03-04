@@ -122,7 +122,7 @@ def start_display():
     Popen('ros2 run botfish_debug display', shell=True)
 
 def main(args=None):
-    print(__file__)
+    # print(__file__)
     rclpy.init(args=args)
 
     node = DebugTerminal()

@@ -36,7 +36,7 @@ def scaler(*args):
 def unscaler(*args): # you have no right to justdge me for this
     return [arg*SD for arg in args]
 
-LOGO = pygame.image.load(os.path.join(os.path.dirname(__file__), 'logo.png'))
+# LOGO = pygame.image.load(os.path.join(os.path.dirname(__file__), 'logo.png'))
 
 class PriorQueue:
     def __init__(self):
@@ -455,7 +455,7 @@ class UIController(Node):
         if self.windows['start']['btns']['quit']['toggle']:
             self.close()
 
-        self.screen.blit(LOGO, (100,100))
+        # self.screen.blit(LOGO, (100,100))
         
         if not self.windows['start']['btns']['start_btn']['toggle']:
             self._draw_content('start', mpos, clicking)
