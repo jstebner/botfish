@@ -4,6 +4,10 @@
 #include "manipulation/manipulation.hpp"
 #include <regex>
 
+//TODO: Try out orientation constraining to keep end effector straight,
+//      Get grippers working over topic,
+//      Prep for potential chess playing
+
 manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulation", options) {
     _cell_offset = this->declare_parameter("cell_offset", 0.05);
     _end_effector_link = this->declare_parameter("end_effector", "right_hand_base_link");
