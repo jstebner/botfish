@@ -68,7 +68,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
 void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     std::vector<manip::cell_location> parsed_moves = parse_move(msg->data);
 
-    for(auto i : parsed_moves){
+    for (auto i: parsed_moves) {
         this->_gripper_pub->get()->publish(grabbed);
         actuate(i);
         _target_pose = _queen_loader_position;
@@ -84,11 +84,11 @@ std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string mo
 
     const std::regex e("\\D\\d*");
     std::regex_token_iterator<std::string::iterator> rend;
-    std::regex_token_iterator<std::string::iterator> a ( move.begin(), move.end(), e );
-    while (a!=rend){
+    std::regex_token_iterator<std::string::iterator> a(move.begin(), move.end(), e);
+    while (a != rend) {
         moves.push_back(*a++);
     };
-    for(auto i : moves){
+    for (auto i: moves) {
         manip::cell_location loc{};
         //Convert letter val to number and multiply both letter and number by cell offset to get location
         char letter = i[0]; //Grab char in first position, ex: A1 -> A
