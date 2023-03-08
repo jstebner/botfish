@@ -1,8 +1,5 @@
-#include <rclcpp/rclcpp.hpp>
-#include <moveit/move_group_interface/move_group_interface.h>
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
-#include "manipulation/manipulation.hpp"
 #include <regex>
+#include "manipulation/manipulation.hpp"
 
 //TODO: Try out orientation constraining to keep end effector straight,
 //      Get grippers working over topic,
@@ -15,6 +12,9 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _grab_height = this->declare_parameter("grab_height", 0.202);
     _move_height = this->declare_parameter("move_height", 0.152);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.0125);
+    _max_velocity = this->declare_parameter("max_velocity", 0.4);
+    _max_acceleration = this->declare_parameter("max_acceleration", 0.4);
+    _planning_time = this->declare_parameter("planning_time", 10.0);
 
     //Define constant quaternion to keep the hand at
     //[-0.707, -0.000, 0.001, 0.708]
@@ -122,6 +122,7 @@ void manip::Manipulation::actuate(manip::cell_location location) {
 }
 
 void manip::Manipulation::grab(bool position) {
+    //TODO: Remove if determined not necessary for final implementation
     std_msgs::msg::Float64 pos;
 
     //Ensure that if were grabbing a piece, that the gripper is opened before descending
@@ -172,7 +173,6 @@ void manip::Manipulation::plan_execute() {
 
 void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInterface *interface) {
     RCLCPP_INFO(this->get_logger(), "Creating move group interface...");
-
     move_group_interface = interface;
 
     RCLCPP_INFO(this->get_logger(), "Setting reference link to %s...", _reference_link.c_str());
@@ -183,14 +183,19 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
 
     RCLCPP_INFO(this->get_logger(), "Setting goal tolerance to %f...", _goal_tolerance);
     move_group_interface->setGoalTolerance(_goal_tolerance);
-    move_group_interface->setMaxVelocityScalingFactor(0.4);
-    move_group_interface->setMaxAccelerationScalingFactor(0.4);
+
+    RCLCPP_INFO(this->get_logger(), "Setting max velocity to: %f, And max acceleration scaling factor to: %f", this->_max_velocity, this->_max_acceleration);
+    move_group_interface->setMaxVelocityScalingFactor(this->_max_velocity);
+    move_group_interface->setMaxAccelerationScalingFactor(this->_max_acceleration);
+
+    RCLCPP_INFO(this->get_logger(), "Setting planning time to %f", this->_planning_time);
+    move_group_interface->setPlanningTime(this->_planning_time);
 
     RCLCPP_INFO(this->get_logger(), "Creating collision box...");
     auto frame_id = move_group_interface->getPlanningFrame();
-    moveit_msgs::msg::CollisionObject collision_object;
-    collision_object.header.frame_id = frame_id;
-    collision_object.id = "box1";
+
+    lower_board_collision.header.frame_id = frame_id;
+    lower_board_collision.id = "box1";
     shape_msgs::msg::SolidPrimitive primitive;
 
     // Define the size of the box in meters
@@ -207,12 +212,11 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     box_pose.position.y = -0.5;
     box_pose.position.z = 0.01;
 
-    collision_object.primitives.push_back(primitive);
-    collision_object.primitive_poses.push_back(box_pose);
-    collision_object.operation = collision_object.ADD;
+    lower_board_collision.primitives.push_back(primitive);
+    lower_board_collision.primitive_poses.push_back(box_pose);
+    lower_board_collision.operation = lower_board_collision.ADD;
     // Add the collision object to the scene
-    moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
-    planning_scene_interface.applyCollisionObject(collision_object);
+    planning_scene_interface.applyCollisionObject(lower_board_collision);
     _target_pose.position = _queen_loader_position.position;
     _target_pose.orientation = _hand_orientation;
     plan_execute();

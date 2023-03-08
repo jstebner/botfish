@@ -1,13 +1,14 @@
 #pragma once
 
+#include <vector>
 #include <rclcpp/rclcpp.hpp>
-#include <geometry_msgs/msg/pose_stamped.hpp>
-#include <moveit/move_group_interface/move_group_interface.h>
 #include <std_msgs/msg/string.hpp>
 #include <std_msgs/msg/float64.hpp>
-#include <std_msgs/msg/float64_multi_array.hpp>
 #include <geometry_msgs/msg/quaternion.hpp>
-#include <vector>
+#include <geometry_msgs/msg/pose_stamped.hpp>
+#include <std_msgs/msg/float64_multi_array.hpp>
+#include <moveit/move_group_interface/move_group_interface.h>
+#include <moveit/planning_scene_interface/planning_scene_interface.h>
 
 namespace manip {
 
@@ -48,6 +49,15 @@ namespace manip {
         //Tolerance for planning to goals, number is meters radius of a sphere around the end location
         double _goal_tolerance{};
 
+        //Percentage of max velocity the arm should move at
+        double _max_velocity{};
+
+        //Percentage of max acceleration the arm should accelerate at
+        double _max_acceleration{};
+
+        //Time allowed for moveit to plan for
+        double _planning_time{};
+
         std_msgs::msg::Float64MultiArray grabbed{};
 
         std_msgs::msg::Float64MultiArray released{};
@@ -70,7 +80,11 @@ namespace manip {
         //Pose to plan to
         geometry_msgs::msg::Pose _target_pose{};
 
+        //Move group interface class pointer
         moveit::planning_interface::MoveGroupInterface *move_group_interface = nullptr;
+
+        moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
+        moveit_msgs::msg::CollisionObject lower_board_collision;
 
         /// @brief Callback for moves from the engine
         /// @param msg string msg containing the move outputted by the engine, format will be startingLocationEndingLocation ex: e2e4
@@ -84,13 +98,12 @@ namespace manip {
         /// @param position whether were grasping or releasing, true = grasping, false = releasing
         void grab(bool position);
 
-        ///@brief Plan and execute pose currently in _target_pose
+        ///@brief Plan and execute movement to pose currently in _target_pose from end effector curren t
         void plan_execute();
 
-
-        /// @brief Converts string moves to xy locations
-        /// @param move string move recieved in the move_cb callback
-        /// @return tuple of two cell_location structs each containing two doubles for both x and y location
+        /// @brief Parses a string of cell locations and converts them to x, y offsets to be used by actuate()
+        /// @param move string of cell locations received in the move_cb callback, ex: "A1B1C1D1"
+        /// @return vector of tuples of two cell_location structs each containing two doubles for both x and y location
         std::vector<cell_location> parse_move(std::string move);
     };
 }
