@@ -217,6 +217,20 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     lower_board_collision.operation = lower_board_collision.ADD;
     // Add the collision object to the scene
     planning_scene_interface.applyCollisionObject(lower_board_collision);
+
+    RCLCPP_INFO(this->get_logger(), "Setting orientation constraint...");
+    moveit_msgs::msg::OrientationConstraint ocm;
+    moveit_msgs::msg::Constraints test_constraints;
+    ocm.link_name = _end_effector_link;
+    ocm.header.frame_id = _reference_link;
+    ocm.orientation = _hand_orientation;
+    ocm.absolute_x_axis_tolerance = 0.1;
+    ocm.absolute_y_axis_tolerance = 0.1;
+    ocm.absolute_z_axis_tolerance = 0.1;
+    ocm.weight = 1.0;
+    test_constraints.orientation_constraints.push_back(ocm);
+    move_group_interface->setPathConstraints(test_constraints);
+
     _target_pose.position = _queen_loader_position.position;
     _target_pose.orientation = _hand_orientation;
     plan_execute();
