@@ -35,33 +35,11 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _queen_loader_position.position.z = _starting_position.position.z;
     _queen_loader_position.orientation = _hand_orientation;
 
-    //Fill grab matrix:
-    //[0.9,  0.989,  0.99, 0.91, 0.92, 0.9, 0.9, 0.9, 0.9]
-    //TODO: Please god find a better way to do this
-    grabbed.data.push_back(0.9);
-    grabbed.data.push_back(0.989);
-    grabbed.data.push_back(0.99);
-    grabbed.data.push_back(0.91);
-    grabbed.data.push_back(0.92);
-    grabbed.data.push_back(0.9);
-    grabbed.data.push_back(0.9);
-    grabbed.data.push_back(0.9);
-    grabbed.data.push_back(0.2);
-
-    released.data.push_back(0.9);
-    released.data.push_back(0.989);
-    released.data.push_back(0.99);
-    released.data.push_back(0.91);
-    released.data.push_back(0.92);
-    released.data.push_back(0.9);
-    released.data.push_back(0.9);
-    released.data.push_back(0.9);
-    released.data.push_back(0.9);
-
-
+    //Subscribers
     _engine_move_sub = this->create_subscription<std_msgs::msg::String>(
             "/engine_move", 10, std::bind(&Manipulation::move_cb, this, std::placeholders::_1));
 
+    //Publishers
     _gripper_pub = this->create_publisher<std_msgs::msg::Float64MultiArray>("/right_hand/target", 10);
 }
 
@@ -69,11 +47,11 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     std::vector<manip::cell_location> parsed_moves = parse_move(msg->data);
 
     for (auto i: parsed_moves) {
-        this->_gripper_pub->get()->publish(grabbed);
+        this->_gripper_pub->get()->publish(GRABBED);
         actuate(i);
         _target_pose = _queen_loader_position;
         plan_execute();
-        this->_gripper_pub->get()->publish(released);
+        this->_gripper_pub->get()->publish(RELEASED);
         sleep(5);
     }
 }
@@ -199,11 +177,11 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     shape_msgs::msg::SolidPrimitive primitive;
 
     // Define the size of the box in meters
-    primitive.type = primitive.BOX;
+    primitive.type = shape_msgs::msg::SolidPrimitive::BOX;
     primitive.dimensions.resize(3);
-    primitive.dimensions[primitive.BOX_X] = 5.0;
-    primitive.dimensions[primitive.BOX_Y] = 5.0;
-    primitive.dimensions[primitive.BOX_Z] = 0.0;
+    primitive.dimensions[shape_msgs::msg::SolidPrimitive::BOX_X] = 5.0;
+    primitive.dimensions[shape_msgs::msg::SolidPrimitive::BOX_Y] = 5.0;
+    primitive.dimensions[shape_msgs::msg::SolidPrimitive::BOX_Z] = 0.0;
 
     // Define the pose of the box (relative to the frame_id)
     geometry_msgs::msg::Pose box_pose;
@@ -214,7 +192,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
 
     lower_board_collision.primitives.push_back(primitive);
     lower_board_collision.primitive_poses.push_back(box_pose);
-    lower_board_collision.operation = lower_board_collision.ADD;
+    lower_board_collision.operation = moveit_msgs::msg::CollisionObject::ADD;
     // Add the collision object to the scene
     planning_scene_interface.applyCollisionObject(lower_board_collision);
 
@@ -234,5 +212,5 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     _target_pose.position = _queen_loader_position.position;
     _target_pose.orientation = _hand_orientation;
     plan_execute();
-    this->_gripper_pub->get()->publish(released);
+    this->_gripper_pub->get()->publish(RELEASED);
 }

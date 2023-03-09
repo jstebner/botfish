@@ -58,9 +58,37 @@ namespace manip {
         //Time allowed for moveit to plan for
         double _planning_time{};
 
-        std_msgs::msg::Float64MultiArray grabbed{};
+        //Message for adjusting finger positions to a grabbed state
+        //[0.9,  0.989,  0.99, 0.91, 0.92, 0.9, 0.9, 0.9, 0.2]
+        const std_msgs::msg::Float64MultiArray GRABBED = []{
+            std_msgs::msg::Float64MultiArray msg;
+            msg.data.push_back(0.9);
+            msg.data.push_back(0.989);
+            msg.data.push_back(0.99);
+            msg.data.push_back(0.91);
+            msg.data.push_back(0.92);
+            msg.data.push_back(0.9);
+            msg.data.push_back(0.9);
+            msg.data.push_back(0.9);
+            msg.data.push_back(0.2);
+            return msg;
+        }();
 
-        std_msgs::msg::Float64MultiArray released{};
+        //Message for adjusting fingers to a released state
+        //[0.9,  0.989,  0.99, 0.91, 0.92, 0.9, 0.9, 0.9, 0.9]
+        const std_msgs::msg::Float64MultiArray RELEASED = []{
+            std_msgs::msg::Float64MultiArray msg;
+            msg.data.push_back(0.9);
+            msg.data.push_back(0.989);
+            msg.data.push_back(0.99);
+            msg.data.push_back(0.91);
+            msg.data.push_back(0.92);
+            msg.data.push_back(0.9);
+            msg.data.push_back(0.9);
+            msg.data.push_back(0.9);
+            msg.data.push_back(0.9);
+            return msg;
+        }();
 
         //Link that will be used to move pieces around
         std::string _end_effector_link{};
