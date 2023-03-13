@@ -65,7 +65,7 @@ std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string mo
     std::regex_token_iterator<std::string::iterator> a(move.begin(), move.end(), e);
     while (a != rend) {
         moves.push_back(*a++);
-    };
+    }
     for (auto i: moves) {
         manip::cell_location loc{};
         //Convert letter val to number and multiply both letter and number by cell offset to get location
@@ -162,7 +162,8 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     RCLCPP_INFO(this->get_logger(), "Setting goal tolerance to %f...", _goal_tolerance);
     move_group_interface->setGoalTolerance(_goal_tolerance);
 
-    RCLCPP_INFO(this->get_logger(), "Setting max velocity to: %f, And max acceleration scaling factor to: %f", this->_max_velocity, this->_max_acceleration);
+    RCLCPP_INFO(this->get_logger(), "Setting max velocity to: %f, And max acceleration scaling factor to: %f",
+                this->_max_velocity, this->_max_acceleration);
     move_group_interface->setMaxVelocityScalingFactor(this->_max_velocity);
     move_group_interface->setMaxAccelerationScalingFactor(this->_max_acceleration);
 

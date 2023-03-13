@@ -62,7 +62,7 @@ namespace manip {
 
         //Message for adjusting finger positions to a grabbed state
         //[0.9,  0.989,  0.99, 0.91, 0.92, 0.9, 0.9, 0.9, 0.2]
-        const std_msgs::msg::Float64MultiArray GRABBED = []{
+        const std_msgs::msg::Float64MultiArray GRABBED = [] {
             std_msgs::msg::Float64MultiArray msg;
             msg.data.push_back(0.9);
             msg.data.push_back(0.989);
@@ -78,7 +78,7 @@ namespace manip {
 
         //Message for adjusting fingers to a released state
         //[0.9,  0.989,  0.99, 0.91, 0.92, 0.9, 0.9, 0.9, 0.9]
-        const std_msgs::msg::Float64MultiArray RELEASED = []{
+        const std_msgs::msg::Float64MultiArray RELEASED = [] {
             std_msgs::msg::Float64MultiArray msg;
             msg.data.push_back(0.9);
             msg.data.push_back(0.989);
