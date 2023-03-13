@@ -26,6 +26,12 @@ for solving the N-Queens problem and some reconfiguration will be required if a 
   Warning from above still applies
 - `goal_tolerance` - Tolerance for Moveit to use when planning, generally the lower the better but this can run into
   issues with plans failing if its too small
+- `max_velocity` - Determines the max velocity of the arm as a percentage, for example a value of 0.2 would allow the
+  max arm velocity to be 20% of the driver determined max speed.
+- `max_acceleration` - Determines the max acceleration of the arm as a percentage, for example a value of 0.2 would
+  allow the arm to accelerate at 20% of its driver defined maximum velocity.
+- `planning_time` - Time in seconds that the moveit planner is allowed to plan for, higher values will result in overall
+  more successes but can result in a large pauses between movements.
 
 ### Subscribes
 
@@ -33,4 +39,4 @@ for solving the N-Queens problem and some reconfiguration will be required if a 
 
 ### Publishes
 
-- N/A
+- `/right_hand/target` - Vector of positions to set each of the joints to for grasping pieces
