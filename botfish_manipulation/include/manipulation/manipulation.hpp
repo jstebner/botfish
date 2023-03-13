@@ -24,6 +24,8 @@ namespace manip {
     public:
         explicit Manipulation(rclcpp::NodeOptions options);
 
+        ~Manipulation() override;
+
         ///@brief Given a MoveGroupInterface this function will set up that interface to use to move pieces
         ///@param interface the MoveGroupInterface pointer to use for plans
         void setup_moveit(moveit::planning_interface::MoveGroupInterface *interface);

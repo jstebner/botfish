@@ -214,3 +214,9 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     plan_execute();
     this->_gripper_pub->get()->publish(RELEASED);
 }
+
+manip::Manipulation::~Manipulation() {
+    //Stop any current movement trajectories if any are running, forget all targets that were set and shutdown
+    move_group_interface->stop();
+    move_group_interface->clearPoseTargets();
+}
