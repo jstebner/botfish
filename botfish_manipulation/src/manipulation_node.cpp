@@ -16,24 +16,17 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _max_acceleration = this->declare_parameter("max_acceleration", 0.4);
     _planning_time = this->declare_parameter("planning_time", 10.0);
 
-    //Define constant quaternion to keep the hand at
-    //[-0.707, -0.000, 0.001, 0.708]
-    _hand_orientation.x = -0.707;
-    _hand_orientation.y = -0.000;
-    _hand_orientation.z = 0.001;
-    _hand_orientation.w = 0.708;
-
     //Define where the starting position is in coordinate space
     _starting_position.position.x = -0.095;
     _starting_position.position.y = _grab_height;
     _starting_position.position.z = 0.312;
-    _starting_position.orientation = _hand_orientation;
+    _starting_position.orientation = HAND_ORIENTATION;
 
     //Define where we are going to grab new queens from relative to that position
     _queen_loader_position.position.x = _starting_position.position.x + 0.42;
     _queen_loader_position.position.y = _starting_position.position.y;
     _queen_loader_position.position.z = _starting_position.position.z;
-    _queen_loader_position.orientation = _hand_orientation;
+    _queen_loader_position.orientation = HAND_ORIENTATION;
 
     //Subscribers
     _engine_move_sub = this->create_subscription<std_msgs::msg::String>(
@@ -93,7 +86,7 @@ void manip::Manipulation::actuate(manip::cell_location location) {
     //z value is y for our current use case
     _target_pose.position.z = this->_starting_position.position.z + location.y_dist;
     _target_pose.position.y = this->_move_height;
-    _target_pose.orientation = this->_hand_orientation;
+    _target_pose.orientation = this->HAND_ORIENTATION;
 
     plan_execute();
 
@@ -202,7 +195,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     moveit_msgs::msg::Constraints test_constraints;
     ocm.link_name = _end_effector_link;
     ocm.header.frame_id = _reference_link;
-    ocm.orientation = _hand_orientation;
+    ocm.orientation = HAND_ORIENTATION;
     ocm.absolute_x_axis_tolerance = 0.1;
     ocm.absolute_y_axis_tolerance = 0.1;
     ocm.absolute_z_axis_tolerance = 0.1;
@@ -211,7 +204,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     move_group_interface->setPathConstraints(test_constraints);
 
     _target_pose.position = _queen_loader_position.position;
-    _target_pose.orientation = _hand_orientation;
+    _target_pose.orientation = HAND_ORIENTATION;
     plan_execute();
     this->_gripper_pub->get()->publish(RELEASED);
 }

@@ -92,14 +92,22 @@ namespace manip {
             return msg;
         }();
 
+        //fixed orientation of the hand, will end up being the orientation of the end effector link
+        // [-0.707, -0.000, 0.001, 0.708]
+        const geometry_msgs::msg::Quaternion HAND_ORIENTATION = [] {
+            geometry_msgs::msg::Quaternion msg;
+            msg.x = -0.707;
+            msg.y = -0.000;
+            msg.z = 0.001;
+            msg.w = 0.708;
+            return msg;
+        }();
+
         //Link that will be used to move pieces around
         std::string _end_effector_link{};
 
         //Reference to calculate position of _end_effector_link with
         std::string _reference_link{};
-
-        //fixed orientation of the hand, will end up being the orientation of the end effector link
-        geometry_msgs::msg::Quaternion _hand_orientation{};
 
         //Reference point for calculating where to go to, should be either the A1 cell or one of the corners of the board
         geometry_msgs::msg::Pose _starting_position{};
