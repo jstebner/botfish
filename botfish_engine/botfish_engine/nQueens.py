@@ -8,33 +8,33 @@ from std_msgs.msg import String
 
 
 class Board:
-	def __init__(self, n: int = 8):
-	
-	    #The nxn size of the board
-	    self._n = n
-	    
-	    #The tiles containing queens where 0 is empty and 1 is a queen
-	    self._occupancy_matrix = np.zeros(shape = (n,n), dtype = int)
-	    
-	    #The safe cells determined by the occupancy matrix. 0 is safe and 1 is not
-	    self._collision_matrix = np.zeros(shape = (n,n), dtype = int)
-	
-	#For UI purposes it's convenient to make the board readable to a human		
-	def display(self):
-	
+    def __init__(self, n: int = 8):
+    
+        #The nxn size of the board
+        self._n = n
+        
+        #The tiles containing queens where 0 is empty and 1 is a queen
+        self._occupancy_matrix = np.zeros(shape = (n,n), dtype = int)
+        
+        #The safe cells determined by the occupancy matrix. 0 is safe and 1 is not
+        self._collision_matrix = np.zeros(shape = (n,n), dtype = int)
+    
+    #For UI purposes it's convenient to make the board readable to a human      
+    def display(self):
+    
 
-	    print_matrix = ""
-	    for row in range(self._n):
-		    for col in range(self._n):
-			    if self._occupancy_matrix[row][col] == 1:
-				    print_matrix += "Q "
-			    else:
-				    print_matrix += "# "
-		    print_matrix += "\n"
-					    
-	    print(print_matrix)
+        print_matrix = ""
+        for row in range(self._n):
+            for col in range(self._n):
+                if self._occupancy_matrix[row][col] == 1:
+                    print_matrix += "Q "
+                else:
+                    print_matrix += "# "
+            print_matrix += "\n"
+                        
+        print(print_matrix)
 
-#Recursively try to place a queen in each row	
+#Recursively try to place a queen in each row   
 def findNQueens(board: Board, row: int = 0):
     
     if row == board._n:
@@ -53,11 +53,11 @@ def findNQueens(board: Board, row: int = 0):
         if findNQueens(board, row+1) == True:
             return True
        
-	    #If we couldn't place a queen, update the boardstate
+        #If we couldn't place a queen, update the boardstate
         updateBoard(board, row, col, False)
-	    
+        
     return False
-	    
+        
 #Returns true if the a queen can be placed at a cell 
 def canPlace(board: Board, row: int, col: int):
     return board._collision_matrix[row][col] == 0
