@@ -12,8 +12,8 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _grab_height = this->declare_parameter("grab_height", 0.202);
     _move_height = this->declare_parameter("move_height", 0.152);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.0125);
-    _max_velocity = this->declare_parameter("max_velocity", 0.4);
-    _max_acceleration = this->declare_parameter("max_acceleration", 0.4);
+    _max_velocity = this->declare_parameter("max_velocity", 0.2);
+    _max_acceleration = this->declare_parameter("max_acceleration", 0.2);
     _planning_time = this->declare_parameter("planning_time", 10.0);
 
     //Define where the starting position is in coordinate space
@@ -189,23 +189,24 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     lower_board_collision.operation = moveit_msgs::msg::CollisionObject::ADD;
     // Add the collision object to the scene
     planning_scene_interface.applyCollisionObject(lower_board_collision);
-
-    RCLCPP_INFO(this->get_logger(), "Setting orientation constraint...");
-    moveit_msgs::msg::OrientationConstraint ocm;
-    moveit_msgs::msg::Constraints test_constraints;
-    ocm.link_name = _end_effector_link;
-    ocm.header.frame_id = _reference_link;
-    ocm.orientation = HAND_ORIENTATION;
-    ocm.absolute_x_axis_tolerance = 0.1;
-    ocm.absolute_y_axis_tolerance = 0.1;
-    ocm.absolute_z_axis_tolerance = 0.1;
-    ocm.weight = 1.0;
-    test_constraints.orientation_constraints.push_back(ocm);
-    move_group_interface->setPathConstraints(test_constraints);
-
+    
     _target_pose.position = _queen_loader_position.position;
     _target_pose.orientation = HAND_ORIENTATION;
     plan_execute();
+
+    // RCLCPP_INFO(this->get_logger(), "Setting orientation constraint...");
+    // moveit_msgs::msg::OrientationConstraint ocm;
+    // moveit_msgs::msg::Constraints test_constraints;
+    // ocm.link_name = _end_effector_link;
+    // ocm.header.frame_id = _reference_link;
+    // ocm.orientation = HAND_ORIENTATION;
+    // ocm.absolute_x_axis_tolerance = 0.1;
+    // ocm.absolute_y_axis_tolerance = 0.1;
+    // ocm.absolute_z_axis_tolerance = 0.1;
+    // ocm.weight = 1.0;
+    // test_constraints.orientation_constraints.push_back(ocm);
+    // move_group_interface->setPathConstraints(test_constraints);
+    
     this->_gripper_pub->get()->publish(RELEASED);
 }
 
