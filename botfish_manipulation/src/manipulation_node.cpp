@@ -9,6 +9,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _cell_offset = this->declare_parameter("cell_offset", 0.05);
     _end_effector_link = this->declare_parameter("end_effector", "right_hand_base_link");
     _reference_link = this->declare_parameter("reference_link", "right_arm_podest_link");
+    _sub_reference_link = this->declare_parameter("subreference_link", "right_arm_4_link");
     _grab_height = this->declare_parameter("grab_height", 0.202);
     _move_height = this->declare_parameter("move_height", 0.152);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.0125);
@@ -41,11 +42,18 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
 
     for (auto i: parsed_moves) {
         this->_gripper_pub->get()->publish(GRABBED);
+        this->_gripper_pub->get()->publish(GRABBED);        
+        this->_gripper_pub->get()->publish(GRABBED);
+        this->_gripper_pub->get()->publish(GRABBED);
+        sleep(0.5);
         actuate(i);
+        this->_gripper_pub->get()->publish(RELEASED);
+        this->_gripper_pub->get()->publish(RELEASED);        
+        this->_gripper_pub->get()->publish(RELEASED);
         _target_pose = _queen_loader_position;
         plan_execute();
-        this->_gripper_pub->get()->publish(RELEASED);
-        sleep(5);
+
+        //sleep(5);
     }
 }
 
@@ -194,18 +202,22 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     _target_pose.orientation = HAND_ORIENTATION;
     plan_execute();
 
-    // RCLCPP_INFO(this->get_logger(), "Setting orientation constraint...");
-    // moveit_msgs::msg::OrientationConstraint ocm;
-    // moveit_msgs::msg::Constraints test_constraints;
-    // ocm.link_name = _end_effector_link;
-    // ocm.header.frame_id = _reference_link;
-    // ocm.orientation = HAND_ORIENTATION;
-    // ocm.absolute_x_axis_tolerance = 0.1;
-    // ocm.absolute_y_axis_tolerance = 0.1;
-    // ocm.absolute_z_axis_tolerance = 0.1;
-    // ocm.weight = 1.0;
-    // test_constraints.orientation_constraints.push_back(ocm);
-    // move_group_interface->setPathConstraints(test_constraints);
+    /*
+    RCLCPP_INFO(this->get_logger(), "Setting orientation constraint...");
+    moveit_msgs::msg::OrientationConstraint ocm;
+    moveit_msgs::msg::Constraints test_constraints;
+    ocm.link_name = _end_effector_link;
+    //ocm.header.frame_id = _reference_link;
+    ocm.header.frame_id = _sub_reference_link;
+    ocm.orientation = HAND_ORIENTATION;
+    ocm.absolute_x_axis_tolerance = 0.5;
+    ocm.absolute_y_axis_tolerance = 0.5;
+    ocm.absolute_z_axis_tolerance = 0.5;
+    ocm.weight = 1.0;
+    test_constraints.orientation_constraints.emplace_back(ocm);
+    move_group_interface->setPlanningTime(this->_planning_time);
+    move_group_interface->setPathConstraints(test_constraints);
+    */
     
     this->_gripper_pub->get()->publish(RELEASED);
 }

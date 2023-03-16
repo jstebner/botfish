@@ -72,7 +72,7 @@ namespace manip {
             msg.data.push_back(0.9);
             msg.data.push_back(0.9);
             msg.data.push_back(0.9);
-            msg.data.push_back(0.2);
+            msg.data.push_back(0.0);
             return msg;
         }();
 
@@ -88,7 +88,7 @@ namespace manip {
             msg.data.push_back(0.9);
             msg.data.push_back(0.9);
             msg.data.push_back(0.9);
-            msg.data.push_back(0.9);
+            msg.data.push_back(0.5);
             return msg;
         }();
 
@@ -108,6 +108,7 @@ namespace manip {
 
         //Reference to calculate position of _end_effector_link with
         std::string _reference_link{};
+        std::string _sub_reference_link{};
 
         //Reference point for calculating where to go to, should be either the A1 cell or one of the corners of the board
         geometry_msgs::msg::Pose _starting_position{};
