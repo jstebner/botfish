@@ -133,10 +133,6 @@ namespace manip {
         /// @param location cell to move arm to
         void actuate(cell_location location);
 
-        /// @breif grabs piece from board using grippers
-        /// @param position whether were grasping or releasing, true = grasping, false = releasing
-        void grab(bool position);
-
         ///@brief Plan and execute movement to pose currently in _target_pose from end effector curren t
         void plan_execute();
 

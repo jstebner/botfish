@@ -42,13 +42,13 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
 
     for (auto i: parsed_moves) {
         this->_gripper_pub->get()->publish(GRABBED);
-        this->_gripper_pub->get()->publish(GRABBED);        
         this->_gripper_pub->get()->publish(GRABBED);
         this->_gripper_pub->get()->publish(GRABBED);
-        sleep(0.5);
+        this->_gripper_pub->get()->publish(GRABBED);
+        sleep(1.0);
         actuate(i);
         this->_gripper_pub->get()->publish(RELEASED);
-        this->_gripper_pub->get()->publish(RELEASED);        
+        this->_gripper_pub->get()->publish(RELEASED);
         this->_gripper_pub->get()->publish(RELEASED);
         _target_pose = _queen_loader_position;
         plan_execute();
@@ -98,33 +98,6 @@ void manip::Manipulation::actuate(manip::cell_location location) {
 
     plan_execute();
 
-}
-
-void manip::Manipulation::grab(bool position) {
-    //TODO: Remove if determined not necessary for final implementation
-    std_msgs::msg::Float64 pos;
-
-    //Ensure that if were grabbing a piece, that the gripper is opened before descending
-    if (position) {
-        pos.data = 0.0;
-        //this->_gripper_pub->get()->publish(pos);
-        //Now that gripper is open set data to 1.0 to prep for close later
-        pos.data = 1.0;
-    } else {
-        //Set data to 0.0 to prep for open later
-        pos.data = 0.0;
-    }
-
-    //Move to grab height to be able to interact with pieces
-    _target_pose.position.y = _grab_height;
-    plan_execute();
-
-    //Open/close the gripper
-    //this->_gripper_pub->get()->publish(pos);
-
-    //Return to movement height
-    _target_pose.position.y = _move_height;
-    plan_execute();
 }
 
 void manip::Manipulation::plan_execute() {
@@ -197,7 +170,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     lower_board_collision.operation = moveit_msgs::msg::CollisionObject::ADD;
     // Add the collision object to the scene
     planning_scene_interface.applyCollisionObject(lower_board_collision);
-    
+
     _target_pose.position = _queen_loader_position.position;
     _target_pose.orientation = HAND_ORIENTATION;
     plan_execute();
@@ -218,7 +191,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     move_group_interface->setPlanningTime(this->_planning_time);
     move_group_interface->setPathConstraints(test_constraints);
     */
-    
+
     this->_gripper_pub->get()->publish(RELEASED);
 }
 
