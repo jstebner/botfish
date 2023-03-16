@@ -2,7 +2,6 @@
 #include "manipulation/manipulation.hpp"
 
 //TODO: Try out orientation constraining to keep end effector straight,
-//      Get grippers working over topic,
 //      Prep for potential chess playing
 
 manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulation", options) {
