@@ -19,13 +19,13 @@ for solving the N-Queens problem and some reconfiguration will be required if a 
 - `end_effector` - Name of the link that will be moved to the desired position. Defaults to `right_hand_base_link`
 - `reference_link` - Name of the link that is used as the reference point for moving the `end_effector`. Determines the
   coordinate system, defaults to `right_arm_podest_link`
-- `grab_height` - Height to set the `end_effector` to to be able to interact with the chess pieces. Please note that
+- `grab_height` - Height to set the `end_effector` to be able to interact with the chess pieces. Please note that
   this will end up as vertical position of only the end_effector and that the rest of the hand will be in a different
   position. Moveit should prevent any part of the bot from colliding with the board but keep in mind this is an offset
-- `move_height` - Height to set the `end_effector` to to be able to move around without interacting with chess pieces.
+- `move_height` - Height to set the `end_effector` to be able to move around without interacting with chess pieces.
   Warning from above still applies
-- `goal_tolerance` - Tolerance for Moveit to use when planning, generally the lower the better but this can run into
-  issues with plans failing if its too small
+- `goal_tolerance` - Tolerance for Moveit to use when planning, generally the lower, the better but this can run into
+  issues with plans failing if it's too small
 - `max_velocity` - Determines the max velocity of the arm as a percentage, for example a value of 0.2 would allow the
   max arm velocity to be 20% of the driver determined max speed.
 - `max_acceleration` - Determines the max acceleration of the arm as a percentage, for example a value of 0.2 would
