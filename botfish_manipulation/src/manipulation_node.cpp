@@ -40,15 +40,16 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     std::vector<manip::cell_location> parsed_moves = parse_move(msg->data);
 
     for (auto i: parsed_moves) {
-        this->_gripper_pub->get()->publish(GRABBED);
-        this->_gripper_pub->get()->publish(GRABBED);
-        this->_gripper_pub->get()->publish(GRABBED);
-        this->_gripper_pub->get()->publish(GRABBED);
+        for(int j = 0; j < 3; j++){
+            this->_gripper_pub->get()->publish(GRABBED);
+            sleep(1.0);
+        }
         sleep(1.0);
         actuate(i);
-        this->_gripper_pub->get()->publish(RELEASED);
-        this->_gripper_pub->get()->publish(RELEASED);
-        this->_gripper_pub->get()->publish(RELEASED);
+        for(int j = 0; j < 3; j++){
+            this->_gripper_pub->get()->publish(RELEASED);
+            sleep(1.0);
+        }
         _target_pose = _queen_loader_position;
         plan_execute();
 
@@ -161,7 +162,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     geometry_msgs::msg::Pose box_pose;
     box_pose.orientation.w = 1.0;
     box_pose.position.x = 0.25;
-    box_pose.position.y = -0.5;
+    box_pose.position.y = -0.55;
     box_pose.position.z = 0.01;
 
     lower_board_collision.primitives.push_back(primitive);
@@ -174,8 +175,8 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     _target_pose.orientation = HAND_ORIENTATION;
     plan_execute();
 
-    /*
-    RCLCPP_INFO(this->get_logger(), "Setting orientation constraint...");
+
+    /*RCLCPP_INFO(this->get_logger(), "Setting orientation constraint...");
     moveit_msgs::msg::OrientationConstraint ocm;
     moveit_msgs::msg::Constraints test_constraints;
     ocm.link_name = _end_effector_link;
@@ -188,8 +189,8 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     ocm.weight = 1.0;
     test_constraints.orientation_constraints.emplace_back(ocm);
     move_group_interface->setPlanningTime(this->_planning_time);
-    move_group_interface->setPathConstraints(test_constraints);
-    */
+    move_group_interface->setPathConstraints(test_constraints);*/
+
 
     this->_gripper_pub->get()->publish(RELEASED);
 }
