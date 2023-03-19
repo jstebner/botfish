@@ -9,7 +9,7 @@ setup.py
 ../build/botfish_perception/botfish_perception.egg-info/top_level.txt
 ../build/botfish_perception/botfish_perception.egg-info/zip-safe
 botfish_perception/__init__.py
-botfish_perception/standin.py
+botfish_perception/perception.py
 resource/botfish_perception
 test/test_copyright.py
 test/test_flake8.py

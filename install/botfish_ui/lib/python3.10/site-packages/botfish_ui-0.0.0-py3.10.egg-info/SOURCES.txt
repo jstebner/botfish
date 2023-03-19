@@ -1,3 +1,4 @@
+logo.png
 package.xml
 setup.cfg
 setup.py

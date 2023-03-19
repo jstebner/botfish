@@ -93,13 +93,14 @@ namespace manip {
         }();
 
         //fixed orientation of the hand, will end up being the orientation of the end effector link
-        // [-0.707, -0.000, 0.001, 0.708]
+        //right hand quarternion vector [-0.707, -0.000, 0.001, 0.708]
+        //left hand quarternion vector [0.654, -0.376, 0.373, 0.540]
         const geometry_msgs::msg::Quaternion HAND_ORIENTATION = [] {
             geometry_msgs::msg::Quaternion msg;
-            msg.x = -0.707;
-            msg.y = -0.000;
-            msg.z = 0.001;
-            msg.w = 0.708;
+            msg.x = -0.334;//-0.707;
+            msg.y = 0.627;//0.000;
+            msg.z = -0.618;//0.001;
+            msg.w = -0.338;//0.708;
             return msg;
         }();
 

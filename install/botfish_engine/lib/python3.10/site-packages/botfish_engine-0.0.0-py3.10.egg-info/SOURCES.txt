@@ -10,6 +10,7 @@ setup.py
 ../build/botfish_engine/botfish_engine.egg-info/zip-safe
 botfish_engine/__init__.py
 botfish_engine/engine.py
+botfish_engine/nQueens.py
 resource/botfish_engine
 test/test_copyright.py
 test/test_flake8.py
