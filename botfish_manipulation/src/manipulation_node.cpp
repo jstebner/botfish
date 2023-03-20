@@ -6,10 +6,10 @@
 
 manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulation", options) {
     _cell_offset = this->declare_parameter("cell_offset", 0.05);
-    _end_effector_link = this->declare_parameter("end_effector", "left_hand_base_link");
+    _end_effector_link = this->declare_parameter("end_effector", "left_hand_d");
     _reference_link = this->declare_parameter("reference_link", "left_arm_podest_link");
     _sub_reference_link = this->declare_parameter("subreference_link", "left_arm_4_link");
-    _grab_height = this->declare_parameter("grab_height", -0.168);//-0.152);//-0.202);//-0.1);
+    _grab_height = this->declare_parameter("grab_height", -0.152);//-0.152);//-0.202);//-0.1);
     _move_height = this->declare_parameter("move_height", -0.152);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.009375);
     _max_velocity = this->declare_parameter("max_velocity", 0.2);
@@ -40,20 +40,20 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     std::vector<manip::cell_location> parsed_moves = parse_move(msg->data);
 
     for (auto i: parsed_moves) {
-        for(int j = 0; j < 3; j++){
+        for (int j = 0; j < 3; j++) {
             this->_gripper_pub->get()->publish(GRABBED);
             sleep(1.0);
         }
         sleep(1.0);
         actuate(i);
-        for(int j = 0; j < 3; j++){
+        for (int j = 0; j < 3; j++) {
             this->_gripper_pub->get()->publish(RELEASED);
             sleep(1.0);
         }
         _target_pose = _queen_loader_position;
         plan_execute();
 
-        //sleep(5);
+        sleep(5);
     }
 }
 
