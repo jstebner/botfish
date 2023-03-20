@@ -9,7 +9,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _end_effector_link = this->declare_parameter("end_effector", "left_hand_base_link");
     _reference_link = this->declare_parameter("reference_link", "left_arm_podest_link");
     _sub_reference_link = this->declare_parameter("subreference_link", "left_arm_4_link");
-    _grab_height = this->declare_parameter("grab_height", -0.152);//-0.202);//-0.1);
+    _grab_height = this->declare_parameter("grab_height", -0.168);//-0.152);//-0.202);//-0.1);
     _move_height = this->declare_parameter("move_height", -0.152);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.009375);
     _max_velocity = this->declare_parameter("max_velocity", 0.2);
@@ -149,7 +149,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     auto frame_id = move_group_interface->getPlanningFrame();
 
     lower_board_collision.header.frame_id = frame_id;
-    lower_board_collision.id = "box1";
+    lower_board_collision.id = "plane1";
     shape_msgs::msg::SolidPrimitive primitive;
 
 
@@ -173,28 +173,54 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     // Add the collision object to the scene
     planning_scene_interface.applyCollisionObject(lower_board_collision);
 
+    upper_ceiling_collision.header.frame_id = frame_id;
+    upper_ceiling_collision.id = "plane2";
+    shape_msgs::msg::SolidPrimitive primitive2;
+
+
+    // Define the size of the box in meters
+    primitive2.type = shape_msgs::msg::SolidPrimitive::BOX;
+    primitive2.dimensions.resize(3);
+    primitive2.dimensions[shape_msgs::msg::SolidPrimitive::BOX_X] = 5.0;
+    primitive2.dimensions[shape_msgs::msg::SolidPrimitive::BOX_Y] = 5.0;
+    primitive2.dimensions[shape_msgs::msg::SolidPrimitive::BOX_Z] = 0.0;
+
+    // Define the pose of the box (relative to the frame_id)
+    geometry_msgs::msg::Pose box_pose2;
+    box_pose2.orientation.w = 1.0;
+    box_pose2.position.x = 0.25;
+    box_pose2.position.y = -0.55;
+    box_pose2.position.z = 0.55;
+
+    upper_ceiling_collision.primitives.push_back(primitive2);
+    upper_ceiling_collision.primitive_poses.push_back(box_pose2);
+    upper_ceiling_collision.operation = moveit_msgs::msg::CollisionObject::ADD;
+    // Add the collision object to the scene
+    planning_scene_interface.applyCollisionObject(upper_ceiling_collision);
+
+
     _target_pose.position = _queen_loader_position.position;
     _target_pose.orientation = HAND_ORIENTATION;
     this->_gripper_pub->get()->publish(RELEASED);
     plan_execute();
 
+/*
 
-
-    /*RCLCPP_INFO(this->get_logger(), "Setting orientation constraint...");
+    RCLCPP_INFO(this->get_logger(), "Setting orientation constraint...");
     moveit_msgs::msg::OrientationConstraint ocm;
     moveit_msgs::msg::Constraints test_constraints;
     ocm.link_name = _end_effector_link;
-    //ocm.header.frame_id = _reference_link;
-    ocm.header.frame_id = _sub_reference_link;
-    ocm.orientation = HAND_ORIENTATION;
-    ocm.absolute_x_axis_tolerance = 0.5;
-    ocm.absolute_y_axis_tolerance = 0.5;
-    ocm.absolute_z_axis_tolerance = 0.5;
+    ocm.header.frame_id = _reference_link;
+    //ocm.header.frame_id = _sub_reference_link;
+    //ocm.orientation = HAND_ORIENTATION;
+    //ocm.absolute_x_axis_tolerance = 1.0;//0.5;
+    //ocm.absolute_y_axis_tolerance = 1.0;//0.5;
+    //ocm.absolute_z_axis_tolerance = 1.0;//0.5;
     ocm.weight = 1.0;
     test_constraints.orientation_constraints.emplace_back(ocm);
     move_group_interface->setPlanningTime(this->_planning_time);
-    move_group_interface->setPathConstraints(test_constraints);*/
-
+    move_group_interface->setPathConstraints(test_constraints);
+*/
 
 
 }

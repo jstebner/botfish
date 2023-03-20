@@ -125,6 +125,7 @@ namespace manip {
 
         moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
         moveit_msgs::msg::CollisionObject lower_board_collision;
+        moveit_msgs::msg::CollisionObject upper_ceiling_collision;
 
         /// @brief Callback for moves from the engine
         /// @param msg string msg containing the move outputted by the engine, format will be startingLocationEndingLocation ex: e2e4
