@@ -18,12 +18,21 @@ py 3.10 -m pip install -r requirements
 ### Usage
 
 ```
-# source your workspace
+# Create workspace:
+mkdir ros2_ws
+mkdir ros2_ws/src
+
+# Clone repo into src folder
+
 # build workspace
+cd ros2_ws
+colcon build
 
+# Source workspace
+. install/setup.bash
 
-# run this for debug terminal and display
-ros2 run botfish_debug terminal
+# Launch botfish
+ros2 launch botfish botfish.launch.py
 ```
 
 

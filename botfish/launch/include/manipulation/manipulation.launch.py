@@ -44,7 +44,7 @@ def generate_launch_description():
     reference_link = LaunchConfiguration('reference_link', default='left_arm_podest_link')
     grab_height = LaunchConfiguration('grab_height', default='-0.152')
     move_height = LaunchConfiguration('move_height', default='-0.152')
-    goal_tolerance = LaunchConfiguration('goal_tolerance', default='0.00625')
+    goal_tolerance = LaunchConfiguration('goal_tolerance', default='0.001')
     max_velocity = LaunchConfiguration('wheelbase', default='0.2')
     max_acceleration = LaunchConfiguration('max_acceleration', default='0.2')
     planning_time = LaunchConfiguration('planning_time', default='10.0')
@@ -83,7 +83,7 @@ def generate_launch_description():
                               default_value='-0.152',
                               description='Height to be at to move around the board'),
         DeclareLaunchArgument('goal_tolerance',
-                              default_value='0.00625',
+                              default_value='0.001',
                               description='Tolerance in meters that the end_effector can be in to consider movement successful'),
         DeclareLaunchArgument('max_velocity',
                               default_value='0.2',

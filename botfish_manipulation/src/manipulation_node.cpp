@@ -10,8 +10,8 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _reference_link = this->declare_parameter("reference_link", "left_arm_podest_link");
     _grab_height = this->declare_parameter("grab_height", -0.152);//-0.152);//-0.202);//-0.1);
     _move_height = this->declare_parameter("move_height", -0.152);
-    _goal_tolerance = this->declare_parameter("goal_tolerance", 0.00625);
-    _max_velocity = this->declare_parameter("max_velocity", 0.2);
+    _goal_tolerance = this->declare_parameter("goal_tolerance", 0.001);
+    _max_velocity = this->declare_parameter("max_velocity", 0.3);
     _max_acceleration = this->declare_parameter("max_acceleration", 0.2);
     _planning_time = this->declare_parameter("planning_time", 10.0);
 
@@ -175,7 +175,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     box_pose.orientation.w = 1.0;
     box_pose.position.x = 0.25;
     box_pose.position.y = -0.55;
-    box_pose.position.z = 0.045;
+    box_pose.position.z = 0.0755;
 
     lower_board_collision.primitives.push_back(primitive);
     lower_board_collision.primitive_poses.push_back(box_pose);
@@ -200,7 +200,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     box_pose2.orientation.w = 1.0;
     box_pose2.position.x = 0.25;
     box_pose2.position.y = -0.55;
-    box_pose2.position.z = 0.55;
+    box_pose2.position.z = 0.605;
 
     upper_ceiling_collision.primitives.push_back(primitive2);
     upper_ceiling_collision.primitive_poses.push_back(box_pose2);
