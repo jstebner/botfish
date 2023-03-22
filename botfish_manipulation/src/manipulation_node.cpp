@@ -8,7 +8,6 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _cell_offset = this->declare_parameter("cell_offset", 0.05);
     _end_effector_link = this->declare_parameter("end_effector", "left_hand_d");
     _reference_link = this->declare_parameter("reference_link", "left_arm_podest_link");
-    _sub_reference_link = this->declare_parameter("subreference_link", "left_arm_4_link");
     _grab_height = this->declare_parameter("grab_height", -0.152);//-0.152);//-0.202);//-0.1);
     _move_height = this->declare_parameter("move_height", -0.152);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.00625);
