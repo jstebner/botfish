@@ -35,8 +35,10 @@ for solving the N-Queens problem and some reconfiguration will be required if a 
 
 ### Subscribes
 
-- `/engine_move` - String representation of all cells to place queens at for solving N-Queens problem. Ex: `"A1B1C1D1"`
+- `/botfish/engine_move` - String representation of all cells to place queens at for solving N-Queens problem. Ex: `"A1B1C1D1"`
 
 ### Publishes
 
 - `/right_hand/target` - Vector of positions to set each of the joints to for grasping pieces
+- `/botfish/current_move` - String that contains the current grid cell that a queen was just placed at. Ex: A7, this
+topic is published to right after the hand releases the piece.
