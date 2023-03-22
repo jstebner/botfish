@@ -11,7 +11,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _sub_reference_link = this->declare_parameter("subreference_link", "left_arm_4_link");
     _grab_height = this->declare_parameter("grab_height", -0.152);//-0.152);//-0.202);//-0.1);
     _move_height = this->declare_parameter("move_height", -0.152);
-    _goal_tolerance = this->declare_parameter("goal_tolerance", 0.009375);
+    _goal_tolerance = this->declare_parameter("goal_tolerance", 0.00625);
     _max_velocity = this->declare_parameter("max_velocity", 0.2);
     _max_acceleration = this->declare_parameter("max_acceleration", 0.2);
     _planning_time = this->declare_parameter("planning_time", 10.0);
@@ -30,26 +30,35 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
 
     //Subscribers
     _engine_move_sub = this->create_subscription<std_msgs::msg::String>(
-            "/engine_move", 10, std::bind(&Manipulation::move_cb, this, std::placeholders::_1));
+            "/botfish/engine_move", 10, std::bind(&Manipulation::move_cb, this, std::placeholders::_1));
 
     //Publishers
     _gripper_pub = this->create_publisher<std_msgs::msg::Float64MultiArray>("/left_hand/target", 10);
+    _finished_move_pub = this->create_publisher<std_msgs::msg::String>("/botfish/current_move", 10);
 }
 
 void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     std::vector<manip::cell_location> parsed_moves = parse_move(msg->data);
 
-    for (auto i: parsed_moves) {
+    for (const auto &i: parsed_moves) {
         for (int j = 0; j < 3; j++) {
             this->_gripper_pub->get()->publish(GRABBED);
             sleep(1.0);
         }
+
         sleep(1.0);
         actuate(i);
+
         for (int j = 0; j < 3; j++) {
             this->_gripper_pub->get()->publish(RELEASED);
             sleep(1.0);
         }
+
+        std_msgs::msg::String str_msg;
+        RCLCPP_INFO(this->get_logger(), "Publishing move: %s", i.move.c_str());
+        str_msg.data = i.move;
+        _finished_move_pub->get()->publish(str_msg);
+
         _target_pose = _queen_loader_position;
         plan_execute();
 
@@ -69,6 +78,7 @@ std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string mo
     }
     for (auto i: moves) {
         manip::cell_location loc{};
+        RCLCPP_INFO(this->get_logger(), "Processing move string %s", i.c_str());
         //Convert letter val to number and multiply both letter and number by cell offset to get location
         char letter = i[0]; //Grab char in first position, ex: A1 -> A
         std::string num(1, i[1]); //Convert num in second position to a string
@@ -78,6 +88,7 @@ std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string mo
         loc.x_dist = ((double) (value - 1)) *
                      _cell_offset; //Convert to x_dist ensuring that value is reduced by one because 0 indexing
         loc.y_dist = ((double) (std::stoi(num) - 1)) * _cell_offset; //Same as above but convert to num using std::stoi
+        loc.move = i;
 
         RCLCPP_INFO(this->get_logger(), "Cell location: %f, %f", this->_starting_position.position.x + loc.x_dist,
                     this->_starting_position.position.z + loc.y_dist);
@@ -86,7 +97,7 @@ std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string mo
     return parsed_moves;
 }
 
-void manip::Manipulation::actuate(manip::cell_location location) {
+void manip::Manipulation::actuate(const manip::cell_location &location) {
     moveit::planning_interface::MoveGroupInterface::Plan msg;
 
     //Calculate cell location to move to

@@ -18,6 +18,7 @@ namespace manip {
     struct cell_location {
         double x_dist;
         double y_dist;
+        std::string move;
     };
 
     class Manipulation : public rclcpp::Node {
@@ -37,6 +38,9 @@ namespace manip {
 
         std::optional<std::shared_ptr<rclcpp::Publisher<std_msgs::msg::Float64MultiArray>>>
                 _gripper_pub = std::nullopt;
+
+        std::optional<std::shared_ptr<rclcpp::Publisher<std_msgs::msg::String>>>
+                _finished_move_pub = std::nullopt;
 
         //distance to the middle of a cell, this should be half the cell length
         double _cell_offset{};
@@ -133,7 +137,7 @@ namespace manip {
 
         /// @brief Calculates the xyz/quaternion that the end effector of the robot needs to go to and moves arm to that location
         /// @param location cell to move arm to
-        void actuate(cell_location location);
+        void actuate(const cell_location &location);
 
         ///@brief Plan and execute movement to pose currently in _target_pose from end effector curren t
         void plan_execute();
