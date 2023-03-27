@@ -9,7 +9,10 @@ from std_msgs.msg import String
 
 class Board:
     def __init__(self, n: int = 8):
-    
+        
+        if n not in range(4,9):
+            n = 8
+        
         #The nxn size of the board
         self._n = n
         
