@@ -11,7 +11,7 @@ class Board:
     def __init__(self, n: int = 8):
         
         if n not in range(4,9):
-            n = 8
+            n = 4
         
         #The nxn size of the board
         self._n = n
@@ -118,37 +118,4 @@ def nQueens():
 
 if __name__ == '__main__':
     nQueens()
-    '''
-    #Initialize a board of size nxn
-    n = input('Enter a value 4-8: ')
-    board = Board( int(n) )
 
-    #Find a solution space
-    findNQueens(board)
-
-    #Print the board
-    board.display()
-
-    rclpy.init(args=None)
-    node = rclpy.create_node('Matrix_Publisher')
-    publisher = node.create_publisher(String, 'tiles',0)
-
-    msg = String()
-                
-    msg.data = ""
-
-    board2 = Board( int(n) )
-    board2._occupancy_matrix = board._occupancy_matrix.transpose(1,0)
-            
-    for row in range(int(n)):
-        for col in range(int(n)):
-            if board2._occupancy_matrix[row][col] == 1:
-                print( str( chr(row + 65) ) + "," + str( int(n) - col + (8 - int(n) ) ) )
-                msg.data += str( ( chr(row + 65)) + str( int(n) - col + (8 - int(n) ) ) )
-
-    node.get_logger().info('Message: "%s"' % msg.data)
-    publisher.publish(msg)            
-                
-    node.destroy_node()
-    rclpy.shutdown()
-    '''
