@@ -44,7 +44,7 @@ class DebugTerminal(Node):
         # cmds that need parsing
         elif cmd_tokens[0] == 'help':
             # stop, stopall, push (uci), pop (int), help, switch, emote (key), svn
-            print('you got this bro :)')
+            print('you got this lil bro :)')
 
         elif cmd_tokens[0] in ['stop', 'stopall']:
             msg.data = cmd_tokens[0]
