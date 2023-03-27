@@ -51,7 +51,6 @@ A8 is always assumed to be the tile furthest from the arm's home position (ie th
 | **7**| A7 | B7| C7| D7| E7| F7| G7| H7|   |
 | **8**| A8 | B8| C8| D8| E8| F8| G8| H8|   |
 
-Moveit will plan to "optimal paths"
 
 ## Modules Needed to Implement Chess
 
