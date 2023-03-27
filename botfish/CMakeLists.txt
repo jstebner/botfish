@@ -7,9 +7,6 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(botfish_manipulation REQUIRED)
-#find_package(botfish_debug REQUIRED)
-#find_package(botfish_engine REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
