@@ -1,9 +1,6 @@
 #include <regex>
 #include "manipulation/manipulation.hpp"
 
-//TODO: Try out orientation constraining to keep end effector straight,
-//      Prep for potential chess playing
-
 manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulation", options) {
     _cell_offset = this->declare_parameter("cell_offset", 0.05);
     _end_effector_link = this->declare_parameter("end_effector", "left_hand_d");
@@ -98,7 +95,6 @@ std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string mo
 }
 
 void manip::Manipulation::actuate(const manip::cell_location &location) {
-    moveit::planning_interface::MoveGroupInterface::Plan msg;
 
     //Calculate cell location to move to
     _target_pose.position.x = this->_starting_position.position.x + location.x_dist;
@@ -108,7 +104,6 @@ void manip::Manipulation::actuate(const manip::cell_location &location) {
     _target_pose.orientation = this->HAND_ORIENTATION;
 
     plan_execute();
-
 }
 
 void manip::Manipulation::plan_execute() {
@@ -117,7 +112,7 @@ void manip::Manipulation::plan_execute() {
 
     //Attempt to plan to that position
     RCLCPP_INFO(this->get_logger(),
-                "Planning movement to x: %f, y: %f, z: %f, With target quaternion: x: %f y: %f z: %f w: %f",
+                "Planning to target position x: %f, y: %f, z: %f, With target quaternion: x: %f y: %f z: %f w: %f",
                 _target_pose.position.x,
                 _target_pose.position.y, _target_pose.position.z, _target_pose.orientation.x,
                 _target_pose.orientation.y, _target_pose.orientation.z, _target_pose.orientation.w);
