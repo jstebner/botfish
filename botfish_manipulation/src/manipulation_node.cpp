@@ -40,17 +40,18 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     std::vector<manip::cell_location> parsed_moves = parse_move(msg->data);
 
     for (const auto &i: parsed_moves) {
+        //Send grab message 3 times to make sure hands get to grabbed position as we had issue with that in the past
         for (int j = 0; j < 3; j++) {
             this->_gripper_pub->get()->publish(GRABBED);
-            sleep(1.0);
+            rclcpp::sleep_for(std::chrono::milliseconds(1000));
         }
 
-        sleep(1.0);
+        rclcpp::sleep_for(std::chrono::milliseconds(1000));
         actuate(i);
 
         for (int j = 0; j < 3; j++) {
             this->_gripper_pub->get()->publish(RELEASED);
-            sleep(1.0);
+            rclcpp::sleep_for(std::chrono::milliseconds(1000));
         }
 
         std_msgs::msg::String str_msg;
@@ -61,7 +62,7 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
         _target_pose = _queen_loader_position;
         plan_execute();
 
-        sleep(5);
+        rclcpp::sleep_for(std::chrono::milliseconds(5000));
     }
 }
 
@@ -115,20 +116,18 @@ void manip::Manipulation::plan_execute() {
     move_group_interface->setPoseTarget(_target_pose);
 
     //Attempt to plan to that position
-    RCLCPP_INFO(this->get_logger(), "Planning movement to x: %f, y: %f, z: %f", _target_pose.position.x,
-                _target_pose.position.y, _target_pose.position.z);
+    RCLCPP_INFO(this->get_logger(),
+                "Planning movement to x: %f, y: %f, z: %f, With target quaternion: x: %f y: %f z: %f w: %f",
+                _target_pose.position.x,
+                _target_pose.position.y, _target_pose.position.z, _target_pose.orientation.x,
+                _target_pose.orientation.y, _target_pose.orientation.z, _target_pose.orientation.w);
     auto const plan_ok = static_cast<bool>(move_group_interface->plan(msg));
     if (!plan_ok) {
         RCLCPP_ERROR(this->get_logger(), "Failed to plan!!!");
     } else {
-        RCLCPP_INFO(this->get_logger(), "Planning Succeeded!");
-        //Execute our calculated plan
-        RCLCPP_INFO(this->get_logger(), "Executing movement...");
         auto const exec_ok = static_cast<bool>(move_group_interface->execute(msg));
         if (!exec_ok) {
             RCLCPP_ERROR(this->get_logger(), "Execute failed!!!");
-        } else {
-            RCLCPP_INFO(this->get_logger(), "Execution Succeeded!");
         }
     }
 }
