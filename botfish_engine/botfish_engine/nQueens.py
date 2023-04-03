@@ -4,7 +4,7 @@ import rclpy
 
 from rclpy.node import Node
 from rclpy.publisher import Publisher
-from std_msgs.msg import String
+from std_msgs.msg import String, Int
 
 
 class Board:
@@ -116,8 +116,57 @@ def nQueens():
     node.destroy_node()
     rclpy.shutdown()
 
+class nQueensNode(Node):
+    def __init__(self):
+        super().__init__('nqueens_node')
+        
+        self.tiles_pub = self.create_publisher(
+            String,
+            'tiles',
+            10
+        )
+        self.perform_nqueens_sub = self.create_subscription(
+            Int,
+            'perform_nqueens',
+            self.perform,
+            10
+        )
+    
+    def perform(self, n: int):
+        if n not in range(4, 9):
+            n = 8
+        board = Board()
+        findNQueens(board)
+        board.display()
+        msg = String()
+        msg.data = ""
+        board2 = Board(n)
+        board2._occupancy_matrix = board._occupancy_matrix.transpose(1,0)
+        
+        for row in range(int(n)):
+            for col in range(int(n)):
+                if board2._occupancy_matrix[row][col] == 1:
+                    print( str( chr(row + 65) ) + "," + str( int(n) - col + (8 - int(n) ) ) )
+                    msg.data += str( ( chr(row + 65)) + str( int(n) - col + (8 - int(n) ) ) )
+        self.tiles_pub.publish(msg)
+    
+
+def main(args=None):
+    rclpy.init()
+    
+    node = nQueensNode()
+    rclpy.spin(node)
+    
+    node.destroy_node()
+    rclpy.shutdown()
+
 if __name__ == '__main__':
-    nQueens()
+    # NOTE: run nQueens() for one-shot cmd line instance
+    # nQueens()
+    # NOTE: run main() for continuous node
+    main()
+    
+    
     '''
     #Initialize a board of size nxn
     n = input('Enter a value 4-8: ')
