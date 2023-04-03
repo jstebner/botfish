@@ -6,8 +6,9 @@ groundwork for a future group to take our research and make a full-fledged auton
 
 ### Dependencies
 
-* REVIEW: Requires Python 3.10 on Ubuntu 22
-* Packages listed in botfish/requirements.txt
+* REVIEW: Requires Python 3.10 on Ubuntu 22, Requires ROS2 Humble as well as Moveit2
+* Python dependencies listed in botfish/requirements.txt
+* R2ED code also required to run
 
 ### Installing
 
@@ -21,20 +22,24 @@ py 3.10 -m pip install -r requirements
 
 ```
 # Create workspace:
-mkdir ros2_ws
-mkdir ros2_ws/src
+$ mkdir ros2_ws
+$ mkdir ros2_ws/src
 
 # Clone repo into src folder
 
+# Get ros dependencies using rosdep
+$ cd ros2_ws
+$ rosdep install --from-paths src --ignore-src -r -y
+
 # build workspace
-cd ros2_ws
-colcon build
+$ cd ros2_ws
+$ colcon build
 
 # Source workspace
-. install/setup.bash
+$ . install/setup.bash
 
-# Launch botfish
-ros2 launch botfish botfish.launch.py
+# Launch botfish, Note that the R2ED Client must be running before botfish can be ran
+$ ros2 launch botfish botfish.launch.py
 ```
 
 ## N-Queens Solver
@@ -104,7 +109,8 @@ only the right thumb flexion is disabled
 
 ### Right Index Finger Mechanical Issues
 
-The motor for the right index finger works properly and is able to move it, but we believe the finger has a busted spring
+The motor for the right index finger works properly and is able to move it, but we believe the finger has a busted
+spring
 and as a result has little resistance to movements and can dangle in place.
 
 ### Left Arm Plans to a Low Position and not the Desired One
