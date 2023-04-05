@@ -5,12 +5,12 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
     _cell_offset = this->declare_parameter("cell_offset", 0.05);
     _end_effector_link = this->declare_parameter("end_effector", "left_hand_d");
     _reference_link = this->declare_parameter("reference_link", "left_arm_podest_link");
-    _grab_height = this->declare_parameter("grab_height", -0.152);//-0.152);//-0.202);//-0.1);
-    _move_height = this->declare_parameter("move_height", -0.152);
+    _grab_height = this->declare_parameter("grab_height", -0.142);//-0.152);//-0.202);//-0.1);
+    _move_height = this->declare_parameter("move_height", -0.142);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.001);
     _max_velocity = this->declare_parameter("max_velocity", 0.3);
     _max_acceleration = this->declare_parameter("max_acceleration", 0.2);
-    _planning_time = this->declare_parameter("planning_time", 10.0);
+    _planning_time = this->declare_parameter("planning_time", 20.0);
 
     //Define where the starting position is in coordinate space
     _starting_position.position.x = -0.095;//-0.106;
@@ -177,6 +177,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     // Add the collision object to the scene
     planning_scene_interface.applyCollisionObject(lower_board_collision);
 
+/*
     upper_ceiling_collision.header.frame_id = frame_id;
     upper_ceiling_collision.id = "plane2";
     shape_msgs::msg::SolidPrimitive primitive2;
@@ -194,7 +195,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     box_pose2.orientation.w = 1.0;
     box_pose2.position.x = 0.25;
     box_pose2.position.y = -0.55;
-    box_pose2.position.z = 0.605;
+    box_pose2.position.z = 0.805;
 
     upper_ceiling_collision.primitives.push_back(primitive2);
     upper_ceiling_collision.primitive_poses.push_back(box_pose2);
@@ -202,7 +203,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     // Add the collision object to the scene
     planning_scene_interface.applyCollisionObject(upper_ceiling_collision);
 
-
+*/
     _target_pose.position = _queen_loader_position.position;
     _target_pose.orientation = HAND_ORIENTATION;
     this->_gripper_pub->get()->publish(RELEASED);
