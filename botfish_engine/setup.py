@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'engine = botfish_engine.engine:main'
+            'engine = botfish_engine.engine:main',
+            'nqueens = botfish_engine.nQueens:main'
         ],
     },
 )

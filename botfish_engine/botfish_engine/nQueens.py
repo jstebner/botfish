@@ -4,7 +4,7 @@ import rclpy
 
 from rclpy.node import Node
 from rclpy.publisher import Publisher
-from std_msgs.msg import String, Int
+from std_msgs.msg import String, Int64
 
 
 class Board:
@@ -126,13 +126,14 @@ class nQueensNode(Node):
             10
         )
         self.perform_nqueens_sub = self.create_subscription(
-            Int,
+            Int64,
             'perform_nqueens',
             self.perform,
             10
         )
     
-    def perform(self, n: int):
+    def perform(self, msg):
+        n = msg.data
         if n not in range(4, 9):
             n = 8
         board = Board()

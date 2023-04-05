@@ -30,7 +30,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     engine = Node(package='botfish_engine',
-                          executable='engine',
+                          executable='nqueens',
                           name='botfish_engine',
                           output='screen',
                           parameters=[]
