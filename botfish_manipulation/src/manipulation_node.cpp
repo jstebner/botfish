@@ -59,7 +59,7 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
         _target_pose = _queen_loader_position;
         plan_execute();
 
-        rclcpp::sleep_for(std::chrono::milliseconds(5000));
+        sleep(3);
     }
 }
 
