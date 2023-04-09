@@ -4,7 +4,7 @@ import io
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String, UInt8
+from std_msgs.msg import String, Int64
 from multiprocessing import Queue
 
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
@@ -52,7 +52,7 @@ class DebugDisplay(Node):
             10
         )
         self.perform_nqueens_pub = self.create_publisher(
-            UInt8,
+            Int64,
             'perform_nqueens',
             10
         )
