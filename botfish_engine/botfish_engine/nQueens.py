@@ -126,7 +126,6 @@ class nQueensNode(Node):
             10
         )
         self.perform_nqueens_sub = self.create_subscription(
-            UInt8,
             Int64,
             'perform_nqueens',
             self.perform,
