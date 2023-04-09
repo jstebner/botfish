@@ -115,7 +115,7 @@ def generate_launch_description():
                               description='Amount of time in seconds moveit is allowed to plan for'),
 
         # Nodes
-        manipulation,
+        #manipulation,
         debug,
         engine
     ])

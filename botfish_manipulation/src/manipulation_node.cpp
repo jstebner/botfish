@@ -1,19 +1,16 @@
 #include <regex>
 #include "manipulation/manipulation.hpp"
 
-//TODO: Try out orientation constraining to keep end effector straight,
-//      Prep for potential chess playing
-
 manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulation", options) {
     _cell_offset = this->declare_parameter("cell_offset", 0.05);
     _end_effector_link = this->declare_parameter("end_effector", "left_hand_d");
     _reference_link = this->declare_parameter("reference_link", "left_arm_podest_link");
-    _grab_height = this->declare_parameter("grab_height", -0.152);//-0.152);//-0.202);//-0.1);
-    _move_height = this->declare_parameter("move_height", -0.152);
+    _grab_height = this->declare_parameter("grab_height", -0.142);//-0.152);//-0.202);//-0.1);
+    _move_height = this->declare_parameter("move_height", -0.142);
     _goal_tolerance = this->declare_parameter("goal_tolerance", 0.001);
     _max_velocity = this->declare_parameter("max_velocity", 0.3);
     _max_acceleration = this->declare_parameter("max_acceleration", 0.2);
-    _planning_time = this->declare_parameter("planning_time", 10.0);
+    _planning_time = this->declare_parameter("planning_time", 20.0);
 
     //Define where the starting position is in coordinate space
     _starting_position.position.x = -0.095;//-0.106;
@@ -40,17 +37,18 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
     std::vector<manip::cell_location> parsed_moves = parse_move(msg->data);
 
     for (const auto &i: parsed_moves) {
+        //Send grab message 3 times to make sure hands get to grabbed position as we had issue with that in the past
         for (int j = 0; j < 3; j++) {
             this->_gripper_pub->get()->publish(GRABBED);
-            sleep(1.0);
+            rclcpp::sleep_for(std::chrono::milliseconds(1000));
         }
 
-        sleep(1.0);
+        rclcpp::sleep_for(std::chrono::milliseconds(1000));
         actuate(i);
 
         for (int j = 0; j < 3; j++) {
             this->_gripper_pub->get()->publish(RELEASED);
-            sleep(1.0);
+            rclcpp::sleep_for(std::chrono::milliseconds(1000));
         }
 
         std_msgs::msg::String str_msg;
@@ -61,7 +59,7 @@ void manip::Manipulation::move_cb(std_msgs::msg::String::SharedPtr msg) {
         _target_pose = _queen_loader_position;
         plan_execute();
 
-        sleep(5);
+        sleep(3);
     }
 }
 
@@ -97,7 +95,6 @@ std::vector<manip::cell_location> manip::Manipulation::parse_move(std::string mo
 }
 
 void manip::Manipulation::actuate(const manip::cell_location &location) {
-    moveit::planning_interface::MoveGroupInterface::Plan msg;
 
     //Calculate cell location to move to
     _target_pose.position.x = this->_starting_position.position.x + location.x_dist;
@@ -107,7 +104,6 @@ void manip::Manipulation::actuate(const manip::cell_location &location) {
     _target_pose.orientation = this->HAND_ORIENTATION;
 
     plan_execute();
-
 }
 
 void manip::Manipulation::plan_execute() {
@@ -115,20 +111,18 @@ void manip::Manipulation::plan_execute() {
     move_group_interface->setPoseTarget(_target_pose);
 
     //Attempt to plan to that position
-    RCLCPP_INFO(this->get_logger(), "Planning movement to x: %f, y: %f, z: %f", _target_pose.position.x,
-                _target_pose.position.y, _target_pose.position.z);
+    RCLCPP_INFO(this->get_logger(),
+                "Planning to target position x: %f, y: %f, z: %f, With target quaternion: x: %f y: %f z: %f w: %f",
+                _target_pose.position.x,
+                _target_pose.position.y, _target_pose.position.z, _target_pose.orientation.x,
+                _target_pose.orientation.y, _target_pose.orientation.z, _target_pose.orientation.w);
     auto const plan_ok = static_cast<bool>(move_group_interface->plan(msg));
     if (!plan_ok) {
         RCLCPP_ERROR(this->get_logger(), "Failed to plan!!!");
     } else {
-        RCLCPP_INFO(this->get_logger(), "Planning Succeeded!");
-        //Execute our calculated plan
-        RCLCPP_INFO(this->get_logger(), "Executing movement...");
         auto const exec_ok = static_cast<bool>(move_group_interface->execute(msg));
         if (!exec_ok) {
             RCLCPP_ERROR(this->get_logger(), "Execute failed!!!");
-        } else {
-            RCLCPP_INFO(this->get_logger(), "Execution Succeeded!");
         }
     }
 }
@@ -183,6 +177,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     // Add the collision object to the scene
     planning_scene_interface.applyCollisionObject(lower_board_collision);
 
+/*
     upper_ceiling_collision.header.frame_id = frame_id;
     upper_ceiling_collision.id = "plane2";
     shape_msgs::msg::SolidPrimitive primitive2;
@@ -200,7 +195,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     box_pose2.orientation.w = 1.0;
     box_pose2.position.x = 0.25;
     box_pose2.position.y = -0.55;
-    box_pose2.position.z = 0.605;
+    box_pose2.position.z = 0.805;
 
     upper_ceiling_collision.primitives.push_back(primitive2);
     upper_ceiling_collision.primitive_poses.push_back(box_pose2);
@@ -208,7 +203,7 @@ void manip::Manipulation::setup_moveit(moveit::planning_interface::MoveGroupInte
     // Add the collision object to the scene
     planning_scene_interface.applyCollisionObject(upper_ceiling_collision);
 
-
+*/
     _target_pose.position = _queen_loader_position.position;
     _target_pose.orientation = HAND_ORIENTATION;
     this->_gripper_pub->get()->publish(RELEASED);

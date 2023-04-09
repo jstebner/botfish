@@ -1,3 +1,4 @@
 [console_scripts]
 engine = botfish_engine.engine:main
+nqueens = botfish_engine.nQueens:main
 
