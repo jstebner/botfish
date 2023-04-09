@@ -4,7 +4,7 @@ import rclpy
 
 from rclpy.node import Node
 from rclpy.publisher import Publisher
-from std_msgs.msg import String, Int
+from std_msgs.msg import String, UInt8
 
 
 class Board:
@@ -126,7 +126,7 @@ class nQueensNode(Node):
             10
         )
         self.perform_nqueens_sub = self.create_subscription(
-            Int,
+            UInt8,
             'perform_nqueens',
             self.perform,
             10

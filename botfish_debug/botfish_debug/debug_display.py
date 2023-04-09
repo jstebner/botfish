@@ -4,7 +4,7 @@ import io
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String  # TODO: also import msg for images
+from std_msgs.msg import String, UInt8
 from multiprocessing import Queue
 
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
@@ -18,7 +18,7 @@ SIZE = (512 + 256,1024)
 WIDGET_SIZE = 512
 FONT_SIZE = 20
 HISTORY = 20
-PERIOD_s = 1/10 # 10 UpS
+PERIOD_s = 1/30 # 10 UpS
 
 class DebugDisplay(Node):
     def __init__(self):
@@ -39,6 +39,8 @@ class DebugDisplay(Node):
         
         self.user_text = str()
         
+        self.nq = None
+        
         self.debug_cmd_pub = self.create_publisher(
             String,
             'debug_cmd',
@@ -47,6 +49,11 @@ class DebugDisplay(Node):
         self.player_move_pub = self.create_publisher(
             String,
             'player_move',
+            10
+        )
+        self.perform_nqueens_pub = self.create_publisher(
+            UInt8,
+            'perform_nqueens',
             10
         )
         self.debug_cmd_sub = self.create_subscription(
@@ -79,12 +86,21 @@ class DebugDisplay(Node):
             self.cmd_q.put,
             10
         )
+        self.tiles_sub = self.create_subscription(
+            String,
+            'tiles',
+            self.process_nq,
+            10
+        )
         self.timer = self.create_timer(
             PERIOD_s,
             self.update
         )
     
-    def _render_board(self):
+    def _render_board(self, board=None):
+        if board is None:
+            board = self.board
+        
         render = io.BytesIO()
         cairosvg.svg2png(
             chess.svg.board(self.board, size=WIDGET_SIZE),
@@ -98,6 +114,13 @@ class DebugDisplay(Node):
         text_rect = text_obj.get_rect()
         text_rect.topleft = (x, y)
         self.screen.blit(text_obj, text_rect)
+    
+    def process_nq(self, msg):
+        tiles = msg.data
+        print(msg.data)
+        tiles = [tiles[2*i:2*i+2] for i in range(len(tiles)//2)]
+        tiles = list(map(lambda c:((c[0]), int(c[1])), tiles))
+        
 
     def parse_cmd(self, inp):
         msg = String()
