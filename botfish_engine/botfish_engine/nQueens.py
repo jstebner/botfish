@@ -169,8 +169,8 @@ if __name__ == '__main__':
     import sys
     if len(sys.argv) > 1:
         if sys.argv[-1] == 'cli':
-            main()
+            nQueens()
         else:
             print('huh')
     else:
-        nQueens()
+        main()
