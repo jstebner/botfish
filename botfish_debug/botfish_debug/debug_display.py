@@ -163,8 +163,10 @@ class DebugDisplay(Node):
             elif not cmd_tokens[1].isdigit():
                 print('need a number')
                 return
-            
-            msg.data = int(cmd_tokens[1])
+            else:
+                n = int(cmd_tokens[1])
+                
+            msg.data = n
             self.perform_nqueens_pub.publish(msg)
 
         elif cmd_tokens[0] == 'push':
