@@ -169,6 +169,7 @@ class DebugDisplay(Node):
                 
             msg.data = n
             self.perform_nqueens_pub.publish(msg)
+            return
 
         elif cmd_tokens[0] == 'push':
             if len(cmd_tokens) == 1:
