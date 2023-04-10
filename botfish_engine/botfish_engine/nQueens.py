@@ -134,10 +134,13 @@ class nQueensNode(Node):
     
     def perform(self, msg):
         n = int(msg.data)
+        print('\n<DEBUG>')
         print(n)
+        print(type(n))
+        print('</DEBUG>\n')
         if n not in range(4, 9):
-            n = 8
-        board = Board()
+            n = 4
+        board = Board(n)
         findNQueens(board)
         board.display()
         msg = String()

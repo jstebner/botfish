@@ -230,6 +230,9 @@ class DebugDisplay(Node):
                 elif event.key == K_BACKSPACE:
                     if len(self.user_text):
                         self.user_text = self.user_text[:-1]
+                elif event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
                 else:
                     self.user_text += event.unicode
     
