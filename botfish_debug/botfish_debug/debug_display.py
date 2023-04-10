@@ -121,10 +121,11 @@ class DebugDisplay(Node):
     def process_nq(self, msg):
         tiles = msg.data
         print(msg.data)
-        tiles = [tiles[2*i:2*i+2] for i in range(len(tiles)//2)]
-        tiles = list(map(lambda c:((c[0]), int(c[1])), tiles))
+        # aasumes letter order will always be A,B,C,...
+        tiles = [tiles[2*i:2*i+2][1] for i in range(1, len(tiles), 2)]
         # TODO: turn tiles into board following:
         #       https://python-chess.readthedocs.io/en/latest/svg.html
+        # ex: "8/8/8/8/4N3/8/8/8 w - - 0 1"
         
 
     def parse_cmd(self, inp):
