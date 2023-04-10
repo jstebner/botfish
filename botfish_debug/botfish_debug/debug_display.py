@@ -119,14 +119,16 @@ class DebugDisplay(Node):
         self.screen.blit(text_obj, text_rect)
     
     def process_nq(self, msg):
-        tiles = msg.data
-        print(msg.data)
         # aasumes letter order will always be A,B,C,...
-        tiles = [tiles[2*i:2*i+2][1] for i in range(1, len(tiles), 2)]
+        tiles = list(map(int, msg.data[1::2]))
+        n = len(tiles)
         # TODO: turn tiles into board following:
         #       https://python-chess.readthedocs.io/en/latest/svg.html
         # ex: "8/8/8/8/4N3/8/8/8 w - - 0 1"
-        
+        fen = ''
+        for idx, _ in sorted(enumerate(tiles), key=lambda x: x[1], reverse=True):
+            fen += '' if idx == 0 else str(idx) + 'q' + '' if 7-idx == 0 else str(7-idx) + '/'
+        fen = fen[:-1] + ' w - - 0 1'
 
     def parse_cmd(self, inp):
         msg = String()
