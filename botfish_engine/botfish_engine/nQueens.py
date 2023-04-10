@@ -133,7 +133,7 @@ class nQueensNode(Node):
         )
     
     def perform(self, msg):
-        n = msg.data
+        n = int(msg.data)
         if n not in range(4, 9):
             n = 8
         board = Board()

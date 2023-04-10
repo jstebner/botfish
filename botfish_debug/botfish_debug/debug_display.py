@@ -120,6 +120,8 @@ class DebugDisplay(Node):
         print(msg.data)
         tiles = [tiles[2*i:2*i+2] for i in range(len(tiles)//2)]
         tiles = list(map(lambda c:((c[0]), int(c[1])), tiles))
+        # TODO: turn tiles into board following:
+        #       https://python-chess.readthedocs.io/en/latest/svg.html
         
 
     def parse_cmd(self, inp):
