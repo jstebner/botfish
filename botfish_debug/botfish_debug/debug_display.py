@@ -154,6 +154,19 @@ class DebugDisplay(Node):
             self.player_move_pub.publish(msg)
             return
 
+        elif cmd_tokens[0] == 'nq':
+            if len(cmd_tokens) == 1:
+                n = 4
+            elif len(cmd_tokens) > 2:
+                print('too many arg')
+                return
+            elif not cmd_tokens[1].isdigit():
+                print('need a number')
+                return
+            
+            msg.data = int(cmd_tokens[1])
+            self.perform_nqueens_pub.publish(msg)
+
         elif cmd_tokens[0] == 'push':
             if len(cmd_tokens) == 1:
                 print('need a move to push bozo')
