@@ -5,6 +5,9 @@ import io
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String, Int64
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
 from multiprocessing import Queue
 
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
@@ -63,7 +66,7 @@ class DebugDisplay(Node):
             10
         )
         self.camera_feed_sub = self.create_subscription(
-            String, # TODO: this should be image
+            Image,
             'camera_feed',
             self.cam_q.put,
             10
@@ -133,6 +136,7 @@ class DebugDisplay(Node):
         
         # cmds that need parsing
         elif cmd_tokens[0] == 'help':
+            # TODO: make this not ass
             # stop, stopall, push (uci), pop (int), help, switch, emote (key), svn
             print('you got this lil bro :)')
 
@@ -237,7 +241,6 @@ class DebugDisplay(Node):
                     self.user_text += event.unicode
     
     def update(self):
-        # TODO: add supplementals to board like arrows n stuff
         self.screen.fill((0,0,0))
         board_update = False
 
@@ -274,8 +277,7 @@ class DebugDisplay(Node):
             self._render_board()
         self.screen.blit(self.board_rendered, (0,0))
         
-        # TODO: draw text input
-        # GO HERE >>> https://www.geeksforgeeks.org/how-to-create-a-text-input-box-with-pygame/
+        # draw text input
         self._draw_text(
             self.user_text,
             x = 512,

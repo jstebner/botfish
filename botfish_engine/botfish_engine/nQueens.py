@@ -166,6 +166,11 @@ def main(args=None):
     rclpy.shutdown()
 
 if __name__ == '__main__':
-    main()
-    # nQueens()
-
+    import sys
+    if len(sys.argv) > 1:
+        if sys.argv[-1] == 'cli':
+            main()
+        else:
+            print('huh')
+    else:
+        nQueens()
