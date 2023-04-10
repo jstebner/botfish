@@ -155,6 +155,7 @@ class DebugDisplay(Node):
             return
 
         elif cmd_tokens[0] == 'nq':
+            msg = Int64()
             if len(cmd_tokens) == 1:
                 n = 4
             elif len(cmd_tokens) > 2:
