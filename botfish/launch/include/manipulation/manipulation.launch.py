@@ -36,7 +36,7 @@ def generate_launch_description():
     grab_height = LaunchConfiguration('grab_height', default='-0.152')
     move_height = LaunchConfiguration('move_height', default='-0.152')
     goal_tolerance = LaunchConfiguration('goal_tolerance', default='0.001')
-    max_velocity = LaunchConfiguration('wheelbase', default='0.2')
+    max_velocity = LaunchConfiguration('max_velocity', default='0.2')
     max_acceleration = LaunchConfiguration('max_acceleration', default='0.2')
     planning_time = LaunchConfiguration('planning_time', default='10.0')
 

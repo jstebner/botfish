@@ -26,7 +26,7 @@ manip::Manipulation::Manipulation(rclcpp::NodeOptions options) : Node("manipulat
 
     //Subscribers
     _engine_move_sub = this->create_subscription<std_msgs::msg::String>(
-            "/botfish/engine_move", 10, std::bind(&Manipulation::move_cb, this, std::placeholders::_1));
+            "/tiles", 10, std::bind(&Manipulation::move_cb, this, std::placeholders::_1));
 
     //Publishers
     _gripper_pub = this->create_publisher<std_msgs::msg::Float64MultiArray>("/left_hand/target", 10);
